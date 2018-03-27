@@ -10,5 +10,6 @@
         <!-- actions -->    
         <menuitem name="Biaya" id="siswa_keu_ocb11.menu_biaya" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_keu_ocb11.biaya_action_window" sequence="1"/>
         <!-- <menuitem name="Assign Biaya" id="siswa_keu_ocb11.menu_assign_biaya" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_keu_ocb11.assign_biaya_action_window" sequence="1"/> -->
+        <menuitem name="Assign Biaya" id="siswa_keu_ocb11.menu_tahunajaran_jenjang" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_keu_ocb11.tahunajaran_jenjang_action_window" sequence="1"/>
     </data>
 </odoo>

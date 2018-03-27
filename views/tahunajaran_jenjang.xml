@@ -6,8 +6,9 @@
             <field name="priority" eval="20"/>
             <field name="arch" type="xml">
                 <tree create="false" delete="false" >
-                    <field name="tahunajaran_id"/>
-                    <field name="jenjang"/>
+                    <field name="name" string="Data" />
+                    <field name="tahunajaran_id" invisible="1"/>
+                    <field name="jenjang" invisible="1" />
                 </tree>
             </field>
         </record>
@@ -41,16 +42,27 @@
             </field>
         </record>
 
+        <record id="siswa_keu_ocb11.view_assign_biaya_filter" model="ir.ui.view">
+            <field name="name">assign.biaya.list.select</field>
+            <field name="model">siswa_keu_ocb11.tahunajaran_jenjang</field>
+            <field name="sequence">22</field>
+            <field name="arch" type="xml">
+                <search string="Search Assign Biaya">
+                    <group expand="0" string="Group By">
+                        <filter name="tahunajaran_id" string="Tahun Ajaran" domain="[]" context="{'group_by':'tahunajaran_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record model="ir.actions.act_window" id="siswa_keu_ocb11.tahunajaran_jenjang_action_window">
             <field name="name">Assign Biaya</field>
             <field name="res_model">siswa_keu_ocb11.tahunajaran_jenjang</field>
             <field name="view_mode">tree,form</field>
-            <field name="context">{'active_test': False}</field>
+            <field name="context">{'group_by': ['tahunajaran_id'],'active_test': False}</field>
             <field name="view_id" ref="siswa_keu_ocb11.tahunajaran_jenjang_list"/>
             <field name="form_view_id" ref="siswa_keu_ocb11.tahunajaran_jenjang_form"/>
         </record>
-
-        <menuitem name="Assign Biaya" id="siswa_keu_ocb11.menu_tahunajaran_jenjang" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_keu_ocb11.tahunajaran_jenjang_action_window" sequence="1"/>
         
     </data>
 </odoo>
