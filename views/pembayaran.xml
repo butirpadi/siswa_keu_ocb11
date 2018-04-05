@@ -1,0 +1,80 @@
+<odoo>
+  <data>
+
+    <!-- explicit list view definition -->    
+    <record model="ir.ui.view" id="siswa_keu_ocb11.pembayaran_list">
+      <field name="name">siswa_keu_ocb11_pembayaran_list</field>
+      <field name="model">siswa_keu_ocb11.pembayaran</field>
+      <field name="arch" type="xml">
+        <tree  >
+          <field name="name"/>
+          <field name="tahunajaran_id" context="{'active_test': False}"/>
+          <field name="siswa_id" />
+          <field name="induk" />
+          <field name="total"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+    
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="siswa_keu_ocb11.pembayaran_action_window">
+      <field name="name">Pembayaran</field>
+      <field name="res_model">siswa_keu_ocb11.pembayaran</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_pembayaran_form" model="ir.ui.view">
+        <field name="name">pembayaran.ocb11.form</field>
+        <field name="model">siswa_keu_ocb11.pembayaran</field>
+        <field name="arch" type="xml">
+            <form string="pembayaran" class="o_sale_order">
+                <header>
+                    <button name="reset_pembayaran_lines" type="object" string="Reset" attrs="{'invisible':['|',('state', '=', 'paid'),('name', '=', 'New')]}" class="oe_edit_only btn btn-default" />
+                    <button name="action_confirm" type="object" string="Confirm" attrs="{'invisible':['|',('state', '=', 'paid'),('name', '=', 'New')]}" class="btn btn-primary" />
+                    <button name="action_cancel" type="object" string="Cancel" attrs="{'invisible':['|',('state', '=', 'draft'),('name', '=', 'New')]}" class="btn btn-default" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="tanggal" attrs="{'readonly':[('name', '!=', 'New')]}" />
+                            <field name="tahunajaran_id" options="{'no_create_edit': True,'no_open':True}" context="{'active_test': False}" attrs="{'readonly':[('name', '!=', 'New')]}" />
+                        </group>
+                        <group>
+                            <field name="siswa_id" domain="[('is_siswa','=',True)]" options="{'no_create_edit': True,'no_open':True}" attrs="{'readonly':[('name', '!=', 'New')]}" />
+                            <field name="induk" />                        
+                            <field name="active_rombel_id" />                        
+                        </group>
+                    </group>
+                    <notebook attrs="{'invisible':[('name', '=', 'New')]}" >
+                        <page name="page_pembayaran_line" string="Order Lines" >
+                            <field name="pembayaran_lines" attrs="{'readonly':[('state', '=', 'paid')]}" >
+                                <tree editable="bottom">
+                                    <field name="biaya_id" readonly="1" />
+                                    <field name="tahunajaran_id" readonly="1" />
+                                    <field name="harga" readonly="1"/>
+                                    <field name="bayar" />
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="total" />
+                                </div>
+                                <field name="total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    
+  </data>
+</odoo>

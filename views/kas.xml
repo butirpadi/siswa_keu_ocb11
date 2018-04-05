@@ -1,0 +1,62 @@
+<odoo>
+  <data>
+
+    <!-- explicit list view definition -->    
+    <record model="ir.ui.view" id="siswa_keu_ocb11.kas_list">
+      <field name="name">siswa_keu_ocb11_kas_list</field>
+      <field name="model">siswa_keu_ocb11.kas</field>
+      <field name="arch" type="xml">
+        <tree  >
+          <field name="name"/>
+          <field name="tanggal" />
+          <field name="desc" />
+          <field name="pembayaran_id" />
+          <field name="debet" sum="Total Debet" />
+          <field name="kredit" sum="Total Kredit" />
+          <field name="state" />
+        </tree>
+      </field>
+    </record>
+    
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="siswa_keu_ocb11.kas_action_window">
+      <field name="name">Kas</field>
+      <field name="res_model">siswa_keu_ocb11.kas</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_kas_form" model="ir.ui.view">
+        <field name="name">kas.ocb11.form</field>
+        <field name="model">siswa_keu_ocb11.kas</field>
+        <field name="arch" type="xml">
+            <form string="kas" class="o_sale_order">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" attrs="{'invisible':['|',('state', '=', 'post'),('name', '=', 'New')]}" class="btn btn-primary" />
+                    <button name="action_cancel" type="object" string="Cancel" attrs="{'invisible':['|','|',('state', '=', 'draft'),('name', '=', 'New'),('is_related', '=', True)]}" class="btn btn-default" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,post"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="tanggal" attrs="{'readonly':[('name', '!=', 'New')]}" />
+                            <field name="desc" required="1" />
+                        </group>
+                        <group>
+                            <field name="jumlah"/>
+                            <field name="pembayaran_id" attrs="{'invisible':[('is_related', '=', False)]}" />
+                            <field name="is_related" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    
+  </data>
+</odoo>

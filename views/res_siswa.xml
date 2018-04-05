@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+
+         <record id="res_siswa_keu_tree" model="ir.ui.view">
+            <field name="name">res.siswa.keu.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field eval="22" name="priority"/>
+            <field name="arch" type="xml">
+                <field name="phone" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="email" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="display_name" position="after">
+                    <field name="induk" string="Induk"/>
+                    <field name="nis" string="NIS"/>
+                    <field name="panggilan" string="Panggilan"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_siswa_keu_filter" model="ir.ui.view">
+            <field name="name">siswa.keu.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field eval="22" name="priority"/>
+            <field name="arch" type="xml">
+                <field name="name" position="replace">
+                    <field name="name" filter_domain="['|','|','|','|',('display_name','ilike',self),('ref','=',self),('induk','ilike',self),('nis','ilike',self),('panggilan','ilike',self)]" />
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

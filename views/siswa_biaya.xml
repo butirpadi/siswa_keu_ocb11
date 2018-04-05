@@ -1,0 +1,41 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->    
+    <record model="ir.ui.view" id="siswa_keu_ocb11.siswa_biaya_list">
+      <field name="name">siswa_keu_ocb11_siswa_biaya_list</field>
+      <field name="model">siswa_keu_ocb11.siswa_biaya</field>
+      <field name="arch" type="xml">
+        <tree  >
+          <field name="name"/>
+          <field name="tahunajaran_id" />
+          <field name="harga" />
+        </tree>
+      </field>
+    </record>
+<!--     
+    <record model="ir.actions.act_window" id="siswa_keu_ocb11.siswa_biaya_action_window">
+      <field name="name">siswa_biaya</field>
+      <field name="res_model">siswa_keu_ocb11.siswa_biaya</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_siswa_biaya_form" model="ir.ui.view">
+        <field name="name">siswa_biaya.ocb11.form</field>
+        <field name="model">siswa_keu_ocb11.siswa_biaya</field>
+        <field name="arch" type="xml">
+            <form string="siswa_biaya" class="o_sale_order">
+              <sheet>
+                  <group>
+                    <group>
+                        <field name="name" />
+                        <field name="is_bulanan" />
+                    </group>
+                  </group>
+              </sheet>
+            </form>
+        </field>
+    </record> -->
+
+    
+  </data>
+</odoo>

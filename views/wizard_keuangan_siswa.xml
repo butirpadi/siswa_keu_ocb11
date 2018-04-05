@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+
+        <record id="siswa_ocb11.wizard_keuangan_siswa_form" model="ir.ui.view">
+            <field name="name">wizard.ocb11.keuangan_siswa</field>
+            <field name="model">siswa_keu_ocb11.wizard_keuangan_siswa</field>
+            <field name="arch" type="xml">
+                <form string="Wizard Keuangan Siswa" class="o_sale_order" create="false">
+                    <sheet>
+                        <div class="oe_title oe_read_only">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="siswa_id" options="{'no_create_edit': True,'no_open':True}" />                    
+                                <field name="induk" readonly="1" />                    
+                                <field name="tahunajaran_id" options="{'no_create_edit': True,'no_open':True}" context="{'active_test': False}" invisible="1" />
+                            </group>
+                            <group>
+                                <field name="rombel_id" options="{'no_create_edit': True,'no_open':True}" />
+                            </group>
+                        </group>
+                        <notebook attrs="{'invisible':[('id', '=', None)]}" >
+                            <page name="page_open_biaya" string="Kewajiban Biaya" >
+                                <field name='biayas_open' readonly='1'>
+                                    <tree>
+                                        <field name='tahunajaran_id'  />
+                                        <field name='name'/>
+                                        <field name='harga' sum="Total Kewajiban" />
+                                        <field name='biaya_id' invisible="1"/>
+                                        <field name='siswa_id' invisible="1" />
+                                        <field name='state' invisible="1" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="page_paid_biaya" string="Telah Dibayar" >
+                                <field name='biayas_paid' readonly='1'>
+                                    <tree>
+                                        <field name='tahunajaran_id'  />
+                                        <field name='name'/>
+                                        <field name='harga' sum="Total Dibayar" />
+                                        <field name='biaya_id' invisible="1"/>
+                                        <field name='siswa_id' invisible="1" />
+                                        <field name='state' invisible="1" />
+                                    </tree>
+                                </field>
+                            </page>
+                            
+                        </notebook>
+                        <footer class="oe_edit_only" >
+                            <button name="action_save" type="object"
+                                string="Save" class="oe_highlight"/>
+                                
+                            <button special="cancel" string="Cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="siswa_keu_ocb11.wizard_keuangan_siswa"
+            name="Keuangan Siswa"
+            src_model="res.partner"
+            res_model="siswa_keu_ocb11.wizard_keuangan_siswa"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"/>
+    </data>
+</odoo>

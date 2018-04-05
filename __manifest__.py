@@ -24,9 +24,14 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'data/ir_sequence_data.xml',
+        'views/res_siswa.xml',
         'views/biaya.xml',
-        # 'views/assign_biaya.xml',
+        'views/siswa_biaya.xml',
         'views/tahunajaran_jenjang.xml',
+        'views/wizard_keuangan_siswa.xml',
+        'views/pembayaran.xml',
+        'views/kas.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode
