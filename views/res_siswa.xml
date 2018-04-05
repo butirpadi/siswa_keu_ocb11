@@ -17,6 +17,7 @@
                     <field name="induk" string="Induk"/>
                     <field name="nis" string="NIS"/>
                     <field name="panggilan" string="Panggilan"/>
+                    <field name="active_rombel_id" />
                 </field>
             </field>
         </record>

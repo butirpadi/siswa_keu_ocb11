@@ -10,6 +10,7 @@ class pembayaran_line(models.Model):
     siswa_id = fields.Many2one('res.partner', related='pembayaran_id.siswa_id')
     biaya_id = fields.Many2one('siswa_keu_ocb11.siswa_biaya', string='Biaya', required=True, domain=[('siswa_id','=',lambda self: self.siswa_id.id)] )
     harga = fields.Float('Harga', related='biaya_id.harga')
+    amount_due = fields.Float('Amount Due', related='biaya_id.amount_due')
     tahunajaran_id = fields.Many2one('siswa_ocb11.tahunajaran', related='biaya_id.tahunajaran_id')
     bayar = fields.Float('Bayar')
 

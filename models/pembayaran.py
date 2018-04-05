@@ -32,6 +32,13 @@ class pembayaran(models.Model):
         kas = self.env['siswa_keu_ocb11.kas'].search([('pembayaran_id','=',self.id)])
         kas.action_cancel()
         kas.unlink()
+        # update status di siswa_biaya
+        for bayar in self.pembayaran_lines:
+            self.env['siswa_keu_ocb11.siswa_biaya'].search([('id','=',bayar.biaya_id.id)]).write({
+                'state' : 'open',
+                'amount_due' : bayar.biaya_id.amount_due + bayar.bayar,
+                'dibayar' : bayar.biaya_id.dibayar - bayar.bayar,
+            })
         # reset state
         self.write({
             'state' : 'draft'
@@ -45,10 +52,18 @@ class pembayaran(models.Model):
             'state' : 'paid'
         })
         # set paid to siswa_biaya
-        for biy in self.pembayaran_lines:
-            biy.biaya_id.write({
-                'state' : 'paid'
-            })
+        for bayar in self.pembayaran_lines:
+            if bayar.bayar == bayar.amount_due:
+                bayar.biaya_id.write({
+                    'state' : 'paid',
+                    'amount_due' : 0,
+                    'dibayar' : bayar.biaya_id.dibayar + bayar.bayar,
+                })
+            else:
+                bayar.biaya_id.write({
+                    'amount_due' : bayar.biaya_id.amount_due - bayar.bayar,
+                    'dibayar' : bayar.biaya_id.dibayar + bayar.bayar
+                })
         # add confirm progress to table action_confirm
         self.env['siswa_keu_ocb11.action_confirm'].create({
             'pembayaran_id' : self.id
@@ -107,7 +122,7 @@ class pembayaran(models.Model):
             reg_biaya.append([0,0,{
                 'siswa_id' : vals['siswa_id'],
                 'biaya_id' : by.id,
-                'bayar' : by.harga,
+                'bayar' : by.amount_due,
             }])
         
         vals.update({

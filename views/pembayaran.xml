@@ -59,6 +59,7 @@
                                     <field name="biaya_id" readonly="1" />
                                     <field name="tahunajaran_id" readonly="1" />
                                     <field name="harga" readonly="1"/>
+                                    <field name="amount_due" readonly="1"/>
                                     <field name="bayar" />
                                 </tree>
                             </field>

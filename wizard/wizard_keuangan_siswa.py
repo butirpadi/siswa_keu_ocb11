@@ -25,8 +25,24 @@ class wizard_keuangan_siswa(models.TransientModel):
     def _compute_biaya(self):
         self.ensure_one()
         # self.biayas = self.siswa_id.biayas.search([('tahunajaran_id','=',self.tahunajaran_id.id)])
-        self.biayas_paid = self.env['siswa_keu_ocb11.siswa_biaya'].search([('siswa_id','=',self.siswa_id.id),('state','=','paid')])
         self.biayas_open = self.env['siswa_keu_ocb11.siswa_biaya'].search([('siswa_id','=',self.siswa_id.id),('state','=','open')])
+        # self.biayas_paid = self.env['siswa_keu_ocb11.siswa_biaya'].search([('siswa_id','=',self.siswa_id.id),('state','=','paid')])
+        # self.biayas_paid = self.env['siswa_keu_ocb11.siswa_biaya'].search([('siswa_id','=',self.siswa_id.id),('amount_due','<',harga)])
+        self._get_paid_siswa_biaya()
+    
+    def _get_paid_siswa_biaya(self):
+        print('inside _get_paid_siswa_biaya')
+        # query = "select * from siswa_keu_ocb11_siswa_biaya where siswa_id=%d and amount_due < harga " % self.siswa_id.id
+        if self.siswa_id.id:
+            query = "select * from siswa_keu_ocb11_siswa_biaya where siswa_id=" + str(self.siswa_id.id) + " and amount_due < harga"
+            self.env.cr.execute(query)
+            siswa_biaya = self.env.cr.fetchall()
+            biaya_ids = []
+            if siswa_biaya:
+                for sis in siswa_biaya:
+                    biaya_ids.append(sis[0])
+                self.biayas_paid = self.env['siswa_keu_ocb11.siswa_biaya'].search([('id','in',biaya_ids)])            
+
 
     @api.depends('siswa_id','tahunajaran_id')
     def _compute_rombel_siswa(self):
