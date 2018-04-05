@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record model="ir.module.category" id="siswa_keu_module_management">
+            <field name="name">Keuangan Siswa</field>
+            <field name="description">User access level for this module</field>
+            <field name="sequence">3</field>
+        </record>
+
+        <record id="siswa_keu_group_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="siswa_keu_ocb11.siswa_keu_module_management"/>
+        </record>
+
+        <record id="siswa_keu_group_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="implied_ids" eval="[(4, ref('siswa_keu_ocb11.siswa_keu_group_user'))]"/>
+            <field name="category_id" ref="siswa_keu_ocb11.siswa_keu_module_management"/>
+        </record>
+    </data>
+</odoo>
+
+
