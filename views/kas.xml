@@ -6,7 +6,7 @@
       <field name="name">siswa_keu_ocb11_kas_list</field>
       <field name="model">siswa_keu_ocb11.kas</field>
       <field name="arch" type="xml">
-        <tree  >
+        <tree default_order="tanggal desc" >
           <field name="name"/>
           <field name="tanggal" />
           <field name="desc" />

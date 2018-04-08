@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+
+        <report
+            id="report_kas_action"
+            model="siswa_keu_ocb11.wizard_report_kas"
+            string="Report Kas"
+            report_type="qweb-html"
+            name="siswa_keu_ocb11.report_kas"
+            file="siswa_keu_ocb11.report_kas"
+            attachment_use="False"
+            attachment="('ReportKas.pdf')"
+            menu="False"
+        />
+
+    </data>
+</odoo>

@@ -31,8 +31,11 @@
         'views/siswa_biaya.xml',
         'views/tahunajaran_jenjang.xml',
         'views/wizard_keuangan_siswa.xml',
+        'views/wizard_report_kas.xml',
         'views/pembayaran.xml',
         'views/kas.xml',
+        'report/report_kas_template.xml',
+        'report/report_kas.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode
