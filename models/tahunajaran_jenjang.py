@@ -20,6 +20,7 @@ class tahunajaran_jenjang(models.Model):
                     ])
             # create/insert biaya to siswa
             for sis in siswas:
+                total_biaya = 0
                 for by in self.biayas:
                     if by.biaya_id.is_bulanan:
                         for bulan_index in range(1,13):
@@ -32,6 +33,7 @@ class tahunajaran_jenjang(models.Model):
                                 'harga' : by.harga,
                                 'amount_due' : by.harga,
                             })
+                            total_biaya += by.harga
                     else:
                         self.env['siswa_keu_ocb11.siswa_biaya'].create({
                             'name' : by.biaya_id.name,
@@ -41,8 +43,9 @@ class tahunajaran_jenjang(models.Model):
                             'harga' : by.harga,
                             'amount_due' : by.harga,
                         })
+                        total_biaya += by.harga
                 # set total_biaya dan amount_due
-                total_biaya = sum(by.harga for by in self.biayas)
+                # total_biaya = sum(by.harga for by in self.biayas)
                 self.env['res.partner'].search([('id','=',sis.siswa_id.id)]).write({
                     'total_biaya' : total_biaya,
                     'amount_due_biaya' : total_biaya,
