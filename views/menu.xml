@@ -20,7 +20,7 @@
         <menuitem name="Kas" id="siswa_keu_ocb11.menu_kas" parent="siswa_keu_ocb11.submenu_keuangan_operations" action="siswa_keu_ocb11.kas_action_window" sequence="3"/>
         <!-- actions reports -->            
         <menuitem name="Keuangan" id="siswa_keu_ocb11.menu_report_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_kas" sequence="1"/>
-        <menuitem name="Rekapitulasi Kas" id="siswa_keu_ocb11.menu_report_rekap_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_kas" sequence="1"/>
-        <!-- <menuitem name="Report" id="siswa_keu_ocb11.menu_report_kas_test" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="report_kas_action" sequence="2"/> -->
+        <!-- <menuitem name="Rekapitulasi Kas" id="siswa_keu_ocb11.menu_report_rekap_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_kas" sequence="1"/> -->
+        
     </data>
 </odoo>

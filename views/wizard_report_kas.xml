@@ -1,7 +1,7 @@
 <odoo>
     <data>
 
-        <record id="siswa_ocb11.wizard_report_kas_form" model="ir.ui.view">
+        <record id="siswa_keu_ocb11.wizard_report_kas_form" model="ir.ui.view">
             <field name="name">wizard.ocb11.report_kas</field>
             <field name="model">siswa_keu_ocb11.wizard_report_kas</field>
             <field name="arch" type="xml">
