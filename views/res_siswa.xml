@@ -34,5 +34,28 @@
             </field>
         </record>
 
+        <record id="siswa_keu_ocb11.siswa_keu_form" model="ir.ui.view" >
+            <field name="name">siswa_keu_ocb11.siswa_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="siswa_ocb11.siswa_form"/>
+            <field name="priority" eval="22"/>
+            <field name="arch" type="xml">
+                <xpath expr='//div[@name="button_box"]/button[1]' position="after">
+                    <button class="oe_stat_button"
+                        name="%(siswa_keu_ocb11.biaya_persiswa_window_action)d"
+                        icon="fa fa-dollar"
+                        type="action">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value"><field name="amount_due_biaya"/></span>
+                            <span class="o_stat_text">Tagihan</span>
+                        </div>
+                    </button>
+                </xpath>
+                <xpath expr='//div[@name="button_box"]/button[1]' position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>                
+            </field>
+        </record>
+
     </data>
 </odoo>
