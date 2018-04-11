@@ -9,7 +9,7 @@
             name="siswa_keu_ocb11.report_kas"
             file="siswa_keu_ocb11.report_kas"
             attachment_use="False"
-            attachment="('ReportKas.pdf')"
+            print_report_name="'Kas-%s' % (object.awal+'-'+object.akhir)"
             menu="False"
         />
 
