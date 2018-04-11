@@ -30,8 +30,10 @@ class pembayaran(models.Model):
         self.env['siswa_keu_ocb11.action_confirm'].search([('pembayaran_id','=',self.id)]).unlink()
         # delete from kas statement
         kas = self.env['siswa_keu_ocb11.kas'].search([('pembayaran_id','=',self.id)])
-        kas.action_cancel()
-        kas.unlink()
+        for dt in kas:
+            dt.action_cancel()
+            dt.unlink()
+            
         # update status di siswa_biaya
         for bayar in self.pembayaran_lines:
             self.env['siswa_keu_ocb11.siswa_biaya'].search([('id','=',bayar.biaya_id.id)]).write({
