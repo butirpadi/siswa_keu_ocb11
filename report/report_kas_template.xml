@@ -8,12 +8,14 @@
                             table.table{
                                 border-left:none!important;
                                 border-right:none!important;
+                                background-color:transparent!important;
                             }
 
                             table.table tbody tr td {
                                 border-right:none!important;
                                 padding-top:0;
                                 padding-bottom:0;
+                                background-color:transparent!important;
                             }
                         </style>
 

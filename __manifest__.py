@@ -36,6 +36,7 @@
         'views/kas.xml',
         'report/report_kas_template.xml',
         'report/report_kas.xml',
+        'report/report_rekap_kas.xml',
         'report/report_bukti_pembayaran.xml',
         'views/menu.xml',
     ],

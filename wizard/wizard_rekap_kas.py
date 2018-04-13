@@ -2,15 +2,15 @@ from odoo import models, fields, api, _
 from pprint import pprint
 from datetime import datetime
 
-class wizard_report_kas(models.TransientModel):
-    _name = 'siswa_keu_ocb11.wizard_report_kas'
+class wizard_rekap_kas(models.TransientModel):
+    _name = 'siswa_keu_ocb11.wizard_rekap_kas'
 
-    name = fields.Char('Name', default='Report Kas')
+    name = fields.Char('Name', default='Rekapitulasi Kas')
     awal = fields.Date('Periode Awal', default=datetime.today(), required=True)
     akhir = fields.Date('Periode Akhir', default=datetime.today(), required=True)
     jenis = fields.Selection([(1, 'All'), (2, 'Pendaptan'), (3, 'Pengeluaran')], string='Jenis Kas', required=True, default=1)
     # kas_ids = fields.Many2many('siswa_keu_ocb11.kas', string='Data Kas')
-    kas_ids = fields.Many2many('siswa_keu_ocb11.kas',relation='siswa_keu_ocb11_report_kas_rel', column1='report_id',column2='kas_id', string="Data Kas")
+    kas_ids = fields.Many2many('siswa_keu_ocb11.kas',relation='siswa_keu_ocb11_rekapitulasi_kas_rel', column1='report_id',column2='kas_id', string="Data Kas")
     saldo_begining = fields.Float('Saldo Begining', default=0)
     saldo_ending = fields.Float('Saldo Ending', default=0)
     saldo_current = fields.Float('Saldo Current', default=0)
@@ -37,14 +37,11 @@ class wizard_report_kas(models.TransientModel):
                 'saldo_begining' : saldo_begining,
                 'saldo_ending' : saldo_ending,
                 'saldo_current' : saldo_current,
-            })        
-    
-    def action_print_kas(self):
-        self.action_save()
-        return self.env.ref('siswa_keu_ocb11.report_kas_action').report_action(self)
-    
-    def action_print_rekap(self):
-        self.action_save()
-        return self.env.ref('siswa_keu_ocb11.report_rekap_kas_action').report_action(self)
+            })
+
+        print('saldo begining  : ' + str(saldo_begining))
+        print('saldo current  : ' + str(saldo_current))
+        print('saldo ending  : ' + str(saldo_ending))
         
+        return self.env.ref('siswa_keu_ocb11.report_kas_action').report_action(self)
 

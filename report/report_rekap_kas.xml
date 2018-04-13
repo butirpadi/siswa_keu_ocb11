@@ -1,0 +1,130 @@
+<odoo>
+    <data>
+
+        <report
+            id="report_rekap_kas_action"
+            model="siswa_keu_ocb11.wizard_report_kas"
+            string="Rekapitulasi Kas"
+            report_type="qweb-html"
+            name="siswa_keu_ocb11.report_rekap_kas"
+            file="siswa_keu_ocb11.report_rekap_kas"
+            attachment_use="False"
+            print_report_name="'RekapitulasiKas-%s' % (object.awal+'-'+object.akhir)"
+            menu="False"
+        />
+
+        <template id="report_rekap_kas">
+            <t t-call="web.html_container">            
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <style>
+                                table.table{
+                                    border-left:none!important;
+                                    border-right:none!important;
+                                    background-color:transparent!important;
+                                }
+
+                                table.table tbody tr td {
+                                    border-right:none!important;
+                                    padding-top:0;
+                                    padding-bottom:0;
+                                    background-color:transparent!important;
+                                }
+                            </style>
+
+                            <div class="row" >
+                                <div class="col-xs-12 text-center" >
+                                    <h3>REKAPITULASI KAS</h3>
+                                    <strong >Periode :</strong> <span t-field="o.awal" /> - <span t-field="o.akhir" />
+                                </div>
+                                <br/><p>.</p>
+                                <div class="col-xs-12" >                                
+                                    <table class="table table-condensed" >
+                                        <thead>
+                                            <tr>
+                                                <th class="col-xs-4" >Keterangan</th>
+                                                <th class="col-xs-2 text-center" >Tanggal</th>
+                                                <th class="col-xs-3 text-right " >Debit</th>
+                                                <th class="col-xs-3 text-right " >Kredit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-set="total_debet" t-value="0" />
+                                            <t t-set="total_kredit" t-value="0" />
+                                            <t t-foreach="o.kas_ids.sorted(key=lambda x: x.tanggal)" t-as="kas">
+                                                <tr>
+                                                    <td>
+                                                        <span t-field="kas.desc" />
+                                                    </td>
+                                                    <td class="text-center" >
+                                                        <span t-field="kas.tanggal" t-field-options='{"format": "dd/MM/y"}'/>
+                                                    </td>
+                                                    <td class="text-right" >
+                                                        <t t-esc="'{0:,.2f}'.format(kas.debet)" />
+                                                    </td>
+                                                    <td class="text-right" >
+                                                        <t t-esc="'{0:,.2f}'.format(kas.kredit)" />
+                                                    </td>
+                                                </tr>
+                                                <t t-set="total_debet" t-value="total_debet+kas.debet" />
+                                                <t t-set="total_kredit" t-value="total_kredit+kas.kredit" />
+                                            </t>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td class="text-right" colspan="2">
+                                                    <strong>TOTAL</strong>
+                                                </td>
+                                                <td class="text-right" >
+                                                    <t t-esc="'{0:,.2f}'.format(total_debet)" />
+                                                </td>
+                                                <td class="text-right" >
+                                                    <t t-esc="'{0:,.2f}'.format(total_kredit)" />
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    
+                                    <div class="col-xs-8">.</div>
+                                    <div class="col-xs-2">
+                                        <strong>Saldo Begining</strong>
+                                    </div>
+                                    <div class="col-xs-2 text-right">
+                                        <t t-if="o.saldo_begining &lt; 0">(</t>
+                                            <t t-esc="'{0:,.2f}'.format(abs(o.saldo_begining))" />
+                                        <t t-if="o.saldo_begining &lt; 0">)</t>
+                                    </div>
+
+                                    <div class="col-xs-8">.</div>
+                                    <div class="col-xs-2">
+                                        <strong>Saldo Ending</strong>
+                                    </div>
+                                    <div class="col-xs-2 text-right">
+                                        <t t-if="o.saldo_ending &lt; 0">(</t>
+                                            <t t-esc="'{0:,.2f}'.format(abs(o.saldo_ending))" />
+                                        <t t-if="o.saldo_ending &lt; 0">)</t>
+                                    </div>
+
+                                    <div class="col-xs-8">.</div>
+                                    <div class="col-xs-2">
+                                        <strong>TOTAL SALDO</strong>
+                                    </div>
+                                    <div class="col-xs-2 text-right" style="border-top:solid thin black;" >
+                                        <t t-set="total_saldo" t-value="o.saldo_begining + o.saldo_current + o.saldo_ending"/>
+                                        <t t-if="total_saldo  &lt; 0">(</t>
+                                            <strong><t t-esc="'{0:,.2f}'.format(abs(total_saldo))" /></strong>
+                                        <t t-if="total_saldo &lt; 0">)</t>
+                                    </div>
+
+                                    <br/><p>.</p>
+                                </div>
+                            </div>                        
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

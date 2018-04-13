@@ -1,9 +1,10 @@
 <odoo>
     <data>
 
-        <record id="siswa_keu_ocb11.wizard_report_kas_form" model="ir.ui.view">
+        <record id="siswa_keu_ocb11.wizard_report_keuangan_form" model="ir.ui.view">
             <field name="name">wizard.ocb11.report_kas</field>
             <field name="model">siswa_keu_ocb11.wizard_report_kas</field>
+            <field name="priority" eval="16" />
             <field name="arch" type="xml">
                 <form string="Wizard Report Kas" class="o_sale_order" create="false">
                     <sheet>
@@ -21,7 +22,7 @@
                             </group>
                         </group>
                         <footer class="oe_edit_only" >
-                            <button name="action_save" type="object"
+                            <button name="action_print_kas" type="object"
                                 string="Print" class="oe_highlight"/>
                                 
                             <button special="cancel" string="Cancel"/>
@@ -31,12 +32,41 @@
             </field>
         </record>
 
-        <act_window id="siswa_keu_ocb11.wizard_report_kas"
-            name="Report Kas"
-            src_model="siswa_keu_ocb11.kas"
-            res_model="siswa_keu_ocb11.wizard_report_kas"
-            view_mode="form"
-            target="new"
-            key2="client_action_multi"/>
+        <record id="siswa_keu_ocb11.wizard_rekapitulasi_kas_form" model="ir.ui.view">
+            <field name="name">wizard.ocb11.rekapitulasi_kas</field>
+            <field name="model">siswa_keu_ocb11.wizard_report_kas</field>
+            <field name="inherit_id" ref="siswa_keu_ocb11.wizard_report_keuangan_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_print_kas']" position="before">
+                    <button invisible="not context.get('show_button_print_rekap')" name="action_print_rekap" type="object" string="Print Rekap" class="oe_highlight"/>
+                </xpath>
+                <button name="action_print_kas" position="attributes">
+                    <attribute name="invisible" >context.get('show_button_print_rekap')</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="siswa_keu_ocb11.wizard_report_keuangan_action">
+            <field name="name">Report Kas</field>
+            <field name="src_model">siswa_keu_ocb11.kas</field>
+            <field name="res_model">siswa_keu_ocb11.wizard_report_kas</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="key2">client_action_multi</field>
+            <field name="view_id" ref="siswa_keu_ocb11.wizard_report_keuangan_form"/>
+            <field name="form_view_id" ref="siswa_keu_ocb11.wizard_report_keuangan_form"/>
+        </record>
+        
+        <record model="ir.actions.act_window" id="siswa_keu_ocb11.wizard_rekap_kas_action">
+            <field name="name">Rekapitulasi Kas</field>
+            <field name="src_model">siswa_keu_ocb11.kas</field>
+            <field name="res_model">siswa_keu_ocb11.wizard_report_kas</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'show_button_print_rekap':True}</field>
+            <field name="target">new</field>
+            <field name="key2">client_action_multi</field>
+            <field name="form_view_id" ref="siswa_keu_ocb11.wizard_rekapitulasi_kas_form"/>
+        </record>
+
     </data>
 </odoo>
