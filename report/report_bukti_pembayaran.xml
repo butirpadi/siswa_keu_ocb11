@@ -1,0 +1,141 @@
+<odoo>
+    <data>
+
+        <report
+            id="report_pembayaran_action"
+            model="siswa_keu_ocb11.pembayaran"
+            string="Bukti Pembayaran"
+            report_type="qweb-html"
+            name="siswa_keu_ocb11.report_pembayaran"
+            file="siswa_keu_ocb11.report_pembayaran"
+            attachment_use="False"
+            print_report_name="'BuktiPembayaran-%s' % (object.siswa_id.induk+'-'+object.tanggal)"
+            menu="False"
+        />
+    
+         <template id="report_pembayaran">
+            <t t-call="web.html_container">            
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <style>
+                                table.table{
+                                    border-left:none!important;
+                                    border-right:none!important;
+                                    border-bottom:none!important;
+                                    background-color:transparent!important
+                                }
+
+                                table.table tbody tr td {
+                                    border-right:none!important;
+                                    padding-top:0;
+                                    padding-bottom:0;
+                                    background-color:transparent!important;
+                                }
+                            </style>
+
+                            <table class="table" >
+                                <tbody>
+                                    <tr>
+                                        <td style="border-bottom:thin solid black;" colspan="6" class="text-center" ><h4>BUKTI PEMBAYARAN SISWA</h4></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-2" >Ref#</td>
+                                        <td style="width:5px;" >:</td>
+                                        <td>
+                                            <span t-field="o.name" />
+                                        </td>
+                                        <td class="col-xs-2" >Induk</td>
+                                        <td style="width:5px;" >:</td>
+                                        <td>
+                                            <span t-field="o.siswa_id.induk" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-xs-2" >Tanggal</td>
+                                        <td style="width:5px;" >:</td>
+                                        <td>
+                                            <span t-field="o.tanggal" t-field-options='{"format": "dd MMM y"}'/>
+                                        </td>
+                                        <td class="col-xs-2" >Nama</td>
+                                        <td style="width:5px;" >:</td>
+                                        <td>
+                                            <span t-field="o.siswa_id.name" />
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom:thin solid black;" >
+                                        <td class="col-xs-2" >Jam Cetak</td>
+                                        <td style="width:5px;" >:</td>
+                                        <td>
+                                            <span t-field="o.name" />
+                                        </td>
+                                        <td class="col-xs-2" >Rombongan Belajar</td>
+                                        <td style="width:5px;" >:</td>
+                                        <td>
+                                            <span t-field="o.siswa_id.active_rombel_id.name" />
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom:thin solid black;" >
+                                        <td colspan="4">
+                                            <strong><h5>Keterangan Pembayaran</h5></strong>
+                                        </td>
+                                        <td colspan="2" class="text-right" >
+                                            <strong style="font-weight:bolder;" ><h5>Jumlah (Rp)</h5></strong>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach="o.pembayaran_lines" t-as="pay">
+                                        <tr>
+                                            <td colspan="3">
+                                                <span t-field="pay.biaya_id.name" /> 
+                                            </td>
+                                            <td >
+                                                <span t-field="pay.biaya_id.tahunajaran_id.name" />
+                                            </td>
+                                            <td colspan="2" class="text-right" >
+                                                <span t-field="pay.bayar" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr style="border-top:solid thin black;" >
+                                        <td colspan="5" style="padding-top:5px;padding-bottom:5px;" >
+                                            <strong>Terbilang:</strong>
+                                        </td>
+                                        <td style="border-bottom:solid thin black;padding-top:5px;padding-bottom:5px;" >
+                                            <strong class="" >Total :</strong>
+                                            <span t-field="o.total" class="pull-right" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" >
+                                            <i style="text-transform: capitalize;" ><span t-field="o.terbilang" /></i>
+                                        </td>
+                                        <td  >
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="vertical-align:bottom;" >
+                                            <i>Catatan:</i><br/>
+                                            <i>-Disimpan sebagai bukti pembayaran yang SAH.</i><br/>
+                                            <i>-Uang yang telah dibayarkan tidak dapat dikembalikan.</i>
+                                        </td>
+                                        <td colspan="3" class="text-center" >
+                                            Sidoarjo, <span t-field="o.tanggal" t-field-options='{"format": "dd MMM y"}'/>
+                                            <p>Staff Administrasi</p>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            Eries Hermanto
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                                  
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    
+    </data>
+</odoo>

@@ -36,6 +36,7 @@
         'views/kas.xml',
         'report/report_kas_template.xml',
         'report/report_kas.xml',
+        'report/report_bukti_pembayaran.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode

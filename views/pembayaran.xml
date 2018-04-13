@@ -32,6 +32,7 @@
                 <header>
                     <button name="reset_pembayaran_lines" type="object" string="Reset" attrs="{'invisible':['|',('state', '=', 'paid'),('name', '=', 'New')]}" class="oe_edit_only btn btn-default" />
                     <button name="action_confirm" type="object" string="Confirm" attrs="{'invisible':['|',('state', '=', 'paid'),('name', '=', 'New')]}" class="btn btn-primary" />
+                    <button name="action_print" type="object" string="Print" attrs="{'invisible':['|',('state', '=', 'draft'),('name', '=', 'New')]}" class="btn btn-default" />
                     <button confirm="Are you sure you want to do this?" name="action_cancel" type="object" string="Cancel" attrs="{'invisible':['|',('state', '=', 'draft'),('name', '=', 'New')]}" class="oe_edit_only btn btn-default" />
                     <field name="state" widget="statusbar" statusbar_visible="draft,paid"/>
                 </header>
