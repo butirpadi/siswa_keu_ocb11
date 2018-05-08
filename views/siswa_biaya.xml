@@ -7,8 +7,12 @@
       <field name="priority" eval="18"/>
       <field name="arch" type="xml">
           <search string="Search Siswa Biaya">
+              <field name="siswa_id" string="Nama" filter_domain="[('siswa_id','ilike',self)]"/>
               <group expand="0" string="Group By">
                   <filter name="group_state" string="State" domain="[]" context="{'group_by':'state'}"/>
+                  <filter name="group_tahunajaran" string="Tahun Ajaran" domain="[]" context="{'group_by':'tahunajaran_id'}"/>
+                  <filter name="group_jenjang" string="Jenjang" domain="[]" context="{'group_by':'jenjang_id'}"/>
+                  <filter name="group_siswa" string="Siswa" domain="[]" context="{'group_by':'siswa_id'}"/>
               </group>
           </search>
       </field>
@@ -23,6 +27,7 @@
         <tree  >
           <field name="name"/>
           <field name="tahunajaran_id" />
+          <field name="jenjang_id" />
           <field name="harga" />
         </tree>
       </field>
@@ -36,21 +41,73 @@
         <tree create="false" edit="false" >
           <field name="name"/>
           <field name="tahunajaran_id" />
-          <field name="harga" />
-          <field name="amount_due" sum="Total Tagihan" />
+          <field name="harga" sum="Total Tagihan" />
+          <field name="amount_due" sum="Total Sisa Tagihan" />
           <field name="state" />
         </tree>
       </field>
+    </record>
+
+    <record model="ir.ui.view" id="siswa_keu_ocb11.biaya_persiswa_with_create_list">
+      <field name="name">siswa_keu_ocb11_biaya_persiswa_with_create_list</field>
+      <field name="model">siswa_keu_ocb11.siswa_biaya</field>
+      <field name="priority" eval="20"/>
+      <field name="arch" type="xml">
+        <tree  >
+          <field name="name"/>
+          <field name="tahunajaran_id" />
+          <field name="harga" sum="Total Tagihan" />
+          <field name="amount_due" sum="Total Sisa Tagihan" />
+          <field name="state" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="siswa_keu_ocb11.siswa_biaya_form_view" model="ir.ui.view">
+        <field name="name">siswa_biaya.ocb11.form.view</field>
+        <field name="model">siswa_keu_ocb11.siswa_biaya</field>
+        <field name="arch" type="xml">
+            <form string="siswa_biaya" class="o_sale_order">
+              <sheet>
+                  <group>
+                    <group>
+                        <field name="tahunajaran_id" />
+                        <field name="biaya_id" />                        
+                        <field name="name" />                        
+                        <field name="bulan" />                        
+                        <field name="siswa_id" invisible="1" />                        
+                    </group>
+                    <group>
+                        <field name="harga" />                        
+                        <field name="amount_due" readonly="1"/>             
+
+                    </group>
+                  </group>
+              </sheet>
+            </form>
+        </field>
     </record>
 
     <record model="ir.actions.act_window" id="siswa_keu_ocb11.biaya_persiswa_window_action">
       <field name="name">Tagihan Siswa</field>
       <field name="res_model">siswa_keu_ocb11.siswa_biaya</field>
       <field name="type">ir.actions.act_window</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('siswa_id','=',active_id),('state','=','open')]</field>
+      <field name="context">{'default_siswa_id':active_id}</field>
+      <!-- <field name="tree_view_id" ref="siswa_keu_ocb11.biaya_persiswa_with_create_list"/>      -->
+      <!-- <field name="form_view_id" ref="siswa_keu_ocb11.siswa_biaya_form_view"/>      -->
+      <field name="view_id" ref="siswa_keu_ocb11.biaya_persiswa_list"/>      
+      <field name="search_view_id" ref="siswa_keu_ocb11.view_biaya_persiswa_filter"/>      
+    </record>
+
+    <record model="ir.actions.act_window" id="siswa_keu_ocb11.data_keuangan_siswa_action">
+      <field name="name">Daftar Tagihan</field>
+      <field name="res_model">siswa_keu_ocb11.siswa_biaya</field>
+      <field name="type">ir.actions.act_window</field>
       <field name="view_mode">tree</field>
       <field name="view_type">form</field>
-      <field name="domain">[('siswa_id','=',active_id),('state','=','open')]</field>
-      <field name="context">{}</field>
+      <field name="context">{'search_default_group_tahunajaran':True, 'search_default_group_jenjang':True, 'search_default_group_siswa':True}</field>
       <field name="view_id" ref="siswa_keu_ocb11.biaya_persiswa_list"/>      
       <field name="search_view_id" ref="siswa_keu_ocb11.view_biaya_persiswa_filter"/>      
     </record>

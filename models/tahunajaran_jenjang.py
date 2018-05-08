@@ -57,6 +57,7 @@ class tahunajaran_jenjang(models.Model):
                                     'bulan' : bulan_index,
                                     'harga' : harga,
                                     'amount_due' : harga,
+                                    'jenjang_id' : self.jenjang_id.id
                                 })
                                 total_biaya += harga
                         else:
@@ -71,6 +72,7 @@ class tahunajaran_jenjang(models.Model):
                                 'biaya_id' : by.biaya_id.id,
                                 'harga' : harga,
                                 'amount_due' : harga,
+                                'jenjang_id' : self.jenjang_id.id
                             })
                             total_biaya += harga
                 # set total_biaya dan amount_due
@@ -122,6 +124,7 @@ class tahunajaran_jenjang(models.Model):
                                         'bulan' : bulan_index,
                                         'harga' : harga,
                                         'amount_due' : harga,
+                                        'jenjang_id' : self.jenjang_id.id
                                     })
                             else:
                                 harga = biy.harga
@@ -136,6 +139,7 @@ class tahunajaran_jenjang(models.Model):
                                     'biaya_id' : biy.biaya_id.id,
                                     'harga' : harga,
                                     'amount_due' : harga,
+                                    'jenjang_id' : self.jenjang_id.id
                                 })
             print('End of Recompute Siswa Biaya')
         else:

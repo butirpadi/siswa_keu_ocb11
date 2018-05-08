@@ -27,3 +27,4 @@ class siswa_biaya(models.Model):
     dibayar = fields.Float('Dibayar', required=True, default=0)
     state = fields.Selection([('open', 'Open'), ('paid', 'Paid')], string='Paid', required=True, default='open')
     active_rombel_id = fields.Many2one('siswa_ocb11.rombel', related='siswa_id.active_rombel_id', string='Rombongan Belajar')
+    jenjang_id = fields.Many2one('siswa_ocb11.jenjang')
