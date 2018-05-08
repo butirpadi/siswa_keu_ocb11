@@ -22,7 +22,7 @@
                                 <field name="rombel_id" options="{'no_create_edit': True,'no_open':True}" />
                             </group>
                         </group>
-                        <notebook attrs="{'invisible':[('id', '=', None)]}" >
+                        <notebook attrs="{'invisible':[('name', '=', '0')]}" >
                             <page name="page_open_biaya" string="Kewajiban Biaya" >
                                 <field name='biayas_open' readonly='1'>
                                     <tree>

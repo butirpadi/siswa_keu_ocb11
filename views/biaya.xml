@@ -27,11 +27,13 @@
             <form string="Biaya" class="o_sale_order">
               <sheet>
                   <group>
-                    <group>
+                    <!-- <group> -->
                         <field name="name" />
                         <field name="is_bulanan" />
+                        <field name="is_different_by_gender" />
+                        <field name="is_siswa_baru_only" />
                         <!-- <field name="harga" />                     -->
-                    </group>
+                    <!-- </group> -->
                   </group>
               </sheet>
             </form>

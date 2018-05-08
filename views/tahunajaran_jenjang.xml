@@ -9,19 +9,20 @@
                     <field name="name" string="Data" />
                     <field name="state" />
                     <field name="tahunajaran_id" invisible="1"/>
-                    <field name="jenjang" invisible="1" />
+                    <field name="jenjang_id" invisible="1" />
                 </tree>
             </field>
         </record>
 
         <record id="siswa_keu_ocb11.tahunajaran__jenjang_form" model="ir.ui.view">
-            <field name="name">tahunajaran_jenjang.ocb11.form</field>
+            <field name="name">tahunajaran_.ocb11.form</field>
             <field name="model">siswa_ocb11.tahunajaran_jenjang</field>
             <field name="arch" type="xml">
                 <form string="Tahun Ajaran" class="o_sale_order" create="false" delete="false">
                     <header>
                         <button name="validate_state" string="Validate"  type="object" states="draft" class="oe_edit_only btn btn-primary"/>
                         <button name="recompute_biaya" string="Recompute" type="object" states="valid" class="oe_edit_only btn btn-primary"/>
+                        <button name="action_reset" string="Reset" type="object" states="valid" class="oe_edit_only " confirm="Anda akan menghapus data yang berkaitan dengan pengaturan biaya ini, Lanjutkan?"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,valid"/>
                     </header>
                     <sheet>
@@ -30,7 +31,7 @@
                                 <field name="tahunajaran_id" readonly="1" />
                             </group>
                             <group>
-                                <field name="jenjang" readonly="1" />
+                                <field name="jenjang_id" readonly="1" />
                             </group>
                         </group>
                         <notebook>
@@ -39,6 +40,8 @@
                                     <tree editable="bottom">
                                         <field name="biaya_id" />
                                         <field name="harga" />
+                                        <field name="harga_alt" attrs="{'readonly':[('is_different_by_gender', '=', False)]}" />
+                                        <field name="is_different_by_gender" invisible="1" />
                                     </tree>
                                 </field>
                             </page>
