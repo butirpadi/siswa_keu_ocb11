@@ -43,12 +43,12 @@
                     </div>
                     <group>
                         <group>
-                            <field name="tanggal" attrs="{'readonly':[('name', '!=', 'New')]}" />
-                            <field name="desc" required="1" />
+                            <field name="tanggal" attrs="{'readonly':[('state', '=', 'post')]}" />
+                            <field name="desc" required="1" attrs="{'readonly':[('state', '=', 'post')]}" />
                         </group>
                         <group>
-                            <field name="jumlah"/>
-                            <field name="pembayaran_id" attrs="{'invisible':[('is_related', '=', False)]}" />
+                            <field name="jumlah" attrs="{'readonly':[('state', '=', 'post')]}" />
+                            <field name="pembayaran_id" attrs="{'invisible':[('is_related', '=', False)], 'readonly':[('state', '=', 'post')]}" />
                             <field name="is_related" invisible="1"/>
                         </group>
                     </group>
