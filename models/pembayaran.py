@@ -44,13 +44,14 @@ class pembayaran(models.Model):
 
     @api.depends('total')
     def _compute_terbilang(self):
-        if self.total == 0:
-            self.terbilang = 'nol'
-        else:
-            t = self.terbilang_(self.total)
-            while '' in t:
-                t.remove('')
-            self.terbilang = ' '.join(t)        
+        for rec in self:
+            if rec.total == 0:
+                rec.terbilang = 'nol'
+            else:
+                t = rec.terbilang_(rec.total)
+                while '' in t:
+                    t.remove('')
+                rec.terbilang = ' '.join(t)        
 
     def reload_page(self):
         return {

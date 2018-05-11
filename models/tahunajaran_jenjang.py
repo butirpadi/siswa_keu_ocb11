@@ -75,6 +75,7 @@ class tahunajaran_jenjang(models.Model):
                                 'jenjang_id' : self.jenjang_id.id
                             })
                             total_biaya += harga
+                            
                 # set total_biaya dan amount_due
                 # total_biaya = sum(by.harga for by in self.biayas)
                 self.env['res.partner'].search([('id','=',sis.siswa_id.id)]).write({
