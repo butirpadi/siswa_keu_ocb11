@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api, exceptions, _
 from odoo.addons import decimal_precision as dp
 from datetime import datetime
 
@@ -64,4 +64,9 @@ class kas(models.Model):
         result = super(kas, self).create(vals)
         return result
 
+    @api.multi
+    def unlink(self):
+        if self.is_related or self.pembayaran_id:
+            raise exceptions.except_orm(_('Warning'), _('You can not delete this type of data.'))
+        return super(kas, self).unlink()
 
