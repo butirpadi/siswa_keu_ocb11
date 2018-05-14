@@ -118,7 +118,7 @@ class pembayaran(models.Model):
         })
         # add kas statement
         kas = self.env['siswa_keu_ocb11.kas'].create({
-            'tanggal' : datetime.today(),
+            'tanggal' : self.tanggal,
             'desc' : 'Penerimaan Pembayaran Siswa' ,
             'jumlah' : self.total,
             'debet' : self.total,
