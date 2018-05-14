@@ -20,7 +20,7 @@
             id="report_pembayaran_action"
             model="siswa_keu_ocb11.pembayaran"
             string="Bukti Pembayaran"
-            report_type="qweb-html"
+            report_type="qweb-pdf"
             name="siswa_keu_ocb11.report_pembayaran"
             file="siswa_keu_ocb11.report_pembayaran"
             attachment_use="False"
@@ -42,14 +42,26 @@
                                     border-top:none!important;
                                     background-color:transparent!important
                                 }
+                                .table tbody tr, .table tbody tr td, table.noborder tbody tr, table.noborder tr td{
+                                    margin: 0!important;
+                                    padding: 0!important;
+                                    border:none!important;
+                                }
+                                .table tbody tr:last, .table tbody tr:last td{
+                                    border-bottom-width: thin!important;
+                                    border-bottom-style: solid!important;
+                                    border-bottom-color: black!important;
+                                }
 
-
-                                <!-- table.table tbody tr td {
-                                    border-right:none!important;
-                                    padding-top:0;
-                                    padding-bottom:0;
-                                    background-color:transparent!important; -->
-                                } -->
+                                .table thead tr, .table thead tr th{
+                                    border-bottom-width: thin!important;
+                                    border-bottom-style: solid!important;
+                                    border-bottom-color: black!important;
+                                    border-top-width: thin!important;
+                                    border-top-style: solid!important;
+                                    border-top-color: black!important;
+                                    padding-left:0!important;
+                                }
                             </style>
 
                             <div class="row" >
@@ -65,63 +77,78 @@
                                 </div>
                                 <div class="col-xs-12" >  
                                     <hr style="border-top: 4px double black;" />   
-                                    <table class="noborder">
+                                    <table class="table noborder">
                                         <tbody>
                                             <tr>
-                                                <td class="col-xs-2" >Tanggal</td>
-                                                <td style="width:5px;" >:</td>
-                                                <td>
-                                                    <span t-field="o.tanggal" t-field-options='{"format": "dd MMM y"}'/>
+                                                <td class="col-xs-2" >
+                                                    <strong>Tanggal</strong>
                                                 </td>
-                                                <td class="col-xs-2" >No. Induk</td>
-                                                <td style="width:5px;" >:</td>
-                                                <td>
+                                                <td style="width:10px;" class="text-left" >:</td>
+                                                <td class="col-xs-3" >
+                                                    <span t-field="o.tanggal" t-field-options='{"format": "dd MMMM y"}'/>
+                                                </td>
+                                                <td class="col-xs-3" >
+                                                    <strong>No. Induk</strong>
+                                                </td>
+                                                <td style="width:10px;" class="text-left" >:</td>
+                                                <td class="col-xs-3" >
                                                     <span t-field="o.siswa_id.induk" />
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="col-xs-2" >Jam Cetak</td>
-                                                <td style="width:5px;" >:</td>
+                                                <td >
+                                                    <strong>Jam Cetak</strong>
+                                                </td>
+                                                <td  >:</td>
                                                 <td>
                                                     <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%H:%M:%S')"/>   
                                                 </td>
-                                                <td class="col-xs-2" >Nama</td>
-                                                <td style="width:5px;" >:</td>
+                                                <td  >
+                                                    <strong>Nama</strong>
+                                                </td>
+                                                <td  >:</td>
                                                 <td>
                                                     <span t-field="o.siswa_id.name" />
                                                 </td>
                                             </tr>
                                             <tr style="border-bottom:thin solid black;" >
-                                                <td class="col-xs-2" ></td>
-                                                <td style="width:5px;" ></td>
+                                                <td></td>
+                                                <td  ></td>
                                                 <td>
                                                     
                                                 </td>
-                                                <td class="col-xs-2" >Rombongan Belajar</td>
-                                                <td style="width:5px;" >:</td>
+                                                <td  >
+                                                    <strong>Rombongan Belajar</strong>
+                                                </td>
+                                                <td  >:</td>
                                                 <td>
                                                     <span t-field="o.siswa_id.active_rombel_id.name" />
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <br/><![CDATA[&nbsp;]]>
+                                    
                                     <table class="table" >
-                                        <tbody>
-                                            <tr style="border-bottom:thin solid black;" >
-                                                <td colspan="4">
+                                        <thead>
+                                            <tr >
+                                                <th colspan="3">
                                                     <strong>Keterangan Pembayaran</strong>
-                                                </td>
-                                                <td colspan="2" class="text-right" >
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Tahun Pelajaran</strong>
+                                                </th>
+                                                <th colspan="2" class="text-right" >
                                                     <strong>Jumlah (Rp)</strong>
-                                                </td>
+                                                </th>
                                             </tr>
+                                        </thead>
+                                        <tbody>
                                             <t t-foreach="o.pembayaran_lines" t-as="pay">
                                                 <tr>
                                                     <td colspan="3">
                                                         <span t-field="pay.biaya_id.name" /> 
                                                     </td>
-                                                    <td >
+                                                    <td class="text-center" >
                                                         <span t-field="pay.biaya_id.tahunajaran_id.name" />
                                                     </td>
                                                     <td colspan="2" class="text-right" >
@@ -153,7 +180,7 @@
                                                     <i>-Uang yang telah dibayarkan tidak dapat dikembalikan.</i>
                                                 </td>
                                                 <td colspan="3" class="text-center" >
-                                                    Sidoarjo, <span t-field="o.tanggal" t-field-options='{"format": "dd MMM y"}'/>
+                                                    Sidoarjo, <span t-field="o.tanggal" t-field-options='{"format": "dd MMMM y"}'/>
                                                     <p>Staff Administrasi</p>
                                                     <br/>
                                                     <br/>

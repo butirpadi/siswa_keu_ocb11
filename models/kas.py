@@ -13,9 +13,10 @@ class kas(models.Model):
     jumlah = fields.Float('Jumlah', required=True)
     debet = fields.Float('Debet' )
     kredit = fields.Float('Kredit')    
-    pembayaran_id = fields.Many2one('siswa_keu_ocb11.pembayaran', string='Pembayaran', ondelete='restrict')
+    pembayaran_id = fields.Many2one('siswa_keu_ocb11.pembayaran', string='Pembayaran', ondelete='cascade')
     is_related = fields.Boolean('Is Related', default=False)
     state = fields.Selection([('draft', 'Draft'), ('post', 'Posted')], string='State', required=True, default='draft')
+    is_allow_to_delete = fields.Boolean('Allow to Delete', default=False)
 
     def reload_page(self):
         return {
@@ -42,7 +43,8 @@ class kas(models.Model):
         self.env['siswa_keu_ocb11.action_confirm'].search([('kas_id','=',self.id)]).unlink()
         # update state
         self.write({
-            'state' : 'draft'
+            'state' : 'draft',
+            'is_allow_to_delete' : True
         })
 
         return self.reload_page()
@@ -66,7 +68,7 @@ class kas(models.Model):
 
     @api.multi
     def unlink(self):
-        if self.is_related or self.pembayaran_id:
+        if not self.is_allow_to_delete:
             raise exceptions.except_orm(_('Warning'), _('You can not delete this type of data.'))
         return super(kas, self).unlink()
 
