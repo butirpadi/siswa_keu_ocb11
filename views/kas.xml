@@ -9,7 +9,8 @@
         <tree default_order="tanggal desc" >
           <field name="name"/>
           <field name="tanggal" />
-          <field name="desc" />
+          <field name="kas_kategori_id" />
+          <!-- <field name="desc" /> -->
           <field name="pembayaran_id" />
           <field name="debet" sum="Total Debet" />
           <field name="kredit" sum="Total Kredit" />
@@ -44,10 +45,11 @@
                     <group>
                         <group>
                             <field name="tanggal" attrs="{'readonly':[('state', '=', 'post')]}" />
-                            <field name="desc" required="1" attrs="{'readonly':[('state', '=', 'post')]}" />
+                            <field name="kas_kategori_id" required="1" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" ttrs="{'readonly':[('state', '=', 'post')]}"/>
                         </group>
                         <group>
                             <field name="jumlah" attrs="{'readonly':[('state', '=', 'post')]}" />
+                            <field name="desc" required="1" attrs="{'readonly':[('state', '=', 'post')]}" />
                             <field name="pembayaran_id" attrs="{'invisible':[('is_related', '=', False)], 'readonly':[('state', '=', 'post')]}" />
                             <field name="is_related" invisible="1"/>
                         </group>

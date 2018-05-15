@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api, exceptions, _
 from odoo.addons import decimal_precision as dp
 from datetime import datetime
 from pprint import pprint
@@ -117,6 +117,8 @@ class pembayaran(models.Model):
             'pembayaran_id' : self.id
         })
         # add kas statement
+        kas_kategori_pembayaran_id = self.env['ir.model.data'].search([('name','=','default_kategori_kas')]).res_id
+        
         kas = self.env['siswa_keu_ocb11.kas'].create({
             'tanggal' : self.tanggal,
             'desc' : 'Penerimaan Pembayaran Siswa' ,
@@ -124,6 +126,7 @@ class pembayaran(models.Model):
             'debet' : self.total,
             'pembayaran_id' : self.id ,
             'is_related' : True ,
+            'kas_kategori_id' : kas_kategori_pembayaran_id,
         })
         kas.action_confirm()
         # reload
