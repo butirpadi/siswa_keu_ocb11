@@ -33,6 +33,7 @@
         'views/wizard_report_kas.xml',
         'views/pembayaran.xml',
         'views/res_siswa.xml',
+        'views/kas_kategori.xml',
         'views/kas.xml',
         'report/report_kas_template.xml',
         'report/report_kas.xml',

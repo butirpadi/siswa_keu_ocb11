@@ -17,6 +17,7 @@ class kas(models.Model):
     is_related = fields.Boolean('Is Related', default=False)
     state = fields.Selection([('draft', 'Draft'), ('post', 'Posted')], string='State', required=True, default='draft')
     is_allow_to_delete = fields.Boolean('Allow to Delete', default=False)
+    kas_kategori_id = fields.Many2one('siswa_keu_ocb11.kas_kategori', string='Kategori Kas')
 
     def reload_page(self):
         return {
@@ -58,7 +59,13 @@ class kas(models.Model):
                 vals['name'] = self.env['ir.sequence'].next_by_code('siswa.keu.ocb11.kas') or _('New')
         
         if 'jumlah' in vals:
-            if vals['jumlah'] > 0 :
+            # tentukan debet atau kredit
+            #
+            # if vals['jumlah'] > 0 :
+            #     vals['debet'] = vals['jumlah']
+            # else:
+            #     vals['kredit'] = abs(vals['jumlah'])
+            if self.kas_kategori_id.tipe == 'in':
                 vals['debet'] = vals['jumlah']
             else:
                 vals['kredit'] = abs(vals['jumlah'])

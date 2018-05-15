@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        <record id="siswa_keu_ocb11.view_kas_kategori_filter" model="ir.ui.view">
+        <field name="name">kas.kategori.list.select</field>
+        <field name="model">siswa_keu_ocb11.kas_kategori</field>
+        <field name="priority" eval="18"/>
+        <field name="arch" type="xml">
+            <search string="Kategori Kas">
+                <field name="name" string="Nama" filter_domain="['|',('name','ilike',self),('tipe','ilike',self)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_tipe" string="Tipe" domain="[]" context="{'group_by':'tipe'}"/>
+                </group>
+            </search>
+        </field>
+        </record>
+
+        <!-- explicit list view definition -->    
+        <record model="ir.ui.view" id="siswa_keu_ocb11.kas_kategori_list">
+        <field name="name">siswa_keu_ocb11_kas_kategori_list</field>
+        <field name="model">siswa_keu_ocb11.kas_kategori</field>
+        <field name="arch" type="xml">
+            <tree >
+                <field name="name"/>
+                <field name="tipe"/>
+            </tree>
+        </field>
+        </record>
+        
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="siswa_keu_ocb11.kas_kategori_action_window">
+            <field name="name">Kategori Kas</field>
+            <field name="res_model">siswa_keu_ocb11.kas_kategori</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_group_by_tipe':True}</field>
+        </record>
+
+        <record id="view_kas_kategori_form" model="ir.ui.view">
+            <field name="name">kas_kategori.ocb11.form</field>
+            <field name="model">siswa_keu_ocb11.kas_kategori</field>
+            <field name="arch" type="xml">
+                <form string="kas_kategori" class="o_sale_order">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1" />
+                            <field name="tipe"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>   
+    </data>
+</odoo>

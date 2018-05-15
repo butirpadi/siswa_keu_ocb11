@@ -10,4 +10,5 @@ from . import siswa_biaya
 from . import pembayaran_line
 from . import pembayaran
 from . import action_confirm
+from . import kas_kategori
 from . import kas

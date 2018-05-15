@@ -15,7 +15,7 @@
 
     <!-- actions opening views on models -->
     <record model="ir.actions.act_window" id="siswa_keu_ocb11.biaya_action_window">
-      <field name="name">Biaya</field>
+      <field name="name">Biaya Kesiswaan</field>
       <field name="res_model">siswa_keu_ocb11.biaya</field>
       <field name="view_mode">tree,form</field>
     </record>
