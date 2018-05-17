@@ -29,6 +29,7 @@
           <field name="tahunajaran_id" />
           <field name="jenjang_id" />
           <field name="harga" />
+          <field name="siswa_id" invisible="1" />
         </tree>
       </field>
     </record>
@@ -54,6 +55,7 @@
       <field name="priority" eval="20"/>
       <field name="arch" type="xml">
         <tree  >
+          <field name="id"/>
           <field name="name"/>
           <field name="tahunajaran_id" />
           <field name="harga" sum="Total Tagihan" />

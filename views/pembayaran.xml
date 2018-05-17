@@ -25,23 +25,23 @@
         <field name="name">siswa_keu_ocb11_pembayaran_list</field>
         <field name="model">siswa_keu_ocb11.pembayaran</field>
         <field name="arch" type="xml">
-            <tree  >
-            <field name="name"/>
-            <field name="tanggal"/>
-            <field name="tahunajaran_id" context="{'active_test': False}"/>
-            <field name="siswa_id" />
-            <field name="induk" />
-            <field name="total"/>
-            <field name="state"/>
+            <tree default_order="tanggal desc" >
+                <field name="name"/>
+                <field name="tanggal"/>
+                <field name="tahunajaran_id" context="{'active_test': False}"/>
+                <field name="siswa_id" />
+                <field name="induk" />
+                <field name="total"/>
+                <field name="state"/>
             </tree>
         </field>
         </record>
         
         <!-- actions opening views on models -->
         <record model="ir.actions.act_window" id="siswa_keu_ocb11.pembayaran_action_window">
-        <field name="name">Pembayaran</field>
-        <field name="res_model">siswa_keu_ocb11.pembayaran</field>
-        <field name="view_mode">tree,form</field>
+            <field name="name">Pembayaran</field>
+            <field name="res_model">siswa_keu_ocb11.pembayaran</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
         <record id="view_pembayaran_form" model="ir.ui.view">
@@ -75,9 +75,11 @@
                         </group>
                         <notebook attrs="{'invisible':[('name', '=', 'New')]}" >
                             <page name="page_pembayaran_line" string="Order Lines" >
-                                <field name="pembayaran_lines" attrs="{'readonly':[('state', '=', 'paid')]}" >
+                                <field name="pembayaran_lines" attrs="{'readonly':[('state', '=', 'paid')]}" context="{'default_pembayaran_id': active_id}" >
                                     <tree editable="bottom">
-                                        <field name="biaya_id" readonly="1" />
+                                        <field name="pembayaran_id" invisible="1" />
+                                        <field name="siswa_id" invisible="1" />
+                                        <field name="biaya_id" />
                                         <field name="tahunajaran_id" readonly="1" />
                                         <field name="harga" readonly="1"/>
                                         <field name="amount_due" readonly="1"/>

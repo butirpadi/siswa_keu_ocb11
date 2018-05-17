@@ -20,7 +20,7 @@ class pembayaran(models.Model):
     pembayaran_lines = fields.One2many('siswa_keu_ocb11.pembayaran_line', inverse_name='pembayaran_id' , string='Biaya-biaya', require=True)
     satuan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh',
           'delapan', 'sembilan', 'sepuluh', 'sebelas']
-    
+
     def terbilang_(self, n):
         if n >= 0 and n <= 11:
             hasil = [self.satuan[int(n)]]
@@ -166,20 +166,20 @@ class pembayaran(models.Model):
             else:
                 vals['name'] = self.env['ir.sequence'].next_by_code('pembayaran.siswa.ocb11') or _('New')
 
-        # populate biaya siswa        
-        biayas = self.env['siswa_keu_ocb11.siswa_biaya'].search([('siswa_id','=',vals['siswa_id']),('state','=','open')])
-        reg_biaya = []
-        for by in biayas:
-            reg_biaya.append([0,0,{
-                'siswa_id' : vals['siswa_id'],
-                'biaya_id' : by.id,
-                'bayar' : by.amount_due,
-            }])
+        # # populate biaya siswa        
+        # biayas = self.env['siswa_keu_ocb11.siswa_biaya'].search([('siswa_id','=',vals['siswa_id']),('state','=','open')])
+        # reg_biaya = []
+        # for by in biayas:
+        #     reg_biaya.append([0,0,{
+        #         'siswa_id' : vals['siswa_id'],
+        #         'biaya_id' : by.id,
+        #         'bayar' : by.amount_due,
+        #     }])
         
-        vals.update({
-            'pembayaran_lines' : reg_biaya
-        })
-        vals['total'] = sum(x.harga for x in biayas)
+        # vals.update({
+        #     'pembayaran_lines' : reg_biaya
+        # })
+        # vals['total'] = sum(x.harga for x in biayas)
 
         result = super(pembayaran, self).create(vals)
         return result

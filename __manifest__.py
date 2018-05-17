@@ -31,6 +31,7 @@
         'views/tahunajaran_jenjang.xml',
         'views/wizard_keuangan_siswa.xml',
         'views/wizard_report_kas.xml',
+        'views/wizard_report_pembayaran_siswa.xml',
         'views/pembayaran.xml',
         'views/res_siswa.xml',
         'views/kas_kategori.xml',

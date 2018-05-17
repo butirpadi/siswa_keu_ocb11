@@ -17,7 +17,7 @@ class kas(models.Model):
     is_related = fields.Boolean('Is Related', default=False)
     state = fields.Selection([('draft', 'Draft'), ('post', 'Posted')], string='State', required=True, default='draft')
     is_allow_to_delete = fields.Boolean('Allow to Delete', default=False)
-    kas_kategori_id = fields.Many2one('siswa_keu_ocb11.kas_kategori', string='Kategori Kas')
+    kas_kategori_id = fields.Many2one('siswa_keu_ocb11.kas_kategori', required=True, string='Kategori Kas', ondelete="restrict")
 
     def reload_page(self):
         return {
