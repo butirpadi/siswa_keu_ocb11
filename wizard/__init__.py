@@ -3,3 +3,4 @@
 from . import wizard_keuangan_siswa
 from . import wizard_report_kas
 from . import wizard_report_pembayaran_siswa
+from . import wizard_pembayaran_siswa_biaya_rel

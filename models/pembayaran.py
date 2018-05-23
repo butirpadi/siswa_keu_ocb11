@@ -12,7 +12,7 @@ class pembayaran(models.Model):
     name = fields.Char(string='Kode Pembayaran', requred=True, default='New')
     tahunajaran_id = fields.Many2one('siswa_ocb11.tahunajaran', string='Tahun Ajaran', required=True, default=lambda x: x.env['siswa_ocb11.tahunajaran'].search([('active','=',True)]))
     siswa_id = fields.Many2one('res.partner', string='Siswa', required=True)
-    induk = fields.Char(string='Induk', related='siswa_id.induk')
+    induk = fields.Char(string='No. Induk', related='siswa_id.induk')
     active_rombel_id = fields.Many2one('siswa_ocb11.rombel', related='siswa_id.active_rombel_id', string='Rombongan Belajar')
     tanggal = fields.Date('Tanggal', required=True, default=datetime.today())
     total = fields.Float('Total', required=True, default=0.00)
@@ -20,6 +20,21 @@ class pembayaran(models.Model):
     pembayaran_lines = fields.One2many('siswa_keu_ocb11.pembayaran_line', inverse_name='pembayaran_id' , string='Biaya-biaya', require=True)
     satuan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh',
           'delapan', 'sembilan', 'sepuluh', 'sebelas']
+    is_potong_tabungan = fields.Boolean('Potong Tabungan ?', default=False)
+    tabungan_id = fields.Many2one('siswa_tab_ocb11.tabungan', string="Transaksi Tabungan")
+    saldo_tabungan_siswa = fields.Float(related='siswa_id.saldo_tabungan')
+
+    @api.onchange('is_potong_tabungan')
+    def potong_tabungan_change(self):
+        if self.is_potong_tabungan:
+            if self.saldo_tabungan_siswa < self.total:
+                # tampilkan pesan tidak mencukupi
+                self.is_potong_tabungan = False
+
+                return {'warning': {
+                        'title': _('Warning'),
+                        'message': _('Saldo tabungan tidak mencukupi.')
+                        }}
 
     def terbilang_(self, n):
         if n >= 0 and n <= 11:
@@ -64,6 +79,13 @@ class pembayaran(models.Model):
 
     def action_cancel(self):
         self.ensure_one()
+        # delete from tabungan if potong_tabungan
+        if self.is_potong_tabungan:
+            # print(self.tabungan_id.name)
+            self.tabungan_id.action_cancel()
+            self.tabungan_id.unlink()
+        #     raise exceptions.except_orm(_('Warning'), _('TEST ERROR'))
+
         # delete from action_confirm table
         self.env['siswa_keu_ocb11.action_confirm'].search([('pembayaran_id','=',self.id)]).unlink()
         # delete from kas statement
@@ -91,50 +113,64 @@ class pembayaran(models.Model):
 
     def action_confirm(self):
         self.ensure_one()
-        # update state
-        self.write({
-            'state' : 'paid'
-        })
-        # set paid to siswa_biaya
-        for bayar in self.pembayaran_lines:
-            if bayar.bayar == bayar.amount_due:
-                bayar.biaya_id.write({
-                    'state' : 'paid',
-                    'amount_due' : 0,
-                    'dibayar' : bayar.biaya_id.dibayar + bayar.bayar,
-                })
-            else:
-                bayar.biaya_id.write({
-                    'amount_due' : bayar.biaya_id.amount_due - bayar.bayar,
-                    'dibayar' : bayar.biaya_id.dibayar + bayar.bayar
-                })
-            # update amount_due_biaya on siswa
-            self.siswa_id.write({
-                'amount_due_biaya' : self.siswa_id.amount_due_biaya - bayar.bayar
+        # check if pembayaran is set or no
+        if len(self.pembayaran_lines) > 0:
+            # update state
+            self.write({
+                'state' : 'paid'
             })
-        # add confirm progress to table action_confirm
-        self.env['siswa_keu_ocb11.action_confirm'].create({
-            'pembayaran_id' : self.id
-        })
-        # add kas statement
-        kas_kategori_pembayaran_id = self.env['ir.model.data'].search([('name','=','default_kategori_kas')]).res_id
-        
-        kas = self.env['siswa_keu_ocb11.kas'].create({
-            'tanggal' : self.tanggal,
-            'desc' : 'Penerimaan Pembayaran Siswa' ,
-            'jumlah' : self.total,
-            'debet' : self.total,
-            'pembayaran_id' : self.id ,
-            'is_related' : True ,
-            'kas_kategori_id' : kas_kategori_pembayaran_id,
-        })
-        kas.action_confirm()
-        # reload
-        # return {
-        #     'type': 'ir.actions.client',
-        #     'tag': 'reload',
-        # }
-        return self.reload_page()
+            # set paid to siswa_biaya
+            for bayar in self.pembayaran_lines:
+                if bayar.bayar == bayar.amount_due:
+                    bayar.biaya_id.write({
+                        'state' : 'paid',
+                        'amount_due' : 0,
+                        'dibayar' : bayar.biaya_id.dibayar + bayar.bayar,
+                    })
+                else:
+                    bayar.biaya_id.write({
+                        'amount_due' : bayar.biaya_id.amount_due - bayar.bayar,
+                        'dibayar' : bayar.biaya_id.dibayar + bayar.bayar
+                    })
+                # update amount_due_biaya on siswa
+                self.siswa_id.write({
+                    'amount_due_biaya' : self.siswa_id.amount_due_biaya - bayar.bayar
+                })
+            # add confirm progress to table action_confirm
+            self.env['siswa_keu_ocb11.action_confirm'].create({
+                'pembayaran_id' : self.id
+            })
+            # add kas statement
+            kas_kategori_pembayaran_id = self.env['ir.model.data'].search([('name','=','default_kategori_kas')]).res_id
+            
+            kas = self.env['siswa_keu_ocb11.kas'].create({
+                'tanggal' : self.tanggal,
+                'desc' : 'Penerimaan Pembayaran Siswa' ,
+                'jumlah' : self.total,
+                'debet' : self.total,
+                'pembayaran_id' : self.id ,
+                'is_related' : True ,
+                'kas_kategori_id' : kas_kategori_pembayaran_id,
+            })
+            kas.action_confirm()
+
+            # if is_potong_tabungan = True, maka potong tabungan
+            if self.is_potong_tabungan:
+                # create trans tabungan
+                new_tab = self.env['siswa_tab_ocb11.tabungan'].create({
+                    'siswa_id' : self.siswa_id.id,
+                    'tanggal' : self.tanggal,
+                    'jenis' : 'tarik',
+                    'jumlah' : self.total,
+                })
+                new_tab.action_confirm()
+                self.tabungan_id = new_tab.id
+
+            # reload
+            return self.reload_page()
+
+        else:
+            raise exceptions.except_orm(_('Warning'), _('There is no data to confirm, complete payment first!'))
 
     @api.onchange('pembayaran_lines')
     def _compute_biaya(self):

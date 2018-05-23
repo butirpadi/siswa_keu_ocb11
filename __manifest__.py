@@ -19,7 +19,7 @@
     'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','siswa_ocb11'],
+    'depends': ['base','siswa_ocb11','siswa_tab_ocb11'],
 
     # always loaded
     'data': [

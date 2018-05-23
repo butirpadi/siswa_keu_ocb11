@@ -1,12 +1,15 @@
 <odoo>
     <data>
 
-        <record id="siswa_ocb11.wizard_report_pembayaran_siswa_form" model="ir.ui.view">
-            <field name="name">wizard.ocb11.keuangan_siswa</field>
+        <record id="siswa_keu_ocb11.wizard_report_pembayaran_siswa_form" model="ir.ui.view">
+            <field name="name">wizard.ocb11.wizard_report_pembayaran_siswa</field>
             <field name="model">siswa_keu_ocb11.wizard_report_pembayaran_siswa</field>
             <field name="arch" type="xml">
                 <form string="Report Pembayaran Siswa" class="o_sale_order" create="false">
-                    <sheet>
+                    <header attrs="{'invisible':[('name', '=', '0')]}" >
+                        <button name="action_print" string="Print" type="object" class="btn btn-default" />
+                    </header>
+                    <!-- <sheet> -->
                         <div class="oe_title oe_read_only">
                             <h1>
                                 <field name="name" readonly="1"/>
@@ -14,40 +17,120 @@
                         </div>
                         <group>
                             <group>
-                                <field name="tahunajaran_id" options="{'no_create_edit': True,'no_open':True,'no_edit':True,'no_create':True}" /> 
-                                <field name="biaya_id" options="{'no_create_edit': True,'no_open':True,'no_edit':True,'no_create':True}" /> 
+                                <field
+                                    name="tahunajaran_id"
+                                    options="{'no_create_edit': True,'no_open':True,'no_edit':True,'no_create':True}"/>
+                                <field
+                                    name="biaya_id"
+                                    options="{'no_create_edit': True,'no_open':True,'no_edit':True,'no_create':True}"/>
                             </group>
                             <group>
-                                <field name="rombel_id" options="{'no_create_edit': True,'no_open':True,'no_edit':True,'no_create':True}" /> 
+                                <field
+                                    name="rombel_id"
+                                    options="{'no_create_edit': True,'no_open':True,'no_edit':True,'no_create':True}"/>
+                                    <field name="siswa_ids" widget="many2many_tags" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" attrs="{'invisible':[('name', '!=', '0')]}" />
                             </group>
-                            <notebook attrs="{'invisible':[('name', '=', '0')]}" >
-                                <page>
-                                    <field name="siswa_ids">
-                                        <tree editable="bottom" create='false' edit="false">
-                                            <field name="induk" />
-                                            <field name="name" />
-                                        </tree>
-                                    </field>
-                                </page>
-                            </notebook>
                         </group>
-                        <footer class="oe_edit_only" >
-                            <button name="action_save" type="object"
-                                string="Save" class="oe_highlight"/>
-                                
-                            <button special="cancel" string="Cancel"/>
-                        </footer>
-                    </sheet>
+                        <notebook attrs="{'invisible':[('name', '=', '0')]}">
+                            <page string="Data Pembayaran" >
+                                <field name="pembayaran_siswa_ids">
+                                    <tree editable="bottom" create='false' edit="false">
+                                        <field name="induk"/>
+                                        <field name="siswa_id"/>
+                                        <field name="biaya_id" invisible="1" />
+                                        <field name="is_bulanan" invisible="1" />
+                                        <field name="is_jul" />
+                                        <field name="is_aug"/>
+                                        <field name="is_sep"/>
+                                        <field name="is_oct"/>
+                                        <field name="is_nov"/>
+                                        <field name="is_dec"/>
+                                        <field name="is_jan"/>
+                                        <field name="is_feb"/>
+                                        <field name="is_mar"/>
+                                        <field name="is_apr"/>
+                                        <field name="is_mei"/>
+                                        <field name="is_jun"/>
+                                        <field name="harga" sum="Total Tagihan" />
+                                        <field name="total_bayar" sum="Amount Bayar" />
+                                        <field name="amount_due" sum="Amount Due" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    <!-- </sheet> -->
+                    <footer class="oe_edit_only" attrs="{'invisible':[('name', '!=', '0')]}" >
+                        <button name="action_save" type="object" string="Save" class="oe_highlight"/>
+
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
                 </form>
             </field>
         </record>
 
-        <act_window id="siswa_keu_ocb11.wizard_report_pembayaran_siswa_action"
+        <record id="siswa_keu_ocb11.wizard_report_pembayaran_siswa_form_non_bulanan" model="ir.ui.view">
+            <field name="name">wizard.ocb11.wizard_pembayaran_siswa_non_bulanan</field>
+            <field name="model">siswa_keu_ocb11.wizard_report_pembayaran_siswa</field>
+            <field name="arch" type="xml">
+                <form string="Report Pembayaran Siswa" class="o_sale_order" create="false">
+                    <header attrs="{'invisible':[('name', '=', '0')]}" >
+                        <button name="action_print" string="Print" type="object" class="btn btn-default" />
+                    </header>
+                    <!-- <sheet> -->
+                        <div class="oe_title oe_read_only">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field
+                                    name="tahunajaran_id"
+                                    options="{'no_create_edit': True,'no_open':True,'no_edit':True,'no_create':True}"/>
+                                <field
+                                    name="biaya_id"
+                                    options="{'no_create_edit': True,'no_open':True,'no_edit':True,'no_create':True}"/>
+                            </group>
+                            <group>
+                                <field
+                                    name="rombel_id"
+                                    options="{'no_create_edit': True,'no_open':True,'no_edit':True,'no_create':True}"/>
+                                    <field name="siswa_ids" widget="many2many_tags" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" attrs="{'invisible':[('name', '!=', '0')]}" />
+                            </group>
+                        </group>
+                        <notebook attrs="{'invisible':[('name', '=', '0')]}">
+                            <page string="Data Pembayaran" >
+                                <field name="pembayaran_siswa_ids">
+                                    <tree editable="bottom" create='false' edit="false">
+                                        <field name="induk"/>
+                                        <field name="siswa_id"/>
+                                        <field name="biaya_id" invisible="1" />
+                                        <field name="is_bulanan" invisible="1" />
+                                        <field name="harga" sum="Total Tagihan" />
+                                        <field name="total_bayar" sum="Total Bayar" />
+                                        <field name="amount_due" sum="Amount Due" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    <!-- </sheet> -->
+                    <footer class="oe_edit_only" attrs="{'invisible':[('name', '!=', '0')]}" >
+                        <button name="action_save" type="object" string="Save" class="oe_highlight"/>
+
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            id="siswa_keu_ocb11.wizard_report_pembayaran_siswa_action"
             name="Report Pembayaran Siswa"
             src_model="siswa_keu_ocb11.pembayaran"
             res_model="siswa_keu_ocb11.wizard_report_pembayaran_siswa"
             view_mode="form"
             target="new"
-            key2="client_action_multi"/>
+            key2="client_action_multi"
+            />
     </data>
 </odoo>

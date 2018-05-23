@@ -94,8 +94,8 @@
       <field name="name">Tagihan Siswa</field>
       <field name="res_model">siswa_keu_ocb11.siswa_biaya</field>
       <field name="type">ir.actions.act_window</field>
-      <field name="view_mode">tree,form</field>
-      <field name="domain">[('siswa_id','=',active_id),('state','=','open')]</field>
+      <field name="view_mode">tree</field>
+      <field name="domain">[('siswa_id','=',active_id)]</field>
       <field name="context">{'default_siswa_id':active_id}</field>
       <!-- <field name="tree_view_id" ref="siswa_keu_ocb11.biaya_persiswa_with_create_list"/>      -->
       <!-- <field name="form_view_id" ref="siswa_keu_ocb11.siswa_biaya_form_view"/>      -->
