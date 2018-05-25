@@ -25,6 +25,7 @@
     'data': [
         'security/user_groups.xml',
         'security/ir.model.access.csv',
+        'data/ir_default_data.xml',
         'data/ir_sequence_data.xml',
         'views/biaya.xml',
         'views/siswa_biaya.xml',
@@ -36,6 +37,7 @@
         'views/res_siswa.xml',
         'views/kas_kategori.xml',
         'views/kas.xml',
+        'views/keuangan_dashboard.xml',
         'report/report_kas_template.xml',
         'report/report_kas.xml',
         'report/report_rekap_kas.xml',

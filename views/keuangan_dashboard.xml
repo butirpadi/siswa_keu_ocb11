@@ -1,0 +1,114 @@
+<odoo>
+    <data>
+        <record id="view_keuangan_dashboard_kanban_form" model="ir.ui.view">
+            <field name="name">keuangan.dashboard.ocb11.kanban</field>
+            <field name="model">siswa_keu_ocb11.keuangan_dashboard</field>
+            <field name="arch" type="xml">
+                <kanban
+                    class="oe_background_grey o_kanban_dashboard o_emphasize_colors o_stock_kanban"
+                    create="0">
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)}">
+                                <div>
+                                    <div t-attf-class="o_kanban_card_header">
+                                        <div class="o_kanban_card_header_title">
+                                            <div class="o_primary">
+                                                <field name="name"/>
+                                            </div>
+                                            <div class="o_secondary">
+                                                <field class="o_secondary" name="subtitle"/>
+                                            </div>
+                                        </div>
+                                        <div class="o_kanban_manage_button_section">
+                                            <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v"/></a>
+                                        </div>
+                                    </div>
+                                    <div class="container o_kanban_card_content">
+                                        <div class="row">
+                                            <div class="col-xs-12 text-right" >
+                                                <h3 style="font-size:24pt;" ><field name="amount_due" /></h3>
+                                            </div>
+                                            <!-- <t t-foreach="[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]" t-as="rg">
+                                                <div class="col-xs-6">
+                                                    <a name="get_view_rombel_laki" type="object">
+                                                        <t t-esc="record.get_amount_per_ta(rg)" />
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-6 text-right">
+                                                    
+                                                </div>
+                                            </t> -->
+                                            <!-- <t t-foreach="record.get_amount_per_ta" t-as="am_ta">
+                                                <div class="col-xs-6">
+                                                    <a name="get_view_rombel_laki" type="object">
+                                                        <t t-esc="am_ta.tahunajaran_id.name" />
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-6 text-right">
+                                                    <t t-esc="am_ta.tahunajaran_id.amount_due" />
+                                                </div>
+                                            </t> -->
+                                            <!-- <div class="col-xs-6">
+                                                <a name="get_view_rombel_perempuan" type="object">
+                                                    Paid
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-6  text-right">
+                                                <field name="paid_amount"/>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="container o_kanban_card_manage_pane">
+                                        <div class="row">
+                                            <div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_view">
+                                                <div class="o_kanban_card_manage_title">
+                                                    <label>Set Color</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                            <div class="col-xs-12">
+                                                <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record
+            model="ir.actions.act_window"
+            id="siswa_keu_ocb11.keuangan_dashboard_view_action">
+            <field name="name">Dashboard</field>
+            <field name="res_model">siswa_keu_ocb11.keuangan_dashboard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban</field>
+            <field name="form_view_id" ref="siswa_keu_ocb11.view_keuangan_dashboard_kanban_form"/>
+        </record>
+
+        <record
+            model="ir.actions.act_window"
+            id="siswa_keu_ocb11.keuangan_dashboard_view_manager_action">
+            <field name="name">Keuangan Dashboard</field>
+            <field name="res_model">siswa_keu_ocb11.keuangan_dashboard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree, form</field>
+        </record>
+
+        <!-- detail keuangan dashboard, tampilkan keuangan_siswa -->
+        <!-- <record model="ir.actions.act_window" id="siswa_keu_ocb11.siswa_per_keuangan_action_window">
+            <field name="name">Siswa</field>
+            <field name="res_model">siswa_keu_ocb11.keuangan_siswa</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="siswa_keu_ocb11.view_keuangan_siswa_filter"/>
+        </record> -->
+
+    </data>
+</odoo>

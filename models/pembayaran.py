@@ -109,7 +109,19 @@ class pembayaran(models.Model):
         self.write({
             'state' : 'draft'
         })
+
+        # recompute keuangan dashboard
+        self.recompute_keuangan_dashboard()
+
         return self.reload_page()
+    
+    def recompute_keuangan_dashboard(self):
+        # recompute dashboard tagihan siswa
+        dash_keuangan_id = self.env['ir.model.data'].search([('name','=','default_dashboard_pembayaran')]).res_id
+        dash_keuangan = self.env['siswa_keu_ocb11.keuangan_dashboard'].search([('id','=',dash_keuangan_id)])
+        for dash in dash_keuangan:
+            dash.compute_keuangan()        
+        # raise exceptions.except_orm(_('Warning'), _('TEST ERROR COMPUTE KEUANGAN DASHBOARD'))
 
     def action_confirm(self):
         self.ensure_one()
@@ -145,9 +157,7 @@ class pembayaran(models.Model):
             
             kas = self.env['siswa_keu_ocb11.kas'].create({
                 'tanggal' : self.tanggal,
-                'desc' : 'Penerimaan Pembayaran Siswa' ,
                 'jumlah' : self.total,
-                'debet' : self.total,
                 'pembayaran_id' : self.id ,
                 'is_related' : True ,
                 'kas_kategori_id' : kas_kategori_pembayaran_id,
@@ -165,6 +175,9 @@ class pembayaran(models.Model):
                 })
                 new_tab.action_confirm()
                 self.tabungan_id = new_tab.id
+            
+            # recompute keuangan dashboard
+            self.recompute_keuangan_dashboard()
 
             # reload
             return self.reload_page()

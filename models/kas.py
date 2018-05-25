@@ -9,7 +9,7 @@ class kas(models.Model):
 
     name = fields.Char(string='Nama', requred=True, default=_('New'))
     tanggal = fields.Date('Tanggal', required=True, default=datetime.today())
-    desc = fields.Char('Keterangan', require=True)
+    desc = fields.Char('Keterangan')
     jumlah = fields.Float('Jumlah', required=True)
     debet = fields.Float('Debet' )
     kredit = fields.Float('Kredit')    
@@ -36,19 +36,34 @@ class kas(models.Model):
             'state' : 'post'
         })
 
+        # update keuangan_dashboard
+        self.recompute_keuangan_dashboard()
+
         return self.reload_page()
     
     def action_cancel(self):
         self.ensure_one()
+        
         # remove from action_confirm
         self.env['siswa_keu_ocb11.action_confirm'].search([('kas_id','=',self.id)]).unlink()
+
         # update state
         self.write({
             'state' : 'draft',
             'is_allow_to_delete' : True
         })
 
+        # update keuangan_dashboard
+        self.recompute_keuangan_dashboard()
+
         return self.reload_page()
+    
+    def recompute_keuangan_dashboard(self):
+        # recompute dashboard tagihan siswa
+        dash_keuangan_id = self.env['ir.model.data'].search([('name','=','default_dashboard_kas')]).res_id
+        dash_keuangan = self.env['siswa_keu_ocb11.keuangan_dashboard'].search([('id','=',dash_keuangan_id)])
+        for dash in dash_keuangan:
+            dash.compute_kas()        
 
     @api.model
     def create(self, vals):
@@ -58,17 +73,21 @@ class kas(models.Model):
             else:
                 vals['name'] = self.env['ir.sequence'].next_by_code('siswa.keu.ocb11.kas') or _('New')
         
-        if 'jumlah' in vals:
+        # if 'jumlah' in vals:
             # tentukan debet atau kredit
             #
             # if vals['jumlah'] > 0 :
             #     vals['debet'] = vals['jumlah']
             # else:
             #     vals['kredit'] = abs(vals['jumlah'])
-            if self.kas_kategori_id.tipe == 'in':
-                vals['debet'] = vals['jumlah']
-            else:
-                vals['kredit'] = abs(vals['jumlah'])
+        
+        # get kas kategori
+        kategori_id = self.env['siswa_keu_ocb11.kas_kategori'].search([('id', '=', vals['kas_kategori_id'])])
+
+        if kategori_id.tipe == 'in':
+            vals['debet'] = vals['jumlah']
+        else:
+            vals['kredit'] = abs(vals['jumlah'])
 
         result = super(kas, self).create(vals)
         return result

@@ -5,11 +5,14 @@
         <menuitem name="Keuangan" id="siswa_ocb11.keuangan_menu"/>
         
         <!-- menu categories -->    
-        <menuitem name="Master" id="siswa_keu_ocb11.submenu_keuangan" parent="siswa_ocb11.keuangan_menu" sequence="1" />
-        <menuitem name="Keuangan" id="siswa_keu_ocb11.submenu_keuangan_keuangan" parent="siswa_ocb11.keuangan_menu" sequence="2" />
-        <menuitem name="Operations" id="siswa_keu_ocb11.submenu_keuangan_operations" parent="siswa_ocb11.keuangan_menu" sequence="3" />
-        <menuitem name="Reports" id="siswa_keu_ocb11.submenu_keuangan_reports" parent="siswa_ocb11.keuangan_menu" sequence="4" />
+        <menuitem name="Dashboard" id="siswa_keu_ocb11.menu_dashboard_keuangan" parent="siswa_ocb11.keuangan_menu" sequence="1" action="siswa_keu_ocb11.keuangan_dashboard_view_action" />
+        <menuitem name="Master" id="siswa_keu_ocb11.submenu_keuangan" parent="siswa_ocb11.keuangan_menu" sequence="2" />
+        <menuitem name="Keuangan" id="siswa_keu_ocb11.submenu_keuangan_keuangan" parent="siswa_ocb11.keuangan_menu" sequence="3" />
+        <menuitem name="Operations" id="siswa_keu_ocb11.submenu_keuangan_operations" parent="siswa_ocb11.keuangan_menu" sequence="4" />
+        <menuitem name="Reports" id="siswa_keu_ocb11.submenu_keuangan_reports" parent="siswa_ocb11.keuangan_menu" sequence="5" />
         
+        <menuitem name="Dashboard Manager" id="siswa_keu_ocb11.menu_dashboard_keuangan_manager" parent="siswa_ocb11.keuangan_menu" sequence="6" action="siswa_keu_ocb11.keuangan_dashboard_view_manager_action" />
+
         <!-- actions master -->    
         <menuitem name="Biaya Kesiswaan" id="siswa_keu_ocb11.menu_biaya" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_keu_ocb11.biaya_action_window" sequence="1"/>
         <menuitem name="Kategori Kas" id="siswa_keu_ocb11.menu_kategori_kas" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_keu_ocb11.kas_kategori_action_window" sequence="2"/>
