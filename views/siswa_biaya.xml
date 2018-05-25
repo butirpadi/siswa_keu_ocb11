@@ -44,7 +44,7 @@
           <field name="tahunajaran_id" />
           <field name="harga" sum="Total Tagihan" />
           <field name="amount_due" sum="Total Sisa Tagihan" />
-          <field name="state" />
+          <field name="state" string="Status" />
         </tree>
       </field>
     </record>
