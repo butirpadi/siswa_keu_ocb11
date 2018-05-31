@@ -26,7 +26,7 @@ class keuangan_dashboard(models.Model):
 
     def compute_keuangan(self):
         # get amount due
-        self.env.cr.execute("select sum(coalesce(amount_due,0)) from siswa_keu_ocb11_siswa_biaya where state = 'open'")
+        self.env.cr.execute("select sum(coalesce(amount_due,0)) from siswa_keu_ocb11_siswa_biaya where state = 'open' and active=True")
         total_kas = self.env.cr.fetchone()[0]        
         
         self.amount_due = total_kas

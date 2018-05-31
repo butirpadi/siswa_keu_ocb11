@@ -5,6 +5,7 @@ from odoo import models, fields, api, _
 class siswa_biaya(models.Model):
     _name = 'siswa_keu_ocb11.siswa_biaya'
 
+    active = fields.Boolean(default=True)
     name = fields.Char(string='Nama')
     siswa_id = fields.Many2one('res.partner', string='Siswa', ondelete='cascade')
     tahunajaran_id = fields.Many2one('siswa_ocb11.tahunajaran', string='Tahun Ajaran', required=True, ondelete='cascade')
