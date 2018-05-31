@@ -176,3 +176,6 @@ class wizard_report_pembayaran_siswa(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'view_id': self.env.ref('siswa_keu_ocb11.wizard_report_pembayaran_siswa_form_non_bulanan').id,
             }
+    
+    def action_print(self):
+        return self.env.ref('siswa_keu_ocb11.report_pembayaran_siswa_per_biaya_action').report_action(self)

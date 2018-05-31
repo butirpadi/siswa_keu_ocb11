@@ -9,11 +9,13 @@
         </record>
 
         <record id="default_dashboard_kas" model="siswa_keu_ocb11.keuangan_dashboard">
-            <field name="name">Saldo Kas</field>
+            <field name="name">Kas</field>
+            <field name="subtitle">Saldo Kas</field>
             <field name="color">11</field>
         </record>
 
-        <!-- <function model="siswa_keu_ocb11.keuangan_dashboard" name="compute_keuangan"/> -->
+        <!-- <function model="siswa_keu_ocb11.keuangan_dashboard" name="compute_keuangan"/>
+        <function model="siswa_keu_ocb11.keuangan_dashboard" name="compute_kas"/> -->
 
 
     </data>

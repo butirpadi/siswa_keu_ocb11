@@ -1,0 +1,204 @@
+<odoo>
+    <data>
+
+        <report
+            id="report_pembayaran_siswa_per_biaya_action"
+            model="siswa_keu_ocb11.wizard_report_pembayaran_siswa"
+            string="Report Pembayaran Siswa"
+            report_type="qweb-pdf"
+            name="siswa_keu_ocb11.report_wiz_pembayaran_siswa_per_biaya"
+            file="siswa_keu_ocb11.report_wiz_pembayaran_siswa_per_biaya"
+            attachment_use="False"
+            print_report_name="'Report_Pembayaran_%s' % (object.biaya_id.name+'_'+object.rombel_id.name)"
+            menu="False"
+            paperformat="siswa_ocb11.format_report_general"
+        />
+    
+         <template id="report_wiz_pembayaran_siswa_per_biaya">
+            <t t-call="web.html_container">            
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+                        <div class="page">
+                            <style>
+                                table.noborder,table.noborder tbody tr, table.noborder tr td{
+                                    border-left:none!important;
+                                    border-right:none!important;
+                                    border-bottom:none!important;
+                                    border-top:none!important;
+                                    background-color:transparent!important
+                                }
+                                table.noborder tbody tr, table.noborder tr td{
+                                    margin: 0!important;
+                                    padding: 0!important;
+                                    border:none!important;
+                                }
+                                
+                                tr.last, tr.last td{
+                                    border-bottom-width: thin!important;
+                                    border-bottom-style: solid!important;
+                                    border-bottom-color: black!important;
+                                    border-top-width: thin!important;
+                                    border-top-style: solid!important;
+                                    border-top-color: black!important;
+                                }
+                                
+                                table.table thead tr.head, table.table thead tr.head th{
+                                    border-bottom-width: thin!important;
+                                    border-bottom-style: solid!important;
+                                    border-bottom-color: black!important;
+                                    border-top-width: thin!important;
+                                    border-top-style: solid!important;
+                                    border-top-color: black!important;
+                                }
+
+                                <!-- table.table thead tr, table.table thead tr th{
+                                    border-bottom-width: thin!important;
+                                    border-bottom-style: solid!important;
+                                    border-bottom-color: black!important;
+                                    border-top-width: thin!important;
+                                    border-top-style: solid!important;
+                                    border-top-color: black!important;
+                                }
+
+                                .table tbody tr:last, .table tbody tr:last td{
+                                    border-bottom-style: solid!important;
+                                    border-bottom-color: black!important;
+                                    border-top-style: solid!important;
+                                    border-top-color: black!important;
+                                } -->
+                            </style>
+
+                            <div class="row" >
+                                <div class="col-xs-6" >
+                                    <strong><p style="margin-top:0;margin-bottom:0;text-transform:uppercase;font-weight:bolder;" t-esc="user.company_id.name"/></strong>
+                                    <p style="margin-top:0;margin-bottom:0;" ><span t-esc="user.company_id.street" ></span> <span t-esc="user.company_id.street2" ></span></p>
+                                    <p style="margin-top:0;margin-bottom:0;" ><span t-esc="user.company_id.city" ></span> <span t-esc="user.company_id.state_id.name" ></span> <span t-esc="user.company_id.zip" ></span></p>
+                                    <p style="margin-top:0;margin-bottom:0;" >Telp: <span t-esc="user.company_id.phone" ></span></p>
+                                </div>
+                                <div class="col-xs-6 text-right" >
+                                    <h3><strong>REPORT PEMBAYARAN SISWA</strong></h3>
+                                </div>
+                                <div class="col-xs-12" >  
+                                    <hr style="border-top: 4px double black;" />   
+                                    <table class="table noborder">
+                                        <tbody>
+                                            <tr>
+                                                <td class="col-xs-2" >
+                                                    <strong>Tahun Ajaran</strong>
+                                                </td>
+                                                <td style="width:10px;" class="text-left" >:</td>
+                                                <td class="col-xs-3" >
+                                                    <!-- <span t-field="o.tanggal" t-field-options='{"format": "dd MMMM y"}'/> -->
+                                                    <span t-field="o.tahunajaran_id" />
+                                                </td>
+                                                <td class="col-xs-3" >
+                                                    <strong>Rombongan Belajar</strong>
+                                                </td>
+                                                <td style="width:10px;" class="text-left" >:</td>
+                                                <td class="col-xs-3" >
+                                                    <span t-field="o.rombel_id" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    <strong>Kategori Biaya</strong>
+                                                </td>
+                                                <td  >:</td>
+                                                <td>
+                                                    <!-- <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%H:%M:%S')"/>    -->
+                                                    <span t-field="o.biaya_id" />
+                                                </td>
+                                                <td  >
+                                                    <strong>Tanggal Cetak</strong>
+                                                </td>
+                                                <td  >:</td>
+                                                <td>
+                                                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M:%S')"/>   
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                    
+                                    <br/><![CDATA[&nbsp;]]>
+                                    
+                                    <table class="table" >
+                                        <thead >
+                                            <tr class="head" >
+                                                <th class="text-right" >
+                                                    <strong>NO</strong>
+                                                </th>
+                                                <th class="text-left" >
+                                                    <strong>NO INDUK</strong>
+                                                </th>
+                                                <th class="text-left" >
+                                                    <strong>NAMA</strong>
+                                                </th>
+                                                <th class="text-right" >
+                                                    <strong>TOTAL TAGIHAN</strong>
+                                                </th>
+                                                <th class="text-right" >
+                                                    <strong>TOTAL BAYAR</strong>
+                                                </th>
+                                                <th class="text-right" >
+                                                    <strong>AMOUNT DUE</strong>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-set="row_num" t-value="1"/>
+                                            <t t-set="total_bayar" t-value="0"/>
+                                            <t t-set="total_harga" t-value="0"/>
+                                            <t t-set="total_amount_due" t-value="0"/>
+                                            <t t-foreach="o.pembayaran_siswa_ids" t-as="pay">
+                                                <tr>
+                                                    <td class="text-right" >
+                                                        <t t-esc="row_num" />
+                                                        <t t-set="row_num" t-value="row_num+1"/>
+                                                    </td>
+                                                    <td  >
+                                                        <span t-field="pay.induk" /> 
+                                                    </td>
+                                                    <td >
+                                                        <span t-field="pay.siswa_id" /> 
+                                                    </td>
+                                                    <td class="text-right" >
+                                                        <t t-esc="'{0:,.2f}'.format(pay.harga)" />
+                                                        <t t-set="total_harga" t-value="total_harga+pay.harga"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <t t-esc="'{0:,.2f}'.format(pay.total_bayar)" />
+                                                        <t t-set="total_bayar" t-value="total_bayar+pay.total_bayar"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <t t-esc="'{0:,.2f}'.format(pay.amount_due)" />
+                                                        <t t-set="total_amount_due" t-value="total_amount_due+pay.amount_due"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <tr class="last" >
+                                                <td colspan="3" class="text-center" >
+                                                    <strong>TOTAL</strong>
+                                                </td>
+                                                <td class="text-right" >
+                                                    <strong><t t-esc="'{0:,.2f}'.format(total_harga)" /></strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    <strong><t t-esc="'{0:,.2f}'.format(total_bayar)" /></strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    <strong><t t-esc="'{0:,.2f}'.format(total_amount_due)" /></strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>                
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    
+    </data>
+</odoo>

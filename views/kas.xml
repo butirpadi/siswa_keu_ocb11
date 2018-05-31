@@ -49,7 +49,7 @@
                         </group>
                         <group>
                             <field name="jumlah" attrs="{'readonly':[('state', '=', 'post')]}" />
-                            <field name="desc" required="1" attrs="{'readonly':[('state', '=', 'post')]}" />
+                            <field name="desc" attrs="{'readonly':[('state', '=', 'post')]}" />
                             <field name="pembayaran_id" attrs="{'invisible':[('is_related', '=', False)], 'readonly':[('state', '=', 'post')]}" />
                             <field name="is_related" invisible="1"/>
                         </group>

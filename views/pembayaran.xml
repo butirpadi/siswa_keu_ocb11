@@ -6,9 +6,10 @@
             <field name="priority" eval="16"/>
             <field name="arch" type="xml">
                 <search string="Pembayaran">
-                    <field name="name" string="Nama" filter_domain="['|','|',
+                    <field name="name" string="Nama" filter_domain="['|','|','|',
                                                     ('name','ilike',self),
                                                     ('siswa_id','ilike',self),
+                                                    ('induk','ilike',self),
                                                     ('tahunajaran_id','ilike',self),
                                                     ]"
                                                     />

@@ -42,6 +42,7 @@
         'report/report_kas.xml',
         'report/report_rekap_kas.xml',
         'report/report_bukti_pembayaran.xml',
+        'report/report_pembayaran_siswa_per_biaya.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode

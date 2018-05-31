@@ -2,7 +2,7 @@
     <data>
         <!-- Top menu item -->    
         <!-- <menuitem name="Master" id="siswa_ocb11.master_menu"/> -->
-        <menuitem name="Keuangan" id="siswa_ocb11.keuangan_menu"/>
+        <menuitem name="Keuangan" id="siswa_ocb11.keuangan_menu" sequence="2" />
         
         <!-- menu categories -->    
         <menuitem name="Dashboard" id="siswa_keu_ocb11.menu_dashboard_keuangan" parent="siswa_ocb11.keuangan_menu" sequence="1" action="siswa_keu_ocb11.keuangan_dashboard_view_action" />

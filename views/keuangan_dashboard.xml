@@ -30,34 +30,7 @@
                                             <div class="col-xs-12 text-right" >
                                                 <h3 style="font-size:24pt;" ><field name="amount_due" /></h3>
                                             </div>
-                                            <!-- <t t-foreach="[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]" t-as="rg">
-                                                <div class="col-xs-6">
-                                                    <a name="get_view_rombel_laki" type="object">
-                                                        <t t-esc="record.get_amount_per_ta(rg)" />
-                                                    </a>
-                                                </div>
-                                                <div class="col-xs-6 text-right">
-                                                    
-                                                </div>
-                                            </t> -->
-                                            <!-- <t t-foreach="record.get_amount_per_ta" t-as="am_ta">
-                                                <div class="col-xs-6">
-                                                    <a name="get_view_rombel_laki" type="object">
-                                                        <t t-esc="am_ta.tahunajaran_id.name" />
-                                                    </a>
-                                                </div>
-                                                <div class="col-xs-6 text-right">
-                                                    <t t-esc="am_ta.tahunajaran_id.amount_due" />
-                                                </div>
-                                            </t> -->
-                                            <!-- <div class="col-xs-6">
-                                                <a name="get_view_rombel_perempuan" type="object">
-                                                    Paid
-                                                </a>
-                                            </div>
-                                            <div class="col-xs-6  text-right">
-                                                <field name="paid_amount"/>
-                                            </div> -->
+                                            
                                         </div>
                                     </div>
                                     <div class="container o_kanban_card_manage_pane">
