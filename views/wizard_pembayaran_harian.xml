@@ -1,0 +1,66 @@
+<odoo>
+    <data>
+
+        <record id="siswa_keu_ocb11.wizard_pembayaran_harian_form" model="ir.ui.view">
+            <field name="name">siswa.keu.ocb11.wizard.pembayaran.harian.form</field>
+            <field name="model">siswa_keu_ocb11.wizard_pembayaran_harian</field>
+            <field name="arch" type="xml">
+                <form string="Report Pembayaran Harian" class="o_sale_order" create="false">
+                    <header attrs="{'invisible':[('name', '=', '0')]}" >
+                        <button name="action_print" string="Print" type="object" class="btn btn-default" />
+                    </header>
+                    <!-- <sheet> -->
+                        <div class="oe_title oe_read_only">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field
+                                    name="awal"
+                                    options="{'no_create_edit': True,'no_open':True,'no_edit':True,'no_create':True}"/>
+                                <field name="tipe" />
+                            </group>
+                            <group>
+                                <field
+                                    name="akhir"
+                                    options="{'no_create_edit': True,'no_open':True,'no_edit':True,'no_create':True}"/>
+                            </group>
+                        </group>
+                        <notebook attrs="{'invisible':[('name', '=', '0')]}">
+                            <page string="Data Pembayaran" >
+                                <field name="pembayaran_ids" >
+                                    <tree editable="bottom" create='false' edit="false" default_order="tanggal asc" >
+                                        <field name="tanggal"/>
+                                        <field name="name"/>
+                                        <field name="tahunajaran_id"/>
+                                        <field name="siswa_id"/>
+                                        <field name="induk"/>
+                                        <field name="rombel_id"/>
+                                        <field name="total" sum="Total" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    <!-- </sheet> -->
+                    <footer class="oe_edit_only" attrs="{'invisible':[('name', '!=', '0')]}" >
+                        <button name="action_save" type="object" string="Save" class="oe_highlight"/>
+
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            id="siswa_keu_ocb11.wizard_pembayaran_harian_action"
+            name="Report Pembayaran Harian"
+            src_model="siswa_keu_ocb11.pembayaran"
+            res_model="siswa_keu_ocb11.wizard_pembayaran_harian"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            />
+    </data>
+</odoo>
