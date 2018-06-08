@@ -33,6 +33,7 @@
         'views/wizard_keuangan_siswa.xml',
         'views/wizard_report_kas.xml',
         'views/wizard_report_pembayaran_siswa.xml',
+        'views/wizard_pembayaran_harian.xml',
         'views/pembayaran.xml',
         'views/res_siswa.xml',
         'views/kas_kategori.xml',
@@ -43,6 +44,8 @@
         'report/report_rekap_kas.xml',
         'report/report_bukti_pembayaran.xml',
         'report/report_pembayaran_siswa_per_biaya.xml',
+        'report/report_pembayaran_harian.xml',
+        'report/report_pembayaran_harian_detail.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode

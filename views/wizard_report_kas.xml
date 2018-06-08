@@ -16,6 +16,7 @@
                         <group>
                             <group>
                                 <field name="awal"  />                    
+                                <field name="tipe"  />                    
                             </group>
                             <group>
                                 <field name="akhir" /> 
@@ -38,7 +39,7 @@
             <field name="inherit_id" ref="siswa_keu_ocb11.wizard_report_keuangan_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='action_print_kas']" position="before">
-                    <button invisible="not context.get('show_button_print_rekap')" name="action_print_rekap" type="object" string="Print Rekap" class="oe_highlight"/>
+                    <button invisible="not context.get('show_button_print_rekap')" name="action_print_rekap" type="object" string="Print" class="oe_highlight"/>
                 </xpath>
                 <button name="action_print_kas" position="attributes">
                     <attribute name="invisible" >context.get('show_button_print_rekap')</attribute>

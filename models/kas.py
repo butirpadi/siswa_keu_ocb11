@@ -94,7 +94,9 @@ class kas(models.Model):
 
     @api.multi
     def unlink(self):
-        if not self.is_allow_to_delete:
-            raise exceptions.except_orm(_('Warning'), _('You can not delete this type of data.'))
+        for rec in self:
+            if not rec.is_allow_to_delete:
+                raise exceptions.except_orm(_('Warning'), _('You can not delete this type of data.'))
+                
         return super(kas, self).unlink()
 

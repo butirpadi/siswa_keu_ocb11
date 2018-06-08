@@ -20,9 +20,9 @@
             <field name="arch" type="xml">
                 <form string="Tahun Ajaran" class="o_sale_order" create="false" delete="false">
                     <header>
-                        <button name="validate_state" string="Validate"  type="object" states="draft" class="oe_edit_only btn btn-primary"/>
-                        <button name="recompute_biaya" string="Recompute" type="object" states="valid" class="oe_edit_only btn btn-primary"/>
-                        <button name="action_reset" string="Reset" type="object" states="valid" class="oe_edit_only " confirm="Anda akan menghapus data yang berkaitan dengan pengaturan biaya ini, Lanjutkan?"/>
+                        <!-- <button name="validate_state" string="Validate"  type="object" states="draft" class="oe_edit_only btn btn-primary"/> -->
+                        <!-- <button name="recompute_biaya" string="Recompute" type="object" states="valid" class="oe_edit_only btn btn-primary"/> -->
+                        <!-- <button name="action_reset" string="Reset" type="object" states="valid" class="oe_edit_only " confirm="Anda akan menghapus data yang berkaitan dengan pengaturan biaya ini, Lanjutkan?"/> -->
                         <field name="state" widget="statusbar" statusbar_visible="draft,valid"/>
                     </header>
                     <sheet>

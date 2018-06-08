@@ -14,11 +14,14 @@ class wizard_report_kas(models.TransientModel):
     saldo_begining = fields.Float('Saldo Begining', default=0)
     saldo_ending = fields.Float('Saldo Ending', default=0)
     saldo_current = fields.Float('Saldo Current', default=0)
+    tipe = fields.Selection([('sum', 'Summary'), ('det', 'Detail')], required=True, default='sum')
 
 
     def action_save(self):
         self.ensure_one()
-        # set kas_ids
+
+        # if self.tipe == 'det':
+            # set kas_ids
         kases = self.env['siswa_keu_ocb11.kas'].search([('tanggal','>=',self.awal),('tanggal','<=',self.akhir)])
         reg_kas = []
         for kas in kases:
@@ -37,14 +40,46 @@ class wizard_report_kas(models.TransientModel):
                 'saldo_begining' : saldo_begining,
                 'saldo_ending' : saldo_ending,
                 'saldo_current' : saldo_current,
-            })        
+            })     
+        # else : 
+        #     self.env.cr.execute("select distinct on (kas_kategori_id) \
+	    #         *, (select sum(cld.jumlah) from siswa_keu_ocb11_kas cld \
+		#         where kas_kategori_id = pr.kas_kategori_id \
+		#         and cld.tanggal >= '" + str(self.awal) + "' \
+		#         and cld.tanggal <= '" + str(self.akhir) + "' ) as total_jumlah \
+        #         from siswa_keu_ocb11_kas as pr \
+        #         where tanggal >= '" + str(self.awal) + "' and tanggal <= '" + str(self.akhir) + "'")
+        #     sum_kas = self.env.cr.fetchall()
+
+        #     pprint(sum_kas)
+
     
+    def get_summary_data(self):
+        self.env.cr.execute("select distinct on (kas_kategori_id) \
+	            kas_kategori_id, kat.name as kategori, (select sum(cld.jumlah) from siswa_keu_ocb11_kas cld \
+		        where kas_kategori_id = pr.kas_kategori_id \
+		        and cld.tanggal >= '" + str(self.awal) + "' \
+		        and cld.tanggal <= '" + str(self.akhir) + "' ) as total_jumlah \
+                from siswa_keu_ocb11_kas as pr \
+                join siswa_keu_ocb11_kas_kategori as kat on pr.kas_kategori_id = kat.id \
+                where tanggal >= '" + str(self.awal) + "' and tanggal <= '" + str(self.akhir) + "'")
+        sum_kas = self.env.cr.fetchall()
+        # print('Loop on get summary data')
+        # for sk in sum_kas:
+        #     pprint(sk['total_jumlah'])
+
+        return sum_kas
+
     def action_print_kas(self):
         self.action_save()
         return self.env.ref('siswa_keu_ocb11.report_kas_action').report_action(self)
     
     def action_print_rekap(self):
         self.action_save()
-        return self.env.ref('siswa_keu_ocb11.report_rekap_kas_action').report_action(self)
+
+        if self.tipe == 'sum' : 
+            return self.env.ref('siswa_keu_ocb11.report_rekap_kas_summary_action').report_action(self)
+        else:
+            return self.env.ref('siswa_keu_ocb11.report_rekap_kas_action').report_action(self)
         
 

@@ -25,8 +25,9 @@
         <menuitem name="Kas" id="siswa_keu_ocb11.menu_kas" parent="siswa_keu_ocb11.submenu_keuangan_operations" action="siswa_keu_ocb11.kas_action_window" sequence="3"/>
         <!-- actions reports -->            
         <menuitem name="Pembayaran Siswa" id="siswa_keu_ocb11.menu_report_pembayaran_siswa" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_pembayaran_siswa_action" sequence="1"/>
-        <menuitem name="Keuangan" id="siswa_keu_ocb11.menu_report_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_keuangan_action" sequence="1"/>
-        <menuitem name="Rekapitulasi" id="siswa_keu_ocb11.menu_rekapitulasi_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_rekap_kas_action" sequence="2"/>
+        <menuitem name="Pembayaran Harian" id="siswa_keu_ocb11.menu_report_pembayaran_harian" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_pembayaran_harian_action" sequence="2"/>
+        <!-- <menuitem name="Keuangan" id="siswa_keu_ocb11.menu_report_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_keuangan_action" sequence="3"/> -->
+        <menuitem name="Kas" id="siswa_keu_ocb11.menu_rekapitulasi_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_rekap_kas_action" sequence="4"/>
         <!-- <menuitem name="Rekapitulasi Kas" id="siswa_keu_ocb11.menu_report_rekap_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_kas" sequence="1"/> -->
         
     </data>
