@@ -112,17 +112,19 @@
                                                 </td>
                                             </tr>
                                             <tr style="border-bottom:thin solid black;" >
-                                                <td></td>
-                                                <td  ></td>
                                                 <td>
-                                                    
+                                                    <strong>Tahun Ajaran</strong>
+                                                </td>
+                                                <td  >:</td>
+                                                <td>
+                                                    <span t-field="o.tahunajaran_id" />
                                                 </td>
                                                 <td  >
                                                     <strong>Rombongan Belajar</strong>
                                                 </td>
                                                 <td  >:</td>
                                                 <td>
-                                                    <span t-field="o.siswa_id.active_rombel_id.name" />
+                                                    <span t-field="o.rombel_id.name" />
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -152,7 +154,7 @@
                                                         <span t-field="pay.biaya_id.tahunajaran_id.name" />
                                                     </td>
                                                     <td colspan="2" class="text-right" >
-                                                        <span t-field="pay.bayar" />
+                                                        <t t-esc="'{0:,.2f}'.format(pay.bayar)" />
                                                     </td>
                                                 </tr>
                                             </t>
@@ -160,9 +162,9 @@
                                                 <td colspan="5" style="padding-top:5px;padding-bottom:5px;" >
                                                     <strong>Terbilang:</strong>
                                                 </td>
-                                                <td style="border-bottom:solid thin black;padding-top:5px;padding-bottom:5px;" >
-                                                    <strong class="" >Total :</strong>
-                                                    <span t-field="o.total" class="pull-right" />
+                                                <td style="border-bottom:solid thin black;padding-top:5px;padding-bottom:5px;" class="text-right" >
+                                                    <strong style="padding-right:50px;" >Total :</strong>
+                                                    <t t-esc="'{0:,.2f}'.format(o.total)" />
                                                 </td>
                                             </tr>
                                             <tr>

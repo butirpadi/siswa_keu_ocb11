@@ -14,6 +14,7 @@ class pembayaran(models.Model):
     siswa_id = fields.Many2one('res.partner', string='Siswa', required=True)
     induk = fields.Char(string='No. Induk', related='siswa_id.induk')
     active_rombel_id = fields.Many2one('siswa_ocb11.rombel', related='siswa_id.active_rombel_id', string='Rombongan Belajar')
+    rombel_id = fields.Many2one('siswa_ocb11.rombel', string="Rombongan Belajar", compute="_compute_set_rombel", store=True)
     tanggal = fields.Date('Tanggal', required=True, default=datetime.today())
     total = fields.Float('Total', required=True, default=0.00)
     terbilang = fields.Char('Terbilang', compute="_compute_terbilang", store=True)
@@ -23,6 +24,19 @@ class pembayaran(models.Model):
     is_potong_tabungan = fields.Boolean('Potong Tabungan ?', default=False)
     tabungan_id = fields.Many2one('siswa_tab_ocb11.tabungan', string="Transaksi Tabungan")
     saldo_tabungan_siswa = fields.Float(related='siswa_id.saldo_tabungan')
+
+    @api.depends('siswa_id')
+    def _compute_set_rombel(self):
+        for rec in self:
+            # get rombel on this tahunajaran for this siswa
+            rombel = self.env['siswa_ocb11.rombel_siswa'].search([
+                ('tahunajaran_id', '=', rec.tahunajaran_id.id),
+                ('siswa_id', '=', rec.siswa_id.id),
+                ])
+            pprint(rombel)
+            for rb in rombel:
+                rec.rombel_id = rb.rombel_id.id
+            print('compute set rombel')
 
     @api.onchange('is_potong_tabungan')
     def potong_tabungan_change(self):
