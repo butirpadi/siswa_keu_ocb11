@@ -32,6 +32,7 @@
                 <field name="tahunajaran_id" context="{'active_test': False}"/>
                 <field name="siswa_id" />
                 <field name="induk" />
+                <field name="rombel_id" />
                 <field name="total"/>
                 <field name="state"/>
             </tree>
