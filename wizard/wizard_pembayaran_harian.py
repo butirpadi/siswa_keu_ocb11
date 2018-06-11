@@ -44,6 +44,8 @@ class wizard_pembayaran_harian(models.TransientModel):
             }
 
     def action_print(self):
+        self.action_save()
+        
         if self.tipe == 'sum' : 
             return self.env.ref('siswa_keu_ocb11.report_pembayaran_harian_action').report_action(self)
         else:

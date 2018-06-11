@@ -5,7 +5,7 @@
             id="report_pembayaran_harian_action"
             model="siswa_keu_ocb11.wizard_pembayaran_harian"
             string="Report Pembayaran Harian"
-            report_type="qweb-pdf"
+            report_type="qweb-html"
             name="siswa_keu_ocb11.report_wiz_pembayaran_harian"
             file="siswa_keu_ocb11.report_wiz_pembayaran_harian"
             attachment_use="False"
@@ -130,7 +130,7 @@
                                                 </tr>
                                             </t>
                                             <tr class="last" >
-                                                <td colspan="6" class="text-center" >
+                                                <td colspan="7" class="text-center" >
                                                     <strong>TOTAL</strong>
                                                 </td>
                                                 <td class="text-right">
