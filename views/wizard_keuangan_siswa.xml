@@ -14,12 +14,12 @@
                         </div>
                         <group>
                             <group>
-                                <field name="siswa_id" options="{'no_create_edit': True,'no_open':True}" />                    
+                                <field name="siswa_id" options="{'no_create':True, 'no_edit':True, 'no_create_edit': True, 'no_open':True}" />                    
                                 <field name="induk" readonly="1" />                    
-                                <field name="tahunajaran_id" options="{'no_create_edit': True,'no_open':True}" context="{'active_test': False}" invisible="1" />
+                                <field name="tahunajaran_id" options="{'no_create':True, 'no_edit':True, 'no_create_edit': True, 'no_open':True}" context="{'active_test': False}" invisible="1" />
                             </group>
                             <group>
-                                <field name="rombel_id" options="{'no_create_edit': True,'no_open':True}" />
+                                <field name="rombel_id" options="{'no_create':True, 'no_edit':True, 'no_create_edit': True, 'no_open':True}" />
                             </group>
                         </group>
                         <notebook attrs="{'invisible':[('name', '=', '0')]}" >

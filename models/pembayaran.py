@@ -16,7 +16,7 @@ class pembayaran(models.Model):
     active_rombel_id = fields.Many2one('siswa_ocb11.rombel', related='siswa_id.active_rombel_id', string='Rombongan Belajar')
     rombel_id = fields.Many2one('siswa_ocb11.rombel', string="Rombongan Belajar", compute="_compute_set_rombel", store=True)
     tanggal = fields.Date('Tanggal', required=True, default=datetime.today())
-    total = fields.Float('Total', required=True, default=0.00)
+    total = fields.Float('Total', required=True, default=0.00, compute="_compute_biaya")
     terbilang = fields.Char('Terbilang', compute="_compute_terbilang", store=True)
     pembayaran_lines = fields.One2many('siswa_keu_ocb11.pembayaran_line', inverse_name='pembayaran_id' , string='Biaya-biaya', require=True)
     satuan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh',
@@ -199,10 +199,20 @@ class pembayaran(models.Model):
         else:
             raise exceptions.except_orm(_('Warning'), _('There is no data to confirm, complete payment first!'))
 
-    @api.onchange('pembayaran_lines')
+    # @api.onchange('pembayaran_lines')
+    
+    @api.depends('pembayaran_lines.bayar')
     def _compute_biaya(self):
-        self.ensure_one()
-        self.total = sum(x.bayar for x in self.pembayaran_lines)
+        for rec in self:
+            # rec.total = sum(x.bayar for x in rec.pembayaran_lines)
+            total_bayar = 0.0
+            for pb in rec.pembayaran_lines:
+                total_bayar += pb.bayar
+                
+            rec.update({
+                'total' : total_bayar
+            })
+            # print('Inside _compute_biaya')
     
     def reset_pembayaran_lines(self):
         self.ensure_one()
