@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <tree create="false" delete="false" >
                     <field name="name" string="Data" />
-                    <field name="state" />
+                    <field name="state" invisible="1" />
                     <field name="tahunajaran_id" invisible="1"/>
                     <field name="jenjang_id" invisible="1" />
                 </tree>
@@ -38,7 +38,7 @@
                             <page name="page_biaya" string="Biaya-biaya" >
                                 <field name="biayas"   >
                                     <tree editable="bottom">
-                                        <field name="biaya_id" />
+                                        <field name="biaya_id" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" />
                                         <field name="harga" />
                                         <field name="harga_alt" attrs="{'readonly':[('is_different_by_gender', '=', False)]}" />
                                         <field name="is_different_by_gender" invisible="1" />

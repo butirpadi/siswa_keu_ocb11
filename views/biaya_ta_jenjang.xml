@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="biaya_ta_jenjang_form_view" model="ir.ui.view">
+            <field name="name">biaya.ta.jenjang.form.view</field>
+            <field name="model">siswa_keu_ocb11.biaya_ta_jenjang</field>
+            <field name="arch" type="xml">
+                <form string="Biaya" class="o_sale_order">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="tahunajaran_jenjang_id" />
+                                <field name="biaya_id" />
+                                <field name="is_different_by_gender" />
+                            </group>
+                            <group>
+                                <field name="harga" />
+                                <field name="harga_alt" />
+                                <button type="object" name="recompute_biaya_ta_jenjang" string="Recompute" confirm="Are you sure..?" />
+                                <button type="object" name="reset_biaya_ta_jenjang" string="Reset" confirm="Are you sure..?" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

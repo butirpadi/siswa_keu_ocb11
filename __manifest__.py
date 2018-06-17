@@ -39,6 +39,7 @@
         'views/kas_kategori.xml',
         'views/kas.xml',
         'views/keuangan_dashboard.xml',
+        'views/biaya_ta_jenjang.xml',
         'report/report_kas_template.xml',
         'report/report_kas.xml',
         'report/report_rekap_kas.xml',
