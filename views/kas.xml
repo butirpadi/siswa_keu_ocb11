@@ -33,7 +33,7 @@
             <form string="kas" class="o_sale_order">
                 <header>
                     <button name="action_confirm" type="object" string="Confirm" attrs="{'invisible':['|',('state', '=', 'post'),('name', '=', 'New')]}" class="btn btn-primary" />
-                    <button name="action_cancel" type="object" string="Cancel" attrs="{'invisible':['|','|',('state', '=', 'draft'),('name', '=', 'New'),('is_related', '=', True)]}" class="btn btn-default" />
+                    <button name="action_cancel" type="object" string="Cancel" attrs="{'invisible':['|','|',('state', '=', 'draft'),('name', '=', 'New'),('is_related', '=', True)]}" class="btn btn-default" groups="siswa_keu_ocb11.siswa_keu_group_admin" />
                     <field name="state" widget="statusbar" statusbar_visible="draft,post"/>
                 </header>
                 <sheet>

@@ -16,7 +16,7 @@
                                 <field name="harga" />
                                 <field name="harga_alt" />
                                 <button type="object" name="recompute_biaya_ta_jenjang" string="Recompute" confirm="Are you sure..?" />
-                                <button type="object" name="reset_biaya_ta_jenjang" string="Reset" confirm="Are you sure..?" />
+                                <button type="object" name="reset_biaya_ta_jenjang" string="Reset" confirm="Are you sure..?" groups="siswa_keu_ocb11.siswa_keu_group_admin" />
                             </group>
                         </group>
                     </sheet>
