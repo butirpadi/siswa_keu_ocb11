@@ -175,3 +175,10 @@ class tahunajaran_jenjang(models.Model):
         #     slf.write({
         #         'state' : 'valid'
         #     })
+
+    @api.multi
+    def write(self, vals):
+        print('inside write tahunajaran jenjang')
+        self.ensure_one()
+        res = super(tahunajaran_jenjang, self).write(vals)        
+        return res

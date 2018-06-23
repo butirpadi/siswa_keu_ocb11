@@ -106,3 +106,18 @@ class biaya_ta_jenjang(models.Model):
         for dash in dash_keuangan:
             dash.compute_keuangan()  
         print('Recompute Keuangan Dashboard done')
+
+    @api.model
+    def create(self, vals):
+        if not vals['is_different_by_gender']:
+            vals['harga_alt'] = vals['harga']        
+        result = super(biaya_ta_jenjang, self).create(vals)
+        return result
+
+    @api.multi
+    def write(self, vals):
+        self.ensure_one()
+        if not vals['is_different_by_gender']:
+            vals['harga_alt'] = vals['harga']
+        res = super(biaya_ta_jenjang, self).write(vals)        
+        return res
