@@ -117,7 +117,16 @@ class biaya_ta_jenjang(models.Model):
     @api.multi
     def write(self, vals):
         self.ensure_one()
-        if not vals['is_different_by_gender']:
+
+        # print('isisnya : ')
+        # pprint(vals)
+
+        # # get biaya
+        # # biaya_ta_jenjang = self.env['siswa_keu_ocb11.biaya_ta_jenjang'].search([('id','=',vals['id'])])
+        # biaya = self.env['siswa_keu_ocb11.biaya'].search([('id','=',vals['biaya_id'])])
+
+        # if not biaya[0].is_different_by_gender: #vals['is_different_by_gender']:
+        if not self.biaya_id.is_different_by_gender: #vals['is_different_by_gender']:
             vals['harga_alt'] = vals['harga']
         res = super(biaya_ta_jenjang, self).write(vals)        
         return res
