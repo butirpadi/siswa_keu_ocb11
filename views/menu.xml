@@ -11,7 +11,13 @@
         <menuitem name="Operations" id="siswa_keu_ocb11.submenu_keuangan_operations" parent="siswa_ocb11.keuangan_menu" sequence="4" />
         <menuitem name="Reports" id="siswa_keu_ocb11.submenu_keuangan_reports" parent="siswa_ocb11.keuangan_menu" sequence="5" />
         
-        <menuitem name="Dashboard Manager" id="siswa_keu_ocb11.menu_dashboard_keuangan_manager" parent="siswa_ocb11.keuangan_menu" sequence="6" action="siswa_keu_ocb11.keuangan_dashboard_view_manager_action" groups="siswa_keu_ocb11.siswa_keu_group_admin" />
+        <menuitem name="Configurations" id="siswa_keu_ocb11.menu_configuration" parent="siswa_ocb11.keuangan_menu" 
+            sequence="6" groups="siswa_keu_ocb11.siswa_keu_group_admin" />
+
+        <menuitem name="Dashboard Manager" id="siswa_keu_ocb11.menu_dashboard_keuangan_manager" 
+            parent="siswa_keu_ocb11.menu_configuration" sequence="61" 
+            action="siswa_keu_ocb11.keuangan_dashboard_view_manager_action" />
+        
 
         <!-- actions master -->    
         <menuitem name="Biaya Kesiswaan" id="siswa_keu_ocb11.menu_biaya" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_keu_ocb11.biaya_action_window" sequence="1"/>

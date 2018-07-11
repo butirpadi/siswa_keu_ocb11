@@ -81,8 +81,7 @@
                     </group>
                     <group>
                         <field name="harga" />                        
-                        <field name="amount_due" readonly="1"/>             
-
+                        <field name="amount_due" readonly="1"/>    
                     </group>
                   </group>
               </sheet>
