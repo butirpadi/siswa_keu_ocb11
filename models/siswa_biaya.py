@@ -29,3 +29,55 @@ class siswa_biaya(models.Model):
     state = fields.Selection([('open', 'Open'), ('paid', 'Paid')], string='Paid', required=True, default='open')
     active_rombel_id = fields.Many2one('siswa_ocb11.rombel', related='siswa_id.active_rombel_id', string='Rombongan Belajar')
     jenjang_id = fields.Many2one('siswa_ocb11.jenjang')
+
+    # @api.depends('biaya_id')
+    # def biaya_id_onchange(self):
+    #     # get harga
+
+    def generate_default(self):
+        # get jenjang
+        rombel = self.siswa_id.rombels.search([('tahunajaran_id','=',self.tahunajaran_id.id)]).rombel_id
+        self.jenjang_id = rombel.jenjang_id.id
+
+        tahunajaran_jenjang = self.env['siswa_ocb11.tahunajaran_jenjang'].search([
+                ('tahunajaran_id', '=', self.tahunajaran_id.id),
+                ('jenjang_id', '=', self.jenjang_id.id),
+            ])
+        biaya_ta_jenjang = tahunajaran_jenjang.biayas.search([
+                ('biaya_id', '=', self.biaya_id.id)
+            ])
+        # print('harga : ' + str(biaya_ta_jenjang.harga))
+        self.harga = biaya_ta_jenjang.harga
+        self.amount_due = biaya_ta_jenjang.harga
+
+        if self.biaya_id.is_different_by_gender:
+            if self.siswa_id.jenis_kelamin == 'perempuan':
+                self.harga = biaya_ta_jenjang.harga_alt
+                self.amount_due = biaya_ta_jenjang.harga_alt
+
+        if self.biaya_id.is_bulanan:
+            self.name = self.biaya_id.name + ' ' + dict(self._fields['bulan'].selection).get(self.bulan)
+        else:
+            self.name = self.biaya_id.name
+            self.bulan = None
+        
+        # compute siswa biaya & amount
+        self.siswa_id._compute_total_biaya()
+    
+    @api.multi
+    def unlink(self):
+    #     self.ensure_one()
+        siswaId = 0
+        for rec in self:
+            siswaId = rec.siswa_id.id
+    #     print('Siswa ID To Compute : ' + str(siswa_id))
+
+        res =  super(siswa_biaya, self).unlink()
+
+        # recompute total biaya siswa
+        siswa = self.env['res.partner'].search([('id','=',siswaId)])
+    #     # print('Recompute Total Biaya Siswa')
+        for rec in siswa:
+            rec._compute_total_biaya()
+
+        return res

@@ -42,11 +42,28 @@
         <tree create="false" edit="false" >
           <field name="name"/>
           <field name="tahunajaran_id" />
+          <field name="jenjang_id" />
           <field name="harga" sum="Total Tagihan" />
           <field name="amount_due" sum="Total Sisa Tagihan" />
           <field name="state" string="Status" />
         </tree>
       </field>
+    </record>
+
+    <record model="ir.ui.view" id="siswa_keu_ocb11.biaya_persiswa_list_root">
+        <field name="name">siswa_keu_ocb11_biaya_persiswa_list_root</field>
+        <field name="model">siswa_keu_ocb11.siswa_biaya</field>
+        <field name="priority" eval="18"/>
+        <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="tahunajaran_id" />
+            <field name="jenjang_id" />
+            <field name="harga" sum="Total Tagihan" />
+            <field name="amount_due" sum="Total Sisa Tagihan" />
+            <field name="state" string="Status" />
+        </tree>
+        </field>
     </record>
 
     <record model="ir.ui.view" id="siswa_keu_ocb11.biaya_persiswa_with_create_list">
@@ -73,18 +90,46 @@
               <sheet>
                   <group>
                     <group>
-                        <field name="tahunajaran_id" />
-                        <field name="biaya_id" />                        
-                        <field name="name" />                        
-                        <field name="bulan" />                        
-                        <field name="siswa_id" invisible="1" />                        
+                        <field name="tahunajaran_id" context="{'active_test': False}" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" />
+                        <field name="biaya_id" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" />
+                        <field name="name" />
+                        <field name="bulan" />
+                        <field name="siswa_id" invisible="1" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" />
                     </group>
                     <group>
-                        <field name="harga" />                        
+                        <field name="harga" />
                         <field name="amount_due" readonly="1"/>    
                     </group>
                   </group>
               </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="siswa_keu_ocb11.siswa_biaya_form_view_root" model="ir.ui.view">
+        <field name="name">root_siswa_biaya.ocb11.form.view</field>
+        <field name="model">siswa_keu_ocb11.siswa_biaya</field>
+        <field name="arch" type="xml">
+            <form string="siswa_biaya" class="o_sale_order">
+                <header>
+                    <button type="object" name="generate_default" class="btn btn-default" string="Generate Default" />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="siswa_id" invisible="1" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" />
+                            <field name="tahunajaran_id" context="{'active_test': False}" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" />
+                            <field name="biaya_id" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" />
+                            <field name="jenjang_id" invisible="1" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" />
+                            <field name="bulan" />
+                            <field name="name" />
+                        </group>
+                        <group>
+                            <field name="harga" />
+                            <field name="amount_due" />    
+                        </group>
+                    </group>
+                </sheet>
             </form>
         </field>
     </record>
@@ -96,10 +141,21 @@
       <field name="view_mode">tree</field>
       <field name="domain">[('siswa_id','=',active_id)]</field>
       <field name="context">{'default_siswa_id':active_id}</field>
-      <!-- <field name="tree_view_id" ref="siswa_keu_ocb11.biaya_persiswa_with_create_list"/>      -->
-      <!-- <field name="form_view_id" ref="siswa_keu_ocb11.siswa_biaya_form_view"/>      -->
       <field name="view_id" ref="siswa_keu_ocb11.biaya_persiswa_list"/>      
       <field name="search_view_id" ref="siswa_keu_ocb11.view_biaya_persiswa_filter"/>      
+    </record>
+    
+    <record model="ir.actions.act_window" id="siswa_keu_ocb11.biaya_persiswa_root_window_action">
+      <field name="name">Manage Tagihan Siswa</field>
+      <field name="res_model">siswa_keu_ocb11.siswa_biaya</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('siswa_id','=',active_id)]</field>
+      <field name="context">{'default_siswa_id':active_id}</field>
+      <!-- <field name="form_view_id" ref="siswa_keu_ocb11.biaya_persiswa_list_root"/>       -->
+      <field name="tree_view_id" ref="siswa_keu_ocb11.biaya_persiswa_list_root"/>      
+      <field name="form_view_id" ref="siswa_keu_ocb11.siswa_biaya_form_view_root"/>      
+      <!-- <field name="search_view_id" ref="siswa_keu_ocb11.view_biaya_persiswa_filter"/>       -->
     </record>
 
     <record model="ir.actions.act_window" id="siswa_keu_ocb11.data_keuangan_siswa_action">
@@ -128,8 +184,8 @@
               <sheet>
                   <group>
                     <group>
-                        <field name="name" />
-                        <field name="is_bulanan" />
+<field name="name" />
+<field name="is_bulanan" />
                     </group>
                   </group>
               </sheet>
