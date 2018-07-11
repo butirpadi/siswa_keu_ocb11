@@ -48,7 +48,7 @@
                         attrs="{'invisible':[('induk', '=', 'New')]}" >
                         <div class="o_field_widget o_stat_info">
                             <span class="o_stat_value">
-                                <field name="amount_due_biaya"/>
+                                <field name="amount_due_biaya" readonly="1" />
                             </span>
                             <span class="o_stat_text">Tagihan</span>
                         </div>
@@ -61,7 +61,7 @@
                         attrs="{'invisible':[('induk', '=', 'New')]}" >
                         <div class="o_field_widget o_stat_info">
                             <span class="o_stat_value">
-                                <field name="amount_due_biaya"/>
+                                <field name="amount_due_biaya" readonly="1" />
                             </span>
                             <span class="o_stat_text">Manage Tagihan</span>
                         </div>
