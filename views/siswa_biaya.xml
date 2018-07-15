@@ -53,7 +53,7 @@
     <record model="ir.ui.view" id="siswa_keu_ocb11.biaya_persiswa_list_root">
         <field name="name">siswa_keu_ocb11_biaya_persiswa_list_root</field>
         <field name="model">siswa_keu_ocb11.siswa_biaya</field>
-        <field name="priority" eval="18"/>
+        <field name="priority" eval="19"/>
         <field name="arch" type="xml">
         <tree>
             <field name="name"/>

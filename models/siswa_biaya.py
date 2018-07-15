@@ -35,8 +35,13 @@ class siswa_biaya(models.Model):
     #     # get harga
 
     def generate_default(self):
+        self.ensure_one()
         # get jenjang
-        rombel = self.siswa_id.rombels.search([('tahunajaran_id','=',self.tahunajaran_id.id)]).rombel_id
+        # rombel = self.siswa_id.rombels.search([('tahunajaran_id','=',self.tahunajaran_id.id)]).rombel_id
+        rombel = self.env['siswa_ocb11.rombel_siswa'].search([
+                ('siswa_id','=',self.siswa_id.id),
+                ('tahunajaran_id','=',self.tahunajaran_id.id)
+            ]).rombel_id
         self.jenjang_id = rombel.jenjang_id.id
 
         tahunajaran_jenjang = self.env['siswa_ocb11.tahunajaran_jenjang'].search([
@@ -44,9 +49,10 @@ class siswa_biaya(models.Model):
                 ('jenjang_id', '=', self.jenjang_id.id),
             ])
         biaya_ta_jenjang = tahunajaran_jenjang.biayas.search([
-                ('biaya_id', '=', self.biaya_id.id)
+                ('biaya_id', '=', self.biaya_id.id),
+                ('tahunajaran_jenjang_id', '=', tahunajaran_jenjang.id),
             ])
-        # print('harga : ' + str(biaya_ta_jenjang.harga))
+
         self.harga = biaya_ta_jenjang.harga
         self.amount_due = biaya_ta_jenjang.harga
 
@@ -76,8 +82,35 @@ class siswa_biaya(models.Model):
 
         # recompute total biaya siswa
         siswa = self.env['res.partner'].search([('id','=',siswaId)])
-    #     # print('Recompute Total Biaya Siswa')
+    
         for rec in siswa:
             rec._compute_total_biaya()
 
+        # update dashboard keuangan
+        self.recompute_dashboard_keuangan()
+
         return res
+    
+    @api.multi
+    def write(self, vals):
+        result = super(siswa_biaya, self).write(vals)
+
+        # update dashboard keuangan
+        self.recompute_dashboard_keuangan()
+
+        return result
+    
+    @api.model
+    def create(self, vals):
+        result = super(siswa_biaya, self).create(vals)
+
+        # update dashboard keuangan
+        self.recompute_dashboard_keuangan()
+
+        return result
+    
+    def recompute_dashboard_keuangan(self):
+        dash_keuangan_id = self.env['ir.model.data'].search([('name','=','default_dashboard_pembayaran')]).res_id
+        dash_keuangan = self.env['siswa_keu_ocb11.keuangan_dashboard'].search([('id','=',dash_keuangan_id)])
+        for dash in dash_keuangan:
+            dash.compute_keuangan()  
