@@ -7,7 +7,12 @@
       <field name="priority" eval="18"/>
       <field name="arch" type="xml">
           <search string="Search Siswa Biaya">
-              <field name="siswa_id" string="Nama" filter_domain="[('siswa_id','ilike',self)]"/>
+              <field name="siswa_id" string="Nama" filter_domain="['|','|','|','|',('siswa_id','ilike',self),
+                                                                        ('name','ilike',self),
+                                                                        ('biaya_id','ilike',self),
+                                                                        ('tahunajaran_id','ilike',self),
+                                                                        ('bulan','ilike',self),
+                                                                        ]"/>
               <group expand="0" string="Group By">
                   <filter name="group_state" string="State" domain="[]" context="{'group_by':'state'}"/>
                   <filter name="group_tahunajaran" string="Tahun Ajaran" domain="[]" context="{'group_by':'tahunajaran_id'}"/>
