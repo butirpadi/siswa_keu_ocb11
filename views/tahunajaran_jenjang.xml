@@ -36,9 +36,9 @@
                         </group>
                         <notebook>
                             <page name="page_biaya" string="Biaya-biaya" >
-                                <field name="biayas"   >
+                                <field name="biayas" >
                                     <tree editable="bottom">
-                                        <field name="biaya_id" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" />
+                                        <field name="biaya_id" options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" domain="[('is_optional','=',False)]" />
                                         <field name="harga" sum="Total Harga" />
                                         <field name="harga_alt" attrs="{'readonly':[('is_different_by_gender', '=', False)]}" sum="Total Harga (Alt)" />
                                         <field name="is_different_by_gender" invisible="1" />
