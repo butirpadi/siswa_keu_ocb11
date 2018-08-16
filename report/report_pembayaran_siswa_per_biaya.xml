@@ -5,11 +5,11 @@
             id="report_pembayaran_siswa_per_biaya_action"
             model="siswa_keu_ocb11.wizard_report_pembayaran_siswa"
             string="Report Pembayaran Siswa"
-            report_type="qweb-pdf"
+            report_type="qweb-html"
             name="siswa_keu_ocb11.report_wiz_pembayaran_siswa_per_biaya"
             file="siswa_keu_ocb11.report_wiz_pembayaran_siswa_per_biaya"
             attachment_use="False"
-            print_report_name="'Report_Pembayaran_%s' % (object.biaya_id.name+'_'+object.rombel_id.name)"
+            print_report_name="'Report_Pembayaran_%s' % (object.biaya_id.name+'_'+object.tahunajaran_id.name)"
             menu="False"
             paperformat="siswa_ocb11.format_report_general"
         />
@@ -49,144 +49,138 @@
                                     border-top-width: thin!important;
                                     border-top-style: solid!important;
                                     border-top-color: black!important;
+                                    
                                 }
 
-                                <!-- table.table thead tr, table.table thead tr th{
-                                    border-bottom-width: thin!important;
-                                    border-bottom-style: solid!important;
-                                    border-bottom-color: black!important;
-                                    border-top-width: thin!important;
-                                    border-top-style: solid!important;
-                                    border-top-color: black!important;
+                                table.table-data thead tr th{
+                                    border-top: thin solid black !important;
+                                    border-bottom: thin solid black !important;
+                                    padding-top:5px !important;
+                                    padding-bottom:5px !important;
                                 }
 
-                                .table tbody tr:last, .table tbody tr:last td{
-                                    border-bottom-style: solid!important;
-                                    border-bottom-color: black!important;
-                                    border-top-style: solid!important;
-                                    border-top-color: black!important;
-                                } -->
+                                table tbody tr.table-row-total td{
+                                    border-bottom: thin solid black !important;
+                                }
+
                             </style>
 
                             <div class="row" >
-                                <div class="col-xs-6" >
-                                    <strong><p style="margin-top:0;margin-bottom:0;text-transform:uppercase;font-weight:bolder;" t-esc="user.company_id.name"/></strong>
-                                    <p style="margin-top:0;margin-bottom:0;" ><span t-esc="user.company_id.street" ></span> <span t-esc="user.company_id.street2" ></span></p>
-                                    <p style="margin-top:0;margin-bottom:0;" ><span t-esc="user.company_id.city" ></span> <span t-esc="user.company_id.state_id.name" ></span> <span t-esc="user.company_id.zip" ></span></p>
-                                    <p style="margin-top:0;margin-bottom:0;" >Telp: <span t-esc="user.company_id.phone" ></span></p>
-                                </div>
-                                <div class="col-xs-6 text-right" >
-                                    <h3><strong>REPORT PEMBAYARAN SISWA</strong></h3>
-                                </div>
                                 <div class="col-xs-12" >  
-                                    <hr style="border-top: 4px double black;" />   
-                                    <table class="table noborder">
-                                        <tbody>
-                                            <tr>
-                                                <td class="col-xs-2" >
-                                                    <strong>Tahun Ajaran</strong>
-                                                </td>
-                                                <td style="width:10px;" class="text-left" >:</td>
-                                                <td class="col-xs-3" >
-                                                    <!-- <span t-field="o.tanggal" t-field-options='{"format": "dd MMMM y"}'/> -->
-                                                    <span t-field="o.tahunajaran_id" />
-                                                </td>
-                                                <td class="col-xs-3" >
-                                                    <strong>Rombongan Belajar</strong>
-                                                </td>
-                                                <td style="width:10px;" class="text-left" >:</td>
-                                                <td class="col-xs-3" >
-                                                    <span t-field="o.rombel_id" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td >
-                                                    <strong>Kategori Biaya</strong>
-                                                </td>
-                                                <td  >:</td>
-                                                <td>
-                                                    <!-- <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%H:%M:%S')"/>    -->
-                                                    <span t-field="o.biaya_id" />
-                                                </td>
-                                                <td  >
-                                                    <strong>Tanggal Cetak</strong>
-                                                </td>
-                                                <td  >:</td>
-                                                <td>
-                                                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M:%S')"/>   
-                                                </td>
-                                            </tr>
-                                            
-                                        </tbody>
-                                    </table>
+                                    <div class="text-center" >
+                                        <h3><strong>REPORT PEMBAYARAN SISWA</strong></h3>
+                                        TAHUN AJARAN <span t-field="o.tahunajaran_id" />
+                                    </div>
                                     
                                     <br/><![CDATA[&nbsp;]]>
                                     
-                                    <table class="table" >
+                                    <table class="table table-condensed" >
                                         <thead >
                                             <tr class="head" >
-                                                <th class="text-right" >
-                                                    <strong>NO</strong>
+                                                <th class="text-center" >
+                                                    <strong>No</strong>
                                                 </th>
                                                 <th class="text-left" >
-                                                    <strong>NO INDUK</strong>
+                                                    <strong>No. Induk</strong>
                                                 </th>
                                                 <th class="text-left" >
-                                                    <strong>NAMA</strong>
+                                                    <strong>Nama</strong>
                                                 </th>
                                                 <th class="text-right" >
-                                                    <strong>TOTAL TAGIHAN</strong>
+                                                    <strong>Total Tagihan</strong>
                                                 </th>
                                                 <th class="text-right" >
-                                                    <strong>TOTAL BAYAR</strong>
+                                                    <strong>Total Bayar</strong>
                                                 </th>
                                                 <th class="text-right" >
-                                                    <strong>AMOUNT DUE</strong>
+                                                    <strong>Amount Due</strong>
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <t t-set="row_num" t-value="1"/>
-                                            <t t-set="total_bayar" t-value="0"/>
-                                            <t t-set="total_harga" t-value="0"/>
-                                            <t t-set="total_amount_due" t-value="0"/>
-                                            <t t-foreach="o.pembayaran_siswa_ids" t-as="pay">
-                                                <tr>
-                                                    <td class="text-right" >
-                                                        <t t-esc="row_num" />
-                                                        <t t-set="row_num" t-value="row_num+1"/>
-                                                    </td>
-                                                    <td  >
-                                                        <span t-field="pay.induk" /> 
-                                                    </td>
-                                                    <td >
-                                                        <span t-field="pay.siswa_id" /> 
-                                                    </td>
-                                                    <td class="text-right" >
-                                                        <t t-esc="'{0:,.2f}'.format(pay.harga)" />
-                                                        <t t-set="total_harga" t-value="total_harga+pay.harga"/>
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <t t-esc="'{0:,.2f}'.format(pay.total_bayar)" />
-                                                        <t t-set="total_bayar" t-value="total_bayar+pay.total_bayar"/>
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <t t-esc="'{0:,.2f}'.format(pay.amount_due)" />
-                                                        <t t-set="total_amount_due" t-value="total_amount_due+pay.amount_due"/>
-                                                    </td>
-                                                </tr>
+                                            <t t-if="o.rombel_ids">
+                                                
+                                                <t t-set="total_bayar" t-value="0"/>
+                                                <t t-set="total_harga" t-value="0"/>
+                                                <t t-set="total_amount_due" t-value="0"/>
+
+                                                <t t-foreach="o.rombel_ids" t-as="rb" >
+                                                    <tr>
+                                                        <td colspan="6" >
+                                                            <strong>Rombel : <t t-esc="rb.name" /></strong>
+                                                        </td>
+                                                    </tr>
+
+                                                    <t t-set="row_num" t-value="1"/>
+                                                    <t t-set="sum_tagihan_per_rombel" t-value="0"/>
+                                                    <t t-set="sum_bayar_per_rombel" t-value="0"/>
+                                                    <t t-set="sum_amount_due_per_rombel" t-value="0"/>
+                                                    <t t-foreach="o.pembayaran_siswa_ids" t-as="pay" >
+                                                        <t t-if="pay.rombel_id.id == rb.id">
+                                                            <tr>
+                                                                <td class="text-center" >
+                                                                    <t t-esc="row_num" />
+                                                                    <t t-set="row_num" t-value="row_num+1" />
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <span t-field="pay.induk" />
+                                                                </td>
+                                                                <td class="text-left" >
+                                                                    <span t-field="pay.siswa_id" />                                                            
+                                                                </td>
+                                                                <td class="text-right" >
+                                                                    <t t-esc="'{0:,.2f}'.format(pay.harga)" />
+                                                                </td>
+                                                                <td class="text-right" >
+                                                                    <t t-esc="'{0:,.2f}'.format(pay.total_bayar)" />
+                                                                </td>
+                                                                <td class="text-right" >
+                                                                    <t t-esc="'{0:,.2f}'.format(pay.amount_due)" />
+                                                                </td>
+                                                            </tr>   
+
+                                                            <t t-set="sum_tagihan_per_rombel" t-value="sum_tagihan_per_rombel+pay.harga"/>
+                                                            <t t-set="sum_bayar_per_rombel" t-value="sum_bayar_per_rombel+pay.total_bayar"/>
+                                                            <t t-set="sum_amount_due_per_rombel" t-value="sum_amount_due_per_rombel+pay.amount_due"/>
+
+                                                        </t>                                                                                                  
+                                                        
+                                                    </t>
+
+                                                    <t t-set="total_harga" t-value="total_harga+sum_tagihan_per_rombel"/>
+                                                    <t t-set="total_bayar" t-value="total_bayar+sum_bayar_per_rombel"/>
+                                                    <t t-set="total_amount_due" t-value="total_amount_due+sum_amount_due_per_rombel"/>
+                                                    
+                                                    <tr class="table-row-total" >
+                                                        <td colspan="3" class="text-right" >
+                                                            <strong>TOTAL <t t-esc="rb.name" /></strong>
+                                                        </td>
+                                                        <td class="text-right" >
+                                                            <strong><t t-esc="'{0:,.2f}'.format(sum_tagihan_per_rombel)" /></strong>
+                                                        </td>
+                                                        <td class="text-right" >
+                                                            <strong><t t-esc="'{0:,.2f}'.format(sum_bayar_per_rombel)" /></strong>
+                                                        </td>
+                                                        <td class="text-right" >
+                                                            <strong><t t-esc="'{0:,.2f}'.format(sum_amount_due_per_rombel)" /></strong>
+                                                        </td>
+                                                    </tr>
+
+                                                </t>
                                             </t>
-                                            <tr class="last" >
-                                                <td colspan="3" class="text-center" >
+
+                                            <!-- Grand Total -->
+                                            <tr class="table-row-total" >
+                                                <td colspan="3" class="text-right" >
                                                     <strong>TOTAL</strong>
                                                 </td>
                                                 <td class="text-right" >
                                                     <strong><t t-esc="'{0:,.2f}'.format(total_harga)" /></strong>
                                                 </td>
-                                                <td class="text-right">
+                                                <td class="text-right" >
                                                     <strong><t t-esc="'{0:,.2f}'.format(total_bayar)" /></strong>
                                                 </td>
-                                                <td class="text-right">
+                                                <td class="text-right" >
                                                     <strong><t t-esc="'{0:,.2f}'.format(total_amount_due)" /></strong>
                                                 </td>
                                             </tr>
@@ -194,6 +188,10 @@
                                     </table>
                                 </div>
                             </div>                
+                        
+                        </div>
+                        <div class="footer" >
+                            <span>Page </span><span class="page" /> of <span class="topage" />
                         </div>
                     </t>
                 </t>

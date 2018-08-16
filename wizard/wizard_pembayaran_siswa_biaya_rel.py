@@ -9,6 +9,7 @@ class wizard_pembayaran_siswa_biaya_rel(models.TransientModel):
     biaya_id = fields.Many2one('siswa_keu_ocb11.biaya', string='Biaya')
     is_bulanan = fields.Boolean('Is Bulanan', related='biaya_id.is_bulanan')
     wizard_id = fields.Many2one('siswa_keu_ocb11.wizard_report_pembayaran_siswa', string='Wizard')
+    rombel_id = fields.Many2one('siswa_ocb11.rombel', string="Rombongan Belajar")
 
     jan = fields.Float('Jan')
     feb = fields.Float('Feb')
