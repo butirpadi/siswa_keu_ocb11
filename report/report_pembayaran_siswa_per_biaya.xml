@@ -98,11 +98,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <t t-if="o.rombel_ids">
-                                                
-                                                <t t-set="total_bayar" t-value="0"/>
-                                                <t t-set="total_harga" t-value="0"/>
-                                                <t t-set="total_amount_due" t-value="0"/>
+                                            <t t-set="total_bayar" t-value="0"/>
+                                            <t t-set="total_harga" t-value="0"/>
+                                            <t t-set="total_amount_due" t-value="0"/>
+
+                                            <t t-if="o.rombel_ids">                                               
 
                                                 <t t-foreach="o.rombel_ids" t-as="rb" >
                                                     <tr>
