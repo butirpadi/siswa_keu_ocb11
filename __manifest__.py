@@ -45,6 +45,7 @@
         'report/report_rekap_kas.xml',
         'report/report_bukti_pembayaran.xml',
         'report/report_pembayaran_siswa_per_biaya.xml',
+        'report/report_pembayaran_siswa_per_biaya_bulanan.xml',
         'report/report_pembayaran_harian.xml',
         'report/report_pembayaran_harian_detail.xml',
         'views/menu.xml',

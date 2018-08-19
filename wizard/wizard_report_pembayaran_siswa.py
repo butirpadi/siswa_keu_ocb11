@@ -181,15 +181,18 @@ class wizard_report_pembayaran_siswa(models.TransientModel):
 
         # ---------------------------------------------
         if self.biaya_id.is_bulanan:
-            return {
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'siswa_keu_ocb11.wizard_report_pembayaran_siswa',
-                'target': 'current',
-                'res_id': self.id,
-                'type': 'ir.actions.act_window',
-                'view_id': self.env.ref('siswa_keu_ocb11.wizard_report_pembayaran_siswa_form').id,
-            }
+            # return {
+            #     'view_type': 'form',
+            #     'view_mode': 'form',
+            #     'res_model': 'siswa_keu_ocb11.wizard_report_pembayaran_siswa',
+            #     'target': 'current',
+            #     'res_id': self.id,
+            #     'type': 'ir.actions.act_window',
+            #     'view_id': self.env.ref('siswa_keu_ocb11.wizard_report_pembayaran_siswa_form').id,
+            # }
+            
+            return self.env.ref('siswa_keu_ocb11.report_pembayaran_siswa_per_biaya_action_bulanan').report_action(self)
+
         else:
             # # return as view
             # return {

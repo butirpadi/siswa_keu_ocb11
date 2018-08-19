@@ -266,3 +266,10 @@ class pembayaran(models.Model):
             self.total = sum(x.bayar for x in self.pembayaran_lines)
         
         return res
+
+    @api.multi
+    def unlink(self):
+        if self.state == 'paid':
+            raise exceptions.except_orm(_('Warning'), _('You can not delete a payment that is already paid!'))
+        else:
+            return super(pembayaran, self).unlink()
