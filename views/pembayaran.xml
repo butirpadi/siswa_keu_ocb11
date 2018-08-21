@@ -33,7 +33,7 @@
                 <field name="siswa_id" />
                 <field name="induk" />
                 <field name="rombel_id" />
-                <field name="total"/>
+                <field name="total" sum="Total" />
                 <field name="state"/>
             </tree>
         </field>

@@ -12,3 +12,5 @@ from . import kas_kategori
 from . import kas
 from . import keuangan_dashboard_tahunajaran_rel
 from . import keuangan_dashboard
+from . import tabungan
+
