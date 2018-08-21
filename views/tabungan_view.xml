@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        
+        <record id="view_tabungan_form_with_potongan_pembayaran" model="ir.ui.view">
+            <field name="name">tabungan.with.potongan.pembayaran.ocb11.form</field>
+            <field name="model">siswa_tab_ocb11.tabungan</field>
+            <field name="inherit_id" ref="siswa_tab_ocb11.view_tabungan_form"/>
+            <field eval="22" name="priority"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="jumlah_temp"]' position="after">
+                    <!-- <field name="desc" readonly="1" attrs="{'invisible':['|',('pembayaran_id', '=', True)]}" /> -->
+                    <field name="desc" readonly="1" />
+                    <!-- <field name="pembayaran_id"  /> -->
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

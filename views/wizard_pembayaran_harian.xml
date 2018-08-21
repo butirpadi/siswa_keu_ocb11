@@ -45,7 +45,7 @@
                         </notebook>
                     <!-- </sheet> -->
                     <footer class="oe_edit_only" attrs="{'invisible':[('name', '!=', '0')]}" >
-                        <button name="action_print" type="object" string="Save" class="oe_highlight"/>
+                        <button name="action_print" type="object" string="Submit" class="oe_highlight"/>
 
                         <button special="cancel" string="Cancel"/>
                     </footer>

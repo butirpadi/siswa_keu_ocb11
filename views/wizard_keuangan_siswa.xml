@@ -5,7 +5,7 @@
             <field name="name">wizard.ocb11.keuangan_siswa</field>
             <field name="model">siswa_keu_ocb11.wizard_keuangan_siswa</field>
             <field name="arch" type="xml">
-                <form string="Wizard Keuangan Siswa" class="o_sale_order" create="false">
+                <form string="Wizard Tagihan Siswa" class="o_sale_order" create="false">
                     <sheet>
                         <div class="oe_title oe_read_only">
                             <h1>
@@ -52,7 +52,7 @@
                         </notebook>
                         <footer class="oe_edit_only" >
                             <button name="action_save" type="object"
-                                string="Save" class="oe_highlight"/>
+                                string="Submit" class="oe_highlight"/>
                                 
                             <button special="cancel" string="Cancel"/>
                         </footer>
@@ -62,7 +62,7 @@
         </record>
 
         <act_window id="siswa_keu_ocb11.wizard_keuangan_siswa"
-            name="Keuangan Siswa"
+            name="Tagihan Siswa"
             src_model="res.partner"
             res_model="siswa_keu_ocb11.wizard_keuangan_siswa"
             view_mode="form"

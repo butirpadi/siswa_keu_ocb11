@@ -162,6 +162,7 @@ class pembayaran(models.Model):
                 self.siswa_id.write({
                     'amount_due_biaya' : self.siswa_id.amount_due_biaya - bayar.bayar
                 })
+            
             # add confirm progress to table action_confirm
             self.env['siswa_keu_ocb11.action_confirm'].create({
                 'pembayaran_id' : self.id
@@ -186,6 +187,7 @@ class pembayaran(models.Model):
                     'tanggal' : self.tanggal,
                     'jenis' : 'tarik',
                     'jumlah' : self.total,
+                    'desc' : 'Pembayaran ' + self.name,
                 })
                 new_tab.action_confirm()
                 self.tabungan_id = new_tab.id
@@ -266,3 +268,10 @@ class pembayaran(models.Model):
             self.total = sum(x.bayar for x in self.pembayaran_lines)
         
         return res
+
+    @api.multi
+    def unlink(self):
+        if self.state == 'paid':
+            raise exceptions.except_orm(_('Warning'), _('You can not delete a payment that is already paid!'))
+        else:
+            return super(pembayaran, self).unlink()

@@ -2,25 +2,25 @@
     <data>
 
         <report
-            id="report_pembayaran_siswa_per_biaya_action"
+            id="report_pembayaran_siswa_per_biaya_action_bulanan"
             model="siswa_keu_ocb11.wizard_report_pembayaran_siswa"
             string="Report Pembayaran Siswa"
             report_type="qweb-html"
-            name="siswa_keu_ocb11.report_wiz_pembayaran_siswa_per_biaya"
-            file="siswa_keu_ocb11.report_wiz_pembayaran_siswa_per_biaya"
+            name="siswa_keu_ocb11.report_wiz_pembayaran_siswa_per_biaya_bulanan"
+            file="siswa_keu_ocb11.report_wiz_pembayaran_siswa_per_biaya_bulanan"
             attachment_use="False"
             print_report_name="'Report_Pembayaran_%s' % (object.biaya_id.name+'_'+object.tahunajaran_id.name)"
             menu="False"
-            paperformat="siswa_ocb11.format_report_general"
+            paperformat="siswa_ocb11.format_report_landscape"
         />
     
-         <template id="report_wiz_pembayaran_siswa_per_biaya">
+         <template id="report_wiz_pembayaran_siswa_per_biaya_bulanan">
             <t t-call="web.html_container">            
                 <t t-foreach="docs" t-as="o">
                     <t t-call="web.basic_layout">
                         <div class="page">
                             <style>
-                                table.noborder,table.noborder tbody tr, table.noborder tr td{
+                                <!-- table.noborder,table.noborder tbody tr, table.noborder tr td{
                                     border-left:none!important;
                                     border-right:none!important;
                                     border-bottom:none!important;
@@ -61,7 +61,7 @@
 
                                 table tbody tr.table-row-total td{
                                     border-bottom: thin solid black !important;
-                                }
+                                } -->
 
                             </style>
 
@@ -74,7 +74,7 @@
                                     
                                     <br/><![CDATA[&nbsp;]]>
                                     
-                                    <table class="table table-condensed" >
+                                    <table class="table table-bordered table-condensed" >
                                         <thead >
                                             <tr class="head" >
                                                 <th class="text-center" >
@@ -85,6 +85,42 @@
                                                 </th>
                                                 <th class="text-left" >
                                                     <strong>Nama</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Jul</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Aug</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Sep</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Oct</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Nov</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Dec</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Jan</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Feb</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Mar</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Apr</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>May</strong>
+                                                </th>
+                                                <th class="text-center" >
+                                                    <strong>Jun</strong>
                                                 </th>
                                                 <th class="text-right" >
                                                     <strong>Total Tagihan</strong>
@@ -98,16 +134,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <t t-set="total_bayar" t-value="0"/>
-                                            <t t-set="total_harga" t-value="0"/>
-                                            <t t-set="total_amount_due" t-value="0"/>
-
-                                            <t t-if="o.rombel_ids">                                               
+                                            <t t-if="o.rombel_ids">
+                                                
+                                                <t t-set="total_bayar" t-value="0"/>
+                                                <t t-set="total_harga" t-value="0"/>
+                                                <t t-set="total_amount_due" t-value="0"/>
 
                                                 <t t-foreach="o.rombel_ids" t-as="rb" >
                                                     <tr>
-                                                        <td colspan="6" >
-                                                            <strong>Rombel : <t t-esc="rb.name" /></strong>
+                                                        <td colspan="18" >
+                                                            <strong>Rombongan Belajar : <t t-esc="rb.name" /></strong>
                                                         </td>
                                                     </tr>
 
@@ -127,6 +163,66 @@
                                                                 </td>
                                                                 <td class="text-left" >
                                                                     <span t-field="pay.siswa_id" />                                                            
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_jul">
+                                                                        v
+                                                                    </t>
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_aug">
+                                                                        v
+                                                                    </t>
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_sep">
+                                                                        v
+                                                                    </t>
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_oct">
+                                                                        v
+                                                                    </t>
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_nov">
+                                                                        v
+                                                                    </t>
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_dec">
+                                                                        v
+                                                                    </t>
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_jan">
+                                                                        v
+                                                                    </t>
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_feb">
+                                                                        v
+                                                                    </t>
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_mar">
+                                                                        v
+                                                                    </t>
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_apr">
+                                                                        v
+                                                                    </t>
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_mei">
+                                                                        v
+                                                                    </t>
+                                                                </td>
+                                                                <td class="text-center" >
+                                                                    <t t-if="pay.is_jun">
+                                                                        v
+                                                                    </t>
                                                                 </td>
                                                                 <td class="text-right" >
                                                                     <t t-esc="'{0:,.2f}'.format(pay.harga)" />
@@ -151,27 +247,29 @@
                                                     <t t-set="total_bayar" t-value="total_bayar+sum_bayar_per_rombel"/>
                                                     <t t-set="total_amount_due" t-value="total_amount_due+sum_amount_due_per_rombel"/>
                                                     
-                                                    <tr class="table-row-total" >
-                                                        <td colspan="3" class="text-right" >
-                                                            <strong>TOTAL <t t-esc="rb.name" /></strong>
-                                                        </td>
-                                                        <td class="text-right" >
-                                                            <strong><t t-esc="'{0:,.2f}'.format(sum_tagihan_per_rombel)" /></strong>
-                                                        </td>
-                                                        <td class="text-right" >
-                                                            <strong><t t-esc="'{0:,.2f}'.format(sum_bayar_per_rombel)" /></strong>
-                                                        </td>
-                                                        <td class="text-right" >
-                                                            <strong><t t-esc="'{0:,.2f}'.format(sum_amount_due_per_rombel)" /></strong>
-                                                        </td>
-                                                    </tr>
+                                                    <t t-if="len(o.rombel_ids) > 1">
+                                                        <tr class="table-row-total" >
+                                                            <td colspan="15" class="text-right" >
+                                                                <strong>TOTAL <t t-esc="rb.name" /></strong>
+                                                            </td>
+                                                            <td class="text-right" >
+                                                                <strong><t t-esc="'{0:,.2f}'.format(sum_tagihan_per_rombel)" /></strong>
+                                                            </td>
+                                                            <td class="text-right" >
+                                                                <strong><t t-esc="'{0:,.2f}'.format(sum_bayar_per_rombel)" /></strong>
+                                                            </td>
+                                                            <td class="text-right" >
+                                                                <strong><t t-esc="'{0:,.2f}'.format(sum_amount_due_per_rombel)" /></strong>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
 
                                                 </t>
                                             </t>
 
                                             <!-- Grand Total -->
                                             <tr class="table-row-total" >
-                                                <td colspan="3" class="text-right" >
+                                                <td colspan="15" class="text-right" >
                                                     <strong>TOTAL</strong>
                                                 </td>
                                                 <td class="text-right" >

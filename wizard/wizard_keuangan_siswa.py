@@ -58,7 +58,7 @@ class wizard_keuangan_siswa(models.TransientModel):
         print('Inside Action Save Wizard Keuangan Siswa')
         # update name
         self.write({
-            'name' : 'Keuangan Siswa'
+            'name' : 'Tagihan Siswa'
         })
         # self.ensure_one()
         # print(self.siswa_id.id)
