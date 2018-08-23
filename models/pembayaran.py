@@ -22,8 +22,31 @@ class pembayaran(models.Model):
     satuan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh',
           'delapan', 'sembilan', 'sepuluh', 'sebelas']
     is_potong_tabungan = fields.Boolean('Potong Tabungan ?', default=False)
+    jumlah_potongan = fields.Float('Potongan Tabungan', default=0)
     tabungan_id = fields.Many2one('siswa_tab_ocb11.tabungan', string="Transaksi Tabungan")
-    saldo_tabungan_siswa = fields.Float(related='siswa_id.saldo_tabungan')
+    saldo_tabungan_siswa = fields.Float(related='siswa_id.saldo_tabungan', store=True)
+    total_temp = fields.Float('Total Bayar', default=0, readonly=True, store=True)
+
+    @api.onchange('jumlah_potongan')
+    def jumlah_potongan_change(self):
+        if self.jumlah_potongan > self.total:
+            # self.jumlah_potongan = 0
+            # self.total_temp = self.total - self.jumlah_potongan
+            return {'warning': {
+                    'title': _('Warning'),
+                    'message': _('Potongan tabungan melebihi jumlah total tagihan.')
+                    }}
+
+        if self.jumlah_potongan > self.saldo_tabungan_siswa:
+            # alert jumlah potongan melebihgi saldo
+            # self.jumlah_potongan = 0
+            # self.total_temp = self.total - self.jumlah_potongan
+            return {'warning': {
+                    'title': _('Warning'),
+                    'message': _('Saldo tabungan tidak mencukupi.')
+                    }}
+        
+        self.total_temp = self.total - self.jumlah_potongan
 
     @api.depends('siswa_id')
     def _compute_set_rombel(self):
@@ -41,14 +64,33 @@ class pembayaran(models.Model):
     @api.onchange('is_potong_tabungan')
     def potong_tabungan_change(self):
         if self.is_potong_tabungan:
-            if self.saldo_tabungan_siswa < self.total:
+            # if self.saldo_tabungan_siswa < self.total:
+            #     # tampilkan pesan tidak mencukupi
+            #     self.is_potong_tabungan = False
+
+            #     return {'warning': {
+            #             'title': _('Warning'),
+            #             'message': _('Saldo tabungan tidak mencukupi.')
+            #             }}
+
+            # pre set total_temp
+            self.total_temp = self.total - self.jumlah_potongan
+
+            # tampilkan form input potongan
+            if self.saldo_tabungan_siswa == 0:
                 # tampilkan pesan tidak mencukupi
                 self.is_potong_tabungan = False
 
                 return {'warning': {
-                        'title': _('Warning'),
-                        'message': _('Saldo tabungan tidak mencukupi.')
-                        }}
+                    'title': _('Warning'),
+                    'message': _('Saldo tabungan tidak mencukupi.')
+                }}
+        else:
+            # reset total dan jumlah_potongan
+            self.jumlah_potongan = 0
+            self.total_temp = self.total - self.jumlah_potongan
+        
+        print('is potong tabungan : ' + str(self.is_potong_tabungan))
 
     def terbilang_(self, n):
         if n >= 0 and n <= 11:
@@ -186,7 +228,7 @@ class pembayaran(models.Model):
                     'siswa_id' : self.siswa_id.id,
                     'tanggal' : self.tanggal,
                     'jenis' : 'tarik',
-                    'jumlah' : self.total,
+                    'jumlah_temp' : self.jumlah_potongan,
                     'desc' : 'Pembayaran ' + self.name,
                 })
                 new_tab.action_confirm()
@@ -212,7 +254,7 @@ class pembayaran(models.Model):
                 total_bayar += pb.bayar
                 
             rec.update({
-                'total' : total_bayar
+                'total' : total_bayar 
             })
             # print('Inside _compute_biaya')
     
@@ -258,17 +300,59 @@ class pembayaran(models.Model):
 
         result = super(pembayaran, self).create(vals)
         return result
+        
+        # calculate total_temp
+        # self.total_temp = result.total = result.jumlah_potongan
     
     @api.multi
     def write(self, vals):
         self.ensure_one()
+
+        # update total_temp
+        if 'is_potong_tabungan' in vals:
+            # pprint(vals)
+            # print('----------------------')
+            vals['total_temp'] = float(self.total - vals['jumlah_potongan'])
+            # pprint(vals)
+
         res = super(pembayaran, self).write(vals)
+
         # update total
         if 'pembayaran_lines' in vals:
             self.total = sum(x.bayar for x in self.pembayaran_lines)
+            # update total_temp
+            self.total_temp = self.total - self.jumlah_potongan
         
+        # if 'jumlah_potongan' in vals:
+        #     print('saldo tabungan ' + str(self.saldo_tabungan_siswa))
+        #     vals['total_temp'] = self.saldo_tabungan_siswa - vals['jumlah_potongan']
+        #     # vals['total_temp'] = 10000
+        #     vals.update({
+        #         total_temp : self.saldo_tabungan_siswa - vals['jumlah_potongan']
+        #     })
+        
+        # pprint(vals)
+
+        # get siswa
+        # if 'is_potong_tabungan' in vals:
+            # pprint(vals)
+            # print('----------------------')
+            # siswa = self.env['res.partner'].search([('id','=',self.siswa_id)])
+            # vals['total_temp'] = float(self.siswa_id.saldo_tabungan - vals['jumlah_potongan'])
+            # pprint(vals)
+        
+
         return res
 
+        # self.write({
+        #     'total_temp' : self.saldo_tabungan_siswa - res.jumlah_potongan
+        # })
+        
+        # calculate total_temp
+        # self.total_temp = res.total = res.jumlah_potongan
+
+        
+        
     @api.multi
     def unlink(self):
         if self.state == 'paid':
