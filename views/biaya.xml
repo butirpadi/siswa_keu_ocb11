@@ -24,7 +24,7 @@
         <field name="name">biaya.ocb11.form</field>
         <field name="model">siswa_keu_ocb11.biaya</field>
         <field name="arch" type="xml">
-            <form string="Biaya" class="o_sale_order">
+            <form duplicate="0" string="Biaya" class="o_sale_order">
               <header>
                 <button name="regenerate_akun_kas" string="Generate Akun Kas" type="object" class="oe_edit_only" groups="base.group_system" />
               </header>

@@ -50,7 +50,7 @@
             <field name="name">pembayaran.ocb11.form</field>
             <field name="model">siswa_keu_ocb11.pembayaran</field>
             <field name="arch" type="xml">
-                <form string="pembayaran" class="o_sale_order">
+                <form duplicate="0" string="pembayaran" class="o_sale_order">
                     <header>
                         <button name="action_confirm" type="object" string="Confirm" attrs="{'invisible':['|',('state', '=', 'paid'),('name', '=', 'New')]}" class="btn btn-primary" />
                         <button name="reset_pembayaran_lines" type="object" string="Reset" invisible="1" class="oe_edit_only btn btn-default" />

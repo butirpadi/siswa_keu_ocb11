@@ -91,7 +91,7 @@
         <field name="name">siswa_biaya.ocb11.form.view</field>
         <field name="model">siswa_keu_ocb11.siswa_biaya</field>
         <field name="arch" type="xml">
-            <form string="siswa_biaya" class="o_sale_order">
+            <form duplicate="0" string="siswa_biaya" class="o_sale_order">
               <sheet>
                   <group>
                     <group>
@@ -115,7 +115,7 @@
         <field name="name">root_siswa_biaya.ocb11.form.view</field>
         <field name="model">siswa_keu_ocb11.siswa_biaya</field>
         <field name="arch" type="xml">
-            <form string="siswa_biaya" class="o_sale_order">
+            <form duplicate="0" string="siswa_biaya" class="o_sale_order">
                 <header>
                     <button type="object" name="generate_default" class="btn btn-default" string="Generate Default" />
                 </header>
@@ -185,7 +185,7 @@
         <field name="name">siswa_biaya.ocb11.form</field>
         <field name="model">siswa_keu_ocb11.siswa_biaya</field>
         <field name="arch" type="xml">
-            <form string="siswa_biaya" class="o_sale_order">
+            <form duplicate="0" string="siswa_biaya" class="o_sale_order">
               <sheet>
                   <group>
                     <group>

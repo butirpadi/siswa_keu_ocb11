@@ -4,7 +4,7 @@
             <field name="name">biaya.ta.jenjang.form.view</field>
             <field name="model">siswa_keu_ocb11.biaya_ta_jenjang</field>
             <field name="arch" type="xml">
-                <form string="Biaya" class="o_sale_order">
+                <form duplicate="0" string="Biaya" class="o_sale_order">
                     <sheet>
                         <group>
                             <group>

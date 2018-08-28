@@ -15,7 +15,7 @@
             <field name="name">assign_biaya.ocb11.form</field>
             <field name="model">siswa_ocb11.tahunajaran</field>
             <field name="arch" type="xml">
-                <form string="Tahun Ajaran" class="o_sale_order" create="false">
+                <form duplicate="0" string="Tahun Ajaran" class="o_sale_order" create="false">
                     <sheet>
                         <group>
                             <field name="name" readonly="True"/>

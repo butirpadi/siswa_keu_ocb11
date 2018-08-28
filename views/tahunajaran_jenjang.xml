@@ -18,7 +18,7 @@
             <field name="name">tahunajaran_.ocb11.form</field>
             <field name="model">siswa_ocb11.tahunajaran_jenjang</field>
             <field name="arch" type="xml">
-                <form string="Tahun Ajaran" class="o_sale_order" create="false" delete="false">
+                <form duplicate="0" string="Tahun Ajaran" class="o_sale_order" create="false" delete="false">
                     <header>
                         <!-- <button name="validate_state" string="Validate"  type="object" states="draft" class="oe_edit_only btn btn-primary"/> -->
                         <!-- <button name="recompute_biaya" string="Recompute" type="object" states="valid" class="oe_edit_only btn btn-primary"/> -->

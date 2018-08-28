@@ -38,7 +38,7 @@
             <field name="name">kas_kategori.ocb11.form</field>
             <field name="model">siswa_keu_ocb11.kas_kategori</field>
             <field name="arch" type="xml">
-                <form string="kas_kategori" class="o_sale_order">
+                <form duplicate="0" string="kas_kategori" class="o_sale_order">
                     <sheet>
                         <group>
                             <field name="name" required="1" />

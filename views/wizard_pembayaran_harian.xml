@@ -5,7 +5,7 @@
             <field name="name">siswa.keu.ocb11.wizard.pembayaran.harian.form</field>
             <field name="model">siswa_keu_ocb11.wizard_pembayaran_harian</field>
             <field name="arch" type="xml">
-                <form string="Report Pembayaran Harian" class="o_sale_order" create="false">
+                <form duplicate="0" string="Report Pembayaran Harian" class="o_sale_order" create="false">
                     <header attrs="{'invisible':[('name', '=', '0')]}" >
                         <button name="action_print" string="Print" type="object" class="btn btn-default" />
                     </header>
