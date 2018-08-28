@@ -209,17 +209,31 @@ class pembayaran(models.Model):
             self.env['siswa_keu_ocb11.action_confirm'].create({
                 'pembayaran_id' : self.id
             })
-            # add kas statement
-            kas_kategori_pembayaran_id = self.env['ir.model.data'].search([('name','=','default_kategori_kas')]).res_id
             
-            kas = self.env['siswa_keu_ocb11.kas'].create({
-                'tanggal' : self.tanggal,
-                'jumlah' : self.total,
-                'pembayaran_id' : self.id ,
-                'is_related' : True ,
-                'kas_kategori_id' : kas_kategori_pembayaran_id,
-            })
-            kas.action_confirm()
+            # add kas statement
+            # kas_kategori_pembayaran_id = self.env['ir.model.data'].search([('name','=','default_kategori_kas')]).res_id
+            
+            # kas = self.env['siswa_keu_ocb11.kas'].create({
+            #     'tanggal' : self.tanggal,
+            #     'jumlah' : self.total,
+            #     'pembayaran_id' : self.id ,
+            #     'is_related' : True ,
+            #     'kas_kategori_id' : kas_kategori_pembayaran_id,
+            # })
+            # kas.action_confirm()
+
+            # update kas statement per item pembayaran lines
+            for pb in self.pembayaran_lines:
+                akun_kas_id = self.env['siswa_keu_ocb11.kas_kategori'].search([('biaya_id','=',pb.biaya_id.biaya_id.id)]).id
+                
+                kas = self.env['siswa_keu_ocb11.kas'].create({
+                    'tanggal' : self.tanggal,
+                    'jumlah' : pb.bayar,
+                    'pembayaran_id' : self.id ,
+                    'is_related' : True ,
+                    'kas_kategori_id' : akun_kas_id,
+                })
+                kas.action_confirm()
 
             # if is_potong_tabungan = True, maka potong tabungan
             if self.is_potong_tabungan:

@@ -46,7 +46,7 @@
                         <group>
                             <field name="tanggal" attrs="{'readonly':[('state', '=', 'post')]}" />
                             <field name="kas_kategori_id" required="1" 
-                                context="{'is_biaya_account': False}"
+                                domain="[('is_biaya_account','=',False)]"
                                 options="{'no_create_edit': True,'no_open':True,'no_create':True,'no_edit':True}" 
                                 attrs="{'readonly':[('state', '=', 'post')]}"/>
                         </group>
