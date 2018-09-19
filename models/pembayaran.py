@@ -22,31 +22,31 @@ class pembayaran(models.Model):
     satuan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh',
           'delapan', 'sembilan', 'sepuluh', 'sebelas']
     is_potong_tabungan = fields.Boolean('Potong Tabungan ?', default=False)
-    jumlah_potongan = fields.Float('Potongan Tabungan', default=0)
+    jumlah_potongan_tabungan = fields.Float('Potongan Tabungan', default=0)
     tabungan_id = fields.Many2one('siswa_tab_ocb11.tabungan', string="Transaksi Tabungan")
     saldo_tabungan_siswa = fields.Float(related='siswa_id.saldo_tabungan', store=True)
     total_temp = fields.Float('Total Bayar', default=0, readonly=True, store=True)
 
-    @api.onchange('jumlah_potongan')
-    def jumlah_potongan_change(self):
-        if self.jumlah_potongan > self.total:
-            # self.jumlah_potongan = 0
-            # self.total_temp = self.total - self.jumlah_potongan
+    @api.onchange('jumlah_potongan_tabungan')
+    def jumlah_potongan_tabungan_change(self):
+        if self.jumlah_potongan_tabungan > self.total:
+            # self.jumlah_potongan_tabungan = 0
+            # self.total_temp = self.total - self.jumlah_potongan_tabungan
             return {'warning': {
                     'title': _('Warning'),
                     'message': _('Potongan tabungan melebihi jumlah total tagihan.')
                     }}
 
-        if self.jumlah_potongan > self.saldo_tabungan_siswa:
+        if self.jumlah_potongan_tabungan > self.saldo_tabungan_siswa:
             # alert jumlah potongan melebihgi saldo
-            # self.jumlah_potongan = 0
-            # self.total_temp = self.total - self.jumlah_potongan
+            # self.jumlah_potongan_tabungan = 0
+            # self.total_temp = self.total - self.jumlah_potongan_tabungan
             return {'warning': {
                     'title': _('Warning'),
                     'message': _('Saldo tabungan tidak mencukupi.')
                     }}
         
-        self.total_temp = self.total - self.jumlah_potongan
+        self.total_temp = self.total - self.jumlah_potongan_tabungan
 
     @api.depends('siswa_id')
     def _compute_set_rombel(self):
@@ -74,7 +74,7 @@ class pembayaran(models.Model):
             #             }}
 
             # pre set total_temp
-            self.total_temp = self.total - self.jumlah_potongan
+            self.total_temp = self.total - self.jumlah_potongan_tabungan
 
             # tampilkan form input potongan
             if self.saldo_tabungan_siswa == 0:
@@ -86,9 +86,9 @@ class pembayaran(models.Model):
                     'message': _('Saldo tabungan tidak mencukupi.')
                 }}
         else:
-            # reset total dan jumlah_potongan
-            self.jumlah_potongan = 0
-            self.total_temp = self.total - self.jumlah_potongan
+            # reset total dan jumlah_potongan_tabungan
+            self.jumlah_potongan_tabungan = 0
+            self.total_temp = self.total - self.jumlah_potongan_tabungan
         
         print('is potong tabungan : ' + str(self.is_potong_tabungan))
 
@@ -242,7 +242,7 @@ class pembayaran(models.Model):
                     'siswa_id' : self.siswa_id.id,
                     'tanggal' : self.tanggal,
                     'jenis' : 'tarik',
-                    'jumlah_temp' : self.jumlah_potongan,
+                    'jumlah_temp' : self.jumlah_potongan_tabungan,
                     'desc' : 'Pembayaran ' + self.name,
                 })
                 new_tab.action_confirm()
@@ -316,7 +316,7 @@ class pembayaran(models.Model):
         return result
         
         # calculate total_temp
-        # self.total_temp = result.total = result.jumlah_potongan
+        # self.total_temp = result.total = result.jumlah_potongan_tabungan
     
     @api.multi
     def write(self, vals):
@@ -326,7 +326,7 @@ class pembayaran(models.Model):
         if 'is_potong_tabungan' in vals:
             # pprint(vals)
             # print('----------------------')
-            vals['total_temp'] = float(self.total - vals['jumlah_potongan'])
+            vals['total_temp'] = float(self.total - vals['jumlah_potongan_tabungan'])
             # pprint(vals)
 
         res = super(pembayaran, self).write(vals)
@@ -335,14 +335,14 @@ class pembayaran(models.Model):
         if 'pembayaran_lines' in vals:
             self.total = sum(x.bayar for x in self.pembayaran_lines)
             # update total_temp
-            self.total_temp = self.total - self.jumlah_potongan
+            self.total_temp = self.total - self.jumlah_potongan_tabungan
         
-        # if 'jumlah_potongan' in vals:
+        # if 'jumlah_potongan_tabungan' in vals:
         #     print('saldo tabungan ' + str(self.saldo_tabungan_siswa))
-        #     vals['total_temp'] = self.saldo_tabungan_siswa - vals['jumlah_potongan']
+        #     vals['total_temp'] = self.saldo_tabungan_siswa - vals['jumlah_potongan_tabungan']
         #     # vals['total_temp'] = 10000
         #     vals.update({
-        #         total_temp : self.saldo_tabungan_siswa - vals['jumlah_potongan']
+        #         total_temp : self.saldo_tabungan_siswa - vals['jumlah_potongan_tabungan']
         #     })
         
         # pprint(vals)
@@ -352,18 +352,18 @@ class pembayaran(models.Model):
             # pprint(vals)
             # print('----------------------')
             # siswa = self.env['res.partner'].search([('id','=',self.siswa_id)])
-            # vals['total_temp'] = float(self.siswa_id.saldo_tabungan - vals['jumlah_potongan'])
+            # vals['total_temp'] = float(self.siswa_id.saldo_tabungan - vals['jumlah_potongan_tabungan'])
             # pprint(vals)
         
 
         return res
 
         # self.write({
-        #     'total_temp' : self.saldo_tabungan_siswa - res.jumlah_potongan
+        #     'total_temp' : self.saldo_tabungan_siswa - res.jumlah_potongan_tabungan
         # })
         
         # calculate total_temp
-        # self.total_temp = res.total = res.jumlah_potongan
+        # self.total_temp = res.total = res.jumlah_potongan_tabungan
 
         
         

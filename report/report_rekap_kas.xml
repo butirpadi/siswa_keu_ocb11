@@ -35,20 +35,25 @@
                             </style>
 
                             <div class="row" >
-                                <div class="col-xs-6" >
+                                <!-- <div class="col-xs-6" >
                                     <strong><p style="margin-top:0;margin-bottom:0;text-transform:uppercase;font-weight:bolder;" t-esc="user.company_id.name"/></strong>
                                     <p style="margin-top:0;margin-bottom:0;" ><span t-esc="user.company_id.street" ></span> <span t-esc="user.company_id.street2" ></span></p>
                                     <p style="margin-top:0;margin-bottom:0;" ><span t-esc="user.company_id.city" ></span> <span t-esc="user.company_id.state_id.name" ></span> <span t-esc="user.company_id.zip" ></span></p>
                                     <p style="margin-top:0;margin-bottom:0;" >Telp: <span t-esc="user.company_id.phone" ></span></p>
-                                </div>
+                                </div> -->
 
-                                <div class="col-xs-6 text-right" >
+                                <!-- <div class="col-xs-6 text-right" >
                                     <h3><strong>REPORT KAS</strong></h3>
                                     <span t-field="o.awal" t-field-options='{"format": "dd MMMM y"}' /> - <span t-field="o.akhir" t-field-options='{"format": "dd MMMM y"}' />
-                                </div>
+                                </div> -->
 
                                 <div class="col-xs-12" >  
-                                    <hr style="border-top: 4px double black;" />
+                                    <div class="text-center" >
+                                        <h3><strong>REPORT KAS</strong></h3>
+                                        <span t-field="o.awal" t-field-options='{"format": "dd MMMM y"}' /> - <span t-field="o.akhir" t-field-options='{"format": "dd MMMM y"}' />
+                                    </div>
+
+                                    <!-- <hr style="border-top: 4px double black;" /> -->
                                     <table class="table table-condensed" >
                                         <thead>
                                             <tr>
@@ -245,7 +250,7 @@
                             </style>
 
                             <div class="row" >
-                                <div class="col-xs-6" >
+                                <!-- <div class="col-xs-6" >
                                     <strong><p style="margin-top:0;margin-bottom:0;text-transform:uppercase;font-weight:bolder;" t-esc="user.company_id.name"/></strong>
                                     <p style="margin-top:0;margin-bottom:0;" ><span t-esc="user.company_id.street" ></span> <span t-esc="user.company_id.street2" ></span></p>
                                     <p style="margin-top:0;margin-bottom:0;" ><span t-esc="user.company_id.city" ></span> <span t-esc="user.company_id.state_id.name" ></span> <span t-esc="user.company_id.zip" ></span></p>
@@ -255,10 +260,14 @@
                                 <div class="col-xs-6 text-right" >
                                     <h3><strong>REPORT KAS</strong></h3>
                                     <span t-field="o.awal" t-field-options='{"format": "dd MMMM y"}' /> - <span t-field="o.akhir" t-field-options='{"format": "dd MMMM y"}' />
-                                </div>
+                                </div> -->
 
                                 <div class="col-xs-12" >                                
-                                    <hr style="border-top: 4px double black;" />   
+                                    <div class="text-center" >
+                                        <h3><strong>REPORT KAS</strong></h3>
+                                        <span t-field="o.awal" t-field-options='{"format": "dd MMMM y"}' /> - <span t-field="o.akhir" t-field-options='{"format": "dd MMMM y"}' />
+                                    </div>
+                                    <!-- <hr style="border-top: 4px double black;" />    -->
                                     <table class="table noborder table-condensed" >
                                         <tbody>
                                             <t t-set="total_pendapatan" t-value="0" />

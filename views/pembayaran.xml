@@ -92,7 +92,7 @@
                                 </field>
                                 <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total" attrs="{'invisible':[('is_potong_tabungan', '=', False)]}"  >
                                     <!-- <field name="jumlah_potongan" widget='monetary' options="{'currency_field': 'currency_id'}"/>                                     -->
-                                    <field name="jumlah_potongan" />                                    
+                                    <field name="jumlah_potongan_tabungan" />                                    
                                     <div class="oe_subtotal_footer_separator oe_inline o_td_label">
                                         <label for="total_temp" />
                                     </div>

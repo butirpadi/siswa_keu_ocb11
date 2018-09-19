@@ -33,7 +33,7 @@
           <field name="name"/>
           <field name="tahunajaran_id" />
           <field name="jenjang_id" />
-          <field name="harga" />
+          <field name="harga" sum="Total Harga" />
           <field name="siswa_id" invisible="1" />
         </tree>
       </field>
