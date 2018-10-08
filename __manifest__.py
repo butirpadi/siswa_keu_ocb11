@@ -41,6 +41,8 @@
         'views/keuangan_dashboard.xml',
         'views/biaya_ta_jenjang.xml',
         'views/tabungan_view.xml',
+        'views/potongan_view.xml',
+        'views/wizard_batch_create_potongan_view.xml',
         'report/report_kas_template.xml',
         'report/report_kas.xml',
         'report/report_rekap_kas.xml',

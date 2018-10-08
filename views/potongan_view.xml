@@ -1,0 +1,84 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    
+	<record model="ir.ui.view" id="siswa_potongan_list">
+		<field name="name">standard.siswa.potongan.list</field>
+		<field name="model">siswa.potongan_biaya</field>
+		<field name="arch" type="xml">
+		<tree  >
+			<field name="siswa_id"/>
+			<field name="related_biaya_id"/>
+			<field name="related_bulan"/>
+			<field name="related_tahunajaran_id"/>
+			<field name="jumlah_potongan" sum="Total Potongan" />
+			<field name="state" />
+		</tree>
+		</field>
+	</record>
+
+	<record id="default_siswa_potongan_filter" model="ir.ui.view">
+		<field name="name">default.siswa.potongan.filter</field>
+		<field name="model">siswa.potongan_biaya</field>
+		<field name="arch" type="xml">
+			<search string="Filter Siswa Potongan">
+				<!-- <field name="name" string="Nama" filter_domain="['|',('name','ilike',self),('tipe','ilike',self)]"/> -->
+				<group expand="0" string="Group By">
+					<filter name="group_by_tahunajaran" string="Tahun Ajaran" domain="[]" context="{'group_by':'related_tahunajaran_id'}"/>
+					<filter name="group_by_siswa" string="Siswa" domain="[]" context="{'group_by':'siswa_id'}"/>
+				</group>
+			</search>
+		</field>
+	</record>
+    
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="siswa_potongan_view_action">
+      	<field name="name">Potongan Biaya</field>
+      	<field name="res_model">siswa.potongan_biaya</field>
+      	<field name="view_mode">tree,form</field>
+		<field name="context">{'search_default_group_by_tahunajaran':True, 'search_default_group_by_siswa':True}</field>
+    </record>
+
+    <record id="siswa_potongan_form_view" model="ir.ui.view">
+        <field name="name">standard.siswa.potongan.biaya.form.view</field>
+        <field name="model">siswa.potongan_biaya</field>
+        <field name="arch" type="xml">
+            <form duplicate="0" string="Potongan Biaya" class="o_sale_order">
+				<header>
+					<button name="action_confirm" string="Confirm" type="object" class="oe_edit_only btn btn-primary" 
+						attrs="{'invisible':['|',('name', '=', ''),('state', '!=', 'draft')]}" />
+					<button name="action_reset" string="Reset" type="object" class="oe_edit_only" 
+						attrs="{'invisible':[('state', '!=', 'open')]}" confirm="Are you sure..?" />
+					<!-- <button name="action_wizard" string="Batch Create" type="object" class="oe_edit_only btn btn-primary"  /> -->
+					<field name="state" widget="statusbar" statusbar_visible="draft,open,paid"/>
+				</header>
+				<sheet>
+			  		<group>
+                        <field name="siswa_id" domain="[('is_siswa','=',True)]"  
+							options="{'no_create':True, 'no_edit':True, 'no_create_edit': True, 'no_open':True}" 
+							attrs="{'readonly':[('state', '!=', 'draft')]}" />
+						<field name="name" invisible="1" />
+				  	</group>
+                  	<group>
+	                    <group>
+							<field name="siswa_biaya_id" string="Biaya" 
+								options="{'no_create':True, 'no_edit':True, 'no_create_edit': True, 'no_open':True}"
+								domain="[('siswa_id','=',siswa_id),('state','=','open')]" 
+								attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                        	<field name="related_tahunajaran_id" readonly="1" />
+                    	</group>
+						<group>
+                        	<field name="related_amount_due" readonly="1" />
+                        	<field name="jumlah_potongan" 
+								attrs="{'readonly':[('state', '!=', 'draft')]}" />
+						</group>
+                  	</group>
+              	</sheet>
+            </form>
+        </field>
+    </record>
+
+    
+  </data>
+</odoo>

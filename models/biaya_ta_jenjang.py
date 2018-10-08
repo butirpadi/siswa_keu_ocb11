@@ -8,6 +8,7 @@ import calendar
 class biaya_ta_jenjang(models.Model):
     _name = 'siswa_keu_ocb11.biaya_ta_jenjang'
 
+    name = fields.Char('Name', related="biaya_id.name")
     tahunajaran_jenjang_id = fields.Many2one('siswa_ocb11.tahunajaran_jenjang', string='Tahun Ajaran', required=True, ondelete='cascade')
     biaya_id = fields.Many2one('siswa_keu_ocb11.biaya', string='Biaya', required=True)
     is_different_by_gender = fields.Boolean('Different by Gender',related='biaya_id.is_different_by_gender')

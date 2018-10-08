@@ -13,4 +13,7 @@ from . import kas
 from . import keuangan_dashboard_tahunajaran_rel
 from . import keuangan_dashboard
 from . import tabungan
+from . import potongan
+from . import wizard_batch_create_potongan_rel
+from . import wizard_batch_create_potongan
 

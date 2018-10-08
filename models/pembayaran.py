@@ -5,12 +5,13 @@ from odoo.addons import decimal_precision as dp
 from datetime import datetime
 from pprint import pprint
 
+
 class pembayaran(models.Model):
     _name = 'siswa_keu_ocb11.pembayaran'
 
     state = fields.Selection([('draft', 'Draft'), ('paid', 'Paid')], string='State', required=True, default='draft')
     name = fields.Char(string='Kode Pembayaran', requred=True, default='New')
-    tahunajaran_id = fields.Many2one('siswa_ocb11.tahunajaran', string='Tahun Ajaran', required=True, default=lambda x: x.env['siswa_ocb11.tahunajaran'].search([('active','=',True)]))
+    tahunajaran_id = fields.Many2one('siswa_ocb11.tahunajaran', string='Tahun Ajaran', required=True, default=lambda x: x.env['siswa_ocb11.tahunajaran'].search([('active', '=', True)]))
     siswa_id = fields.Many2one('res.partner', string='Siswa', required=True)
     induk = fields.Char(string='No. Induk', related='siswa_id.induk')
     active_rombel_id = fields.Many2one('siswa_ocb11.rombel', related='siswa_id.active_rombel_id', string='Rombongan Belajar')
@@ -143,16 +144,16 @@ class pembayaran(models.Model):
         #     raise exceptions.except_orm(_('Warning'), _('TEST ERROR'))
 
         # delete from action_confirm table
-        self.env['siswa_keu_ocb11.action_confirm'].search([('pembayaran_id','=',self.id)]).unlink()
+        self.env['siswa_keu_ocb11.action_confirm'].search([('pembayaran_id', '=', self.id)]).unlink()
         # delete from kas statement
-        kas = self.env['siswa_keu_ocb11.kas'].search([('pembayaran_id','=',self.id)])
+        kas = self.env['siswa_keu_ocb11.kas'].search([('pembayaran_id', '=', self.id)])
         for dt in kas:
             dt.action_cancel()
             dt.unlink()
             
         # update status di siswa_biaya
         for bayar in self.pembayaran_lines:
-            self.env['siswa_keu_ocb11.siswa_biaya'].search([('id','=',bayar.biaya_id.id)]).write({
+            self.env['siswa_keu_ocb11.siswa_biaya'].search([('id', '=', bayar.biaya_id.id)]).write({
                 'state' : 'open',
                 'amount_due' : bayar.biaya_id.amount_due + bayar.bayar,
                 'dibayar' : bayar.biaya_id.dibayar - bayar.bayar,
@@ -168,17 +169,36 @@ class pembayaran(models.Model):
 
         # recompute keuangan dashboard
         self.recompute_keuangan_dashboard()
+        
+        # reset amount_due on pembayaran_lines
+        print('reset amount due on siswa_biaya using potongan_biaya ...')
+        for bayar in self.pembayaran_lines:
+            self.env['siswa_keu_ocb11.siswa_biaya'].search([('id', '=', bayar.biaya_id.id)]).write({
+                'amount_due' : bayar.biaya_id.amount_due + bayar.jumlah_potongan,
+                'dibayar' : bayar.biaya_id.dibayar - bayar.jumlah_potongan,
+            })
+
+            # update amount_due on siswa
+            print('update amount_due_biaya on siswa ...')
+            self.siswa_id.write({
+                'amount_due_biaya' : self.siswa_id.amount_due_biaya + bayar.jumlah_potongan
+            })
+
+            # reset status potongan_biaya
+            if bayar.biaya_id.potongan_ids:
+                for pot in bayar.biaya_id.potongan_ids:
+                    pot.state = 'open'
 
         return self.reload_page()
     
     def recompute_keuangan_dashboard(self):
         # recompute dashboard tagihan siswa
-        dash_keuangan_id = self.env['ir.model.data'].search([('name','=','default_dashboard_pembayaran')]).res_id
-        dash_keuangan = self.env['siswa_keu_ocb11.keuangan_dashboard'].search([('id','=',dash_keuangan_id)])
+        dash_keuangan_id = self.env['ir.model.data'].search([('name', '=', 'default_dashboard_pembayaran')]).res_id
+        dash_keuangan = self.env['siswa_keu_ocb11.keuangan_dashboard'].search([('id', '=', dash_keuangan_id)])
         for dash in dash_keuangan:
             dash.compute_keuangan()        
         # raise exceptions.except_orm(_('Warning'), _('TEST ERROR COMPUTE KEUANGAN DASHBOARD'))
-
+    
     def action_confirm(self):
         self.ensure_one()
         # check if pembayaran is set or no
@@ -189,7 +209,7 @@ class pembayaran(models.Model):
             })
             # set paid to siswa_biaya
             for bayar in self.pembayaran_lines:
-                if bayar.bayar == bayar.amount_due:
+                if bayar.bayar == bayar.amount_due - bayar.jumlah_potongan:
                     bayar.biaya_id.write({
                         'state' : 'paid',
                         'amount_due' : 0,
@@ -197,6 +217,7 @@ class pembayaran(models.Model):
                     })
                 else:
                     bayar.biaya_id.write({
+                        # 'amount_due' : bayar.biaya_id.amount_due - bayar.jumlah_potongan - bayar.bayar,
                         'amount_due' : bayar.biaya_id.amount_due - bayar.bayar,
                         'dibayar' : bayar.biaya_id.dibayar + bayar.bayar
                     })
@@ -204,27 +225,20 @@ class pembayaran(models.Model):
                 self.siswa_id.write({
                     'amount_due_biaya' : self.siswa_id.amount_due_biaya - bayar.bayar
                 })
+
+                # set potongan biaya to paid 
+                if bayar.biaya_id.potongan_ids:
+                    for pot_by in bayar.biaya_id.potongan_ids:
+                        pot_by.state = 'paid'
             
             # add confirm progress to table action_confirm
             self.env['siswa_keu_ocb11.action_confirm'].create({
                 'pembayaran_id' : self.id
             })
-            
-            # add kas statement
-            # kas_kategori_pembayaran_id = self.env['ir.model.data'].search([('name','=','default_kategori_kas')]).res_id
-            
-            # kas = self.env['siswa_keu_ocb11.kas'].create({
-            #     'tanggal' : self.tanggal,
-            #     'jumlah' : self.total,
-            #     'pembayaran_id' : self.id ,
-            #     'is_related' : True ,
-            #     'kas_kategori_id' : kas_kategori_pembayaran_id,
-            # })
-            # kas.action_confirm()
 
             # update kas statement per item pembayaran lines
             for pb in self.pembayaran_lines:
-                akun_kas_id = self.env['siswa_keu_ocb11.kas_kategori'].search([('biaya_id','=',pb.biaya_id.biaya_id.id)]).id
+                akun_kas_id = self.env['siswa_keu_ocb11.kas_kategori'].search([('biaya_id', '=', pb.biaya_id.biaya_id.id)]).id
                 
                 kas = self.env['siswa_keu_ocb11.kas'].create({
                     'tanggal' : self.tanggal,
@@ -257,7 +271,85 @@ class pembayaran(models.Model):
         else:
             raise exceptions.except_orm(_('Warning'), _('There is no data to confirm, complete payment first!'))
 
-    # @api.onchange('pembayaran_lines')
+#     def action_confirm(self):
+#         self.ensure_one()
+#         # check if pembayaran is set or no
+#         if len(self.pembayaran_lines) > 0:
+#             # update state
+#             self.write({
+#                 'state' : 'paid'
+#             })
+#             # set paid to siswa_biaya
+#             for bayar in self.pembayaran_lines:
+#                 if bayar.bayar == bayar.amount_due:
+#                     bayar.biaya_id.write({
+#                         'state' : 'paid',
+#                         'amount_due' : 0,
+#                         'dibayar' : bayar.biaya_id.dibayar + bayar.bayar,
+#                     })
+#                 else:
+#                     bayar.biaya_id.write({
+#                         'amount_due' : bayar.biaya_id.amount_due - bayar.bayar,
+#                         'dibayar' : bayar.biaya_id.dibayar + bayar.bayar
+#                     })
+#                 # update amount_due_biaya on siswa
+#                 self.siswa_id.write({
+#                     'amount_due_biaya' : self.siswa_id.amount_due_biaya - bayar.bayar
+#                 })
+#             
+#             # add confirm progress to table action_confirm
+#             self.env['siswa_keu_ocb11.action_confirm'].create({
+#                 'pembayaran_id' : self.id
+#             })
+#             
+#             # add kas statement
+#             # kas_kategori_pembayaran_id = self.env['ir.model.data'].search([('name','=','default_kategori_kas')]).res_id
+#             
+#             # kas = self.env['siswa_keu_ocb11.kas'].create({
+#             #     'tanggal' : self.tanggal,
+#             #     'jumlah' : self.total,
+#             #     'pembayaran_id' : self.id ,
+#             #     'is_related' : True ,
+#             #     'kas_kategori_id' : kas_kategori_pembayaran_id,
+#             # })
+#             # kas.action_confirm()
+# 
+#             # update kas statement per item pembayaran lines
+#             for pb in self.pembayaran_lines:
+#                 akun_kas_id = self.env['siswa_keu_ocb11.kas_kategori'].search([('biaya_id', '=', pb.biaya_id.biaya_id.id)]).id
+#                 
+#                 kas = self.env['siswa_keu_ocb11.kas'].create({
+#                     'tanggal' : self.tanggal,
+#                     'jumlah' : pb.bayar,
+#                     'pembayaran_id' : self.id ,
+#                     'is_related' : True ,
+#                     'kas_kategori_id' : akun_kas_id,
+#                 })
+#                 kas.action_confirm()
+# 
+#             # if is_potong_tabungan = True, maka potong tabungan
+#             if self.is_potong_tabungan:
+#                 # create trans tabungan
+#                 new_tab = self.env['siswa_tab_ocb11.tabungan'].create({
+#                     'siswa_id' : self.siswa_id.id,
+#                     'tanggal' : self.tanggal,
+#                     'jenis' : 'tarik',
+#                     'jumlah_temp' : self.jumlah_potongan_tabungan,
+#                     'desc' : 'Pembayaran ' + self.name,
+#                 })
+#                 new_tab.action_confirm()
+#                 self.tabungan_id = new_tab.id
+#             
+#             # recompute keuangan dashboard
+#             self.recompute_keuangan_dashboard()
+# 
+#             # reload
+#             return self.reload_page()
+# 
+#         else:
+#             raise exceptions.except_orm(_('Warning'), _('There is no data to confirm, complete payment first!'))
+# 
+#     # @api.onchange('pembayaran_lines')
     
     @api.depends('pembayaran_lines.bayar')
     def _compute_biaya(self):
@@ -274,10 +366,10 @@ class pembayaran(models.Model):
     
     def reset_pembayaran_lines(self):
         self.ensure_one()
-        biayas = self.env['siswa_keu_ocb11.siswa_biaya'].search([('siswa_id','=',self.siswa_id.id),('state','=','open')])
+        biayas = self.env['siswa_keu_ocb11.siswa_biaya'].search([('siswa_id', '=', self.siswa_id.id), ('state', '=', 'open')])
         reg_biaya = []
         for by in biayas:
-            reg_biaya.append([0,0,{
+            reg_biaya.append([0, 0, {
                 'siswa_id' : self.siswa_id.id,
                 'biaya_id' : by.id,
                 'bayar' : by.harga,
@@ -354,7 +446,6 @@ class pembayaran(models.Model):
             # siswa = self.env['res.partner'].search([('id','=',self.siswa_id)])
             # vals['total_temp'] = float(self.siswa_id.saldo_tabungan - vals['jumlah_potongan_tabungan'])
             # pprint(vals)
-        
 
         return res
 
@@ -364,8 +455,6 @@ class pembayaran(models.Model):
         
         # calculate total_temp
         # self.total_temp = res.total = res.jumlah_potongan_tabungan
-
-        
         
     @api.multi
     def unlink(self):

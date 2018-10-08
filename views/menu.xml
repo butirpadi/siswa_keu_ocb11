@@ -22,6 +22,8 @@
         <!-- actions master -->    
         <menuitem name="Biaya Kesiswaan" id="siswa_keu_ocb11.menu_biaya" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_keu_ocb11.biaya_action_window" sequence="1"/>
         <menuitem name="Akun Kas" id="siswa_keu_ocb11.menu_kategori_kas" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_keu_ocb11.kas_kategori_action_window" sequence="2"/>
+        <menuitem name="Potongan Biaya" id="potongan_biaya_menu" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_potongan_view_action"  />
+        <menuitem name="Batch Create Potongan" id="batch_create_potongan_biaya_menu" parent="siswa_keu_ocb11.submenu_keuangan" action="wizard_batch_create_potongan_action"  />
         <!-- actions keuangan -->    
         <!-- actions operations -->            
         <menuitem name="Assign Biaya" id="siswa_keu_ocb11.menu_tahunajaran_jenjang" parent="siswa_keu_ocb11.submenu_keuangan_operations" action="siswa_keu_ocb11.tahunajaran__jenjang_action_window" sequence="1"/>

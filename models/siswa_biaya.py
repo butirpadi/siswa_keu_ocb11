@@ -30,6 +30,7 @@ class siswa_biaya(models.Model):
     state = fields.Selection([('open', 'Open'), ('paid', 'Paid')], string='Paid', required=True, default='open')
     active_rombel_id = fields.Many2one('siswa_ocb11.rombel', related='siswa_id.active_rombel_id', string='Rombongan Belajar')
     jenjang_id = fields.Many2one('siswa_ocb11.jenjang')
+    potongan_ids = fields.One2many('siswa.potongan_biaya',inverse_name='siswa_biaya_id')
 
     # @api.depends('biaya_id')
     # def biaya_id_onchange(self):

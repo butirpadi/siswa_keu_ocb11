@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+
+        <record id="wizard_batch_create_potongan_form" model="ir.ui.view">
+            <field name="name">wizard_batch_create_potongan_form</field>
+            <field name="model">siswa_wizard_batch_create_potongan</field>
+            <field name="arch" type="xml">
+                <form duplicate="0" string="Wizard Potongan Biaya" class="o_sale_order" >
+                    <sheet>
+                        <group>
+                            <field name="my_siswa_id" options="{'no_create':True, 'no_edit':True, 'no_create_edit': True, 'no_open':True}"
+                            domain="[('is_siswa','=',True)]" />
+                        </group>
+                        <notebook>
+                            <page name="page_biaya" string="Biaya-biaya" >
+                                <field name="potongan_ids" context="{'default_siswa_id':my_siswa_id}" >
+                                    <tree editable="bottom">
+                                        <field name="siswa_id" 
+                                            options="{'no_create':True, 'no_edit':True, 'no_create_edit': True, 'no_open':True}"
+                                            domain="[('is_siswa','=',True),('id','=',parent.my_siswa_id)]"
+                                            invisible="1" />
+                                        <field name="state" invisible="1"  />
+                                        <field name="siswa_biaya_id" string="Biaya" 
+                                            options="{'no_create':True, 'no_edit':True, 'no_create_edit': True, 'no_open':True}"
+                                            domain="[('siswa_id','=',siswa_id),('state','=','open')]" />
+                                        <field name="related_tahunajaran_id" readonly="1" />
+                                        <field name="related_amount_due" readonly="1" />
+                                        <field name="jumlah_potongan" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <footer class="oe_edit_only" >
+                            <button name="action_save" type="object"
+                                string="Save" class="oe_highlight"/>
+                                
+                            <button special="cancel" string="Cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="wizard_batch_create_potongan_action">
+            <field name="name">Wizard Potongan Biaya</field>
+            <field name="src_model">siswa.potongan_biaya</field>
+            <field name="res_model">siswa_wizard_batch_create_potongan</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="key2">client_action_multi</field>
+            <field name="view_id" ref="wizard_batch_create_potongan_form"/>
+        </record>
+
+    </data>
+</odoo>
