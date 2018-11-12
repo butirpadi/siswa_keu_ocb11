@@ -31,6 +31,13 @@ class siswa_biaya(models.Model):
     active_rombel_id = fields.Many2one('siswa_ocb11.rombel', related='siswa_id.active_rombel_id', string='Rombongan Belajar')
     jenjang_id = fields.Many2one('siswa_ocb11.jenjang')
     potongan_ids = fields.One2many('siswa.potongan_biaya',inverse_name='siswa_biaya_id')
+    jumlah_potongan = fields.Float('Jumlah Potongan', compute="_compute_jumlah_potongan", store=True)
+    
+    @api.depends('potongan_ids')
+    def _compute_jumlah_potongan(self):
+        for rec in self:
+            for pot in rec.potongan_ids:
+                rec.jumlah_potongan += pot.jumlah_potongan
 
     # @api.depends('biaya_id')
     # def biaya_id_onchange(self):

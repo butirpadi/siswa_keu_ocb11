@@ -34,6 +34,7 @@
           <field name="tahunajaran_id" />
           <field name="jenjang_id" />
           <field name="harga" sum="Total Harga" />
+          <field name="jumlah_potongan" string="Potongan" sum="Total Potongan" />
           <field name="siswa_id" invisible="1" />
         </tree>
       </field>
@@ -49,6 +50,7 @@
           <field name="tahunajaran_id" />
           <field name="jenjang_id" />
           <field name="harga" sum="Total Tagihan" />
+          <field name="jumlah_potongan" string="Potongan" sum="Total Potongan" />
           <field name="amount_due" sum="Total Sisa Tagihan" />
           <field name="state" string="Status" />
         </tree>
@@ -65,6 +67,7 @@
             <field name="tahunajaran_id" />
             <field name="jenjang_id" />
             <field name="harga" sum="Total Tagihan" />
+            <field name="jumlah_potongan" string="Potongan" sum="Total Potongan" />
             <field name="amount_due" sum="Total Sisa Tagihan" />
             <field name="state" string="Status" />
         </tree>
@@ -81,6 +84,7 @@
           <field name="name"/>
           <field name="tahunajaran_id" />
           <field name="harga" sum="Total Tagihan" />
+          <field name="jumlah_potongan" string="Potongan" sum="Total Potongan" />
           <field name="amount_due" sum="Total Sisa Tagihan" />
           <field name="state" />
         </tree>

@@ -85,8 +85,8 @@
                                         <field name="siswa_id" invisible="1" />
                                         <field name="biaya_id" options="{'no_create':True, 'no_edit':True, 'no_create_edit': True, 'no_open':True}" />
                                         <field name="tahunajaran_id" readonly="1" />
-                                        <field name="harga" readonly="1" sum="Total Harga" />
-                                        <field name="amount_due" readonly="1"/>
+                                        <field name="harga" attrs="{'invisible':[('parent.state', '=', 'paid')]}" readonly="1" sum="Total Harga" />
+                                        <field name="amount_due" attrs="{'invisible':[('parent.state', '=', 'paid')]}" readonly="1"/>
                                         <field name="bayar" sum="Total Bayar" />
                                     </tree>
                                 </field>
