@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
         <!-- Top menu item -->    
         <!-- <menuitem name="Master" id="siswa_ocb11.master_menu"/> -->
@@ -39,4 +39,4 @@
         <!-- <menuitem name="Rekapitulasi Kas" id="siswa_keu_ocb11.menu_report_rekap_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_kas" sequence="1"/> -->
         
     </data>
-</odoo>
+</flectra>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, exceptions, _
+from flectra import models, fields, api, exceptions, _
 from pprint import pprint
 import calendar
 
@@ -181,4 +181,4 @@ class tahunajaran_jenjang(models.Model):
         print('inside write tahunajaran jenjang')
         self.ensure_one()
         res = super(tahunajaran_jenjang, self).write(vals)        
-        return res
+        return res 

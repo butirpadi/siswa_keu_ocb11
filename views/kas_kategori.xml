@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
         <record id="siswa_keu_ocb11.view_kas_kategori_filter" model="ir.ui.view">
         <field name="name">kas.kategori.list.select</field>
@@ -49,4 +49,4 @@
             </field>
         </record>   
     </data>
-</odoo>
+</flectra>

@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
 
         <record id="siswa_keu_ocb11.wizard_report_keuangan_form" model="ir.ui.view">
@@ -70,4 +70,4 @@
         </record>
 
     </data>
-</odoo>
+</flectra>

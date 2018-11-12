@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
         <record model="ir.module.category" id="siswa_keu_module_management">
             <field name="name">Keuangan Siswa</field>
@@ -20,6 +20,6 @@
             <field name="category_id" ref="siswa_keu_ocb11.siswa_keu_module_management"/>
         </record>
     </data>
-</odoo>
+</flectra>
 
 

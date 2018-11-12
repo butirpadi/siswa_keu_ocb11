@@ -1,4 +1,4 @@
-from odoo import models, fields, api, _
+from flectra import models, fields, api, _
 from pprint import pprint
 
 class wizard_pembayaran_siswa_biaya_rel(models.TransientModel):

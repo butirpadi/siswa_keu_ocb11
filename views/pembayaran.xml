@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
         <record id="siswa_keu_ocb11.view_pembayaran_filter" model="ir.ui.view">
             <field name="name">pembayaran.list.select</field>
@@ -106,4 +106,4 @@
             </field>
         </record>    
   </data>
-</odoo>
+</flectra>

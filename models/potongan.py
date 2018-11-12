@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, exceptions, _
+from flectra import models, fields, api, exceptions, _
 
 class PotonganBiaya(models.Model):
     _name = 'siswa.potongan_biaya'
@@ -115,4 +115,4 @@ class PotonganBiaya(models.Model):
     #     self.name = self.siswa_id.name
     #     # set domain
     #     domain = {'siswa_biaya_id':[('siswa_id','=',self.siswa_id.id)]}
-    #     return {'domain':domain, 'value':{'siswa_biaya_id':[]}}
+    #     return {'domain':domain, 'value':{'siswa_biaya_id':[]}} 

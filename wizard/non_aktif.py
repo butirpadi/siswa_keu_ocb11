@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from flectra import models, fields, api
 from pprint import pprint
 from datetime import datetime
 
@@ -24,4 +24,4 @@ class non_aktif(models.TransientModel):
         for dash in dash_keuangan:
             dash.compute_keuangan()    
 
-        return res
+        return res 

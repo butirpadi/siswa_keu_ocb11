@@ -1,4 +1,4 @@
-from odoo import models, fields, api, _
+from flectra import models, fields, api, _
 
 class wizard_batch_create_potongan_rel(models.Model):
     _name = 'siswa_wizard_batch_create_potongan_rel'
@@ -31,4 +31,4 @@ class wizard_batch_create_potongan_rel(models.Model):
         ('open', 'Open'),
         ('paid', 'Paid'),
         ], string='Status', default='draft')
-                    
+                     

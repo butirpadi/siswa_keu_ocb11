@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
 
         <report
@@ -14,4 +14,4 @@
         />
 
     </data>
-</odoo>
+</flectra>

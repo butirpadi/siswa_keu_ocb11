@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
 
         <record id="siswa_keu_ocb11.wizard_report_pembayaran_siswa_form" model="ir.ui.view">
@@ -132,4 +132,4 @@
             key2="client_action_multi"
             />
     </data>
-</odoo>
+</flectra>

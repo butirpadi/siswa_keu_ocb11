@@ -1,4 +1,4 @@
-from odoo import models, fields, api, _
+from flectra import models, fields, api, _
 from pprint import pprint
 from datetime import datetime
 

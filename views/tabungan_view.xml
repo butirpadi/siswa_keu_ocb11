@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
         
         <record id="view_tabungan_form_with_potongan_pembayaran" model="ir.ui.view">
@@ -16,4 +16,4 @@
         </record>
 
     </data>
-</odoo>
+</flectra>

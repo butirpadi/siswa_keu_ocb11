@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from flectra import models, fields, api, _
 
 class siswa_biaya(models.Model):
     _name = 'siswa_keu_ocb11.siswa_biaya'
@@ -122,4 +122,4 @@ class siswa_biaya(models.Model):
         dash_keuangan_id = self.env['ir.model.data'].search([('name','=','default_dashboard_pembayaran')]).res_id
         dash_keuangan = self.env['siswa_keu_ocb11.keuangan_dashboard'].search([('id','=',dash_keuangan_id)])
         for dash in dash_keuangan:
-            dash.compute_keuangan()  
+            dash.compute_keuangan()   

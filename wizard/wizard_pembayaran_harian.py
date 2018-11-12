@@ -1,4 +1,4 @@
-from odoo import models, fields, api, _
+from flectra import models, fields, api, _
 from pprint import pprint
 from datetime import datetime
 
@@ -49,4 +49,4 @@ class wizard_pembayaran_harian(models.TransientModel):
         if self.tipe == 'sum' : 
             return self.env.ref('siswa_keu_ocb11.report_pembayaran_harian_action').report_action(self)
         else:
-            return self.env.ref('siswa_keu_ocb11.report_pembayaran_harian_detail_action').report_action(self)
+            return self.env.ref('siswa_keu_ocb11.report_pembayaran_harian_detail_action').report_action(self) 

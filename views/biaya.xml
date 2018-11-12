@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
   <data>
     <!-- explicit list view definition -->    
     <record model="ir.ui.view" id="siswa_keu_ocb11.biaya_list">
@@ -43,4 +43,4 @@
 
     
   </data>
-</odoo>
+</flectra>

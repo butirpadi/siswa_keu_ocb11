@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
         <record model="ir.ui.view" id="siswa_keu_ocb11.assign_biaya_list">
             <field name="name">siswa_keu_ocb11_assign_biaya_list</field>
@@ -44,4 +44,4 @@
             <field name="form_view_id" ref="siswa_keu_ocb11.assign_biaya_form"/>
         </record>
     </data>
-</odoo>
+</flectra>

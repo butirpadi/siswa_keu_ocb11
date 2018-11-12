@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
         <record id="view_keuangan_dashboard_kanban_form" model="ir.ui.view">
             <field name="name">keuangan.dashboard.ocb11.kanban</field>
@@ -84,4 +84,4 @@
         </record> -->
 
     </data>
-</odoo>
+</flectra>

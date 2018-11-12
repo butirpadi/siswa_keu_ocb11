@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
-from odoo.addons import decimal_precision as dp
+from flectra import models, fields, api
+from flectra.addons import decimal_precision as dp
 
 class biaya(models.Model):
     _name = 'siswa_keu_ocb11.biaya'

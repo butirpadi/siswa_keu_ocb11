@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
 
         <record id="wizard_batch_create_potongan_form" model="ir.ui.view">
@@ -52,4 +52,4 @@
         </record>
 
     </data>
-</odoo>
+</flectra>

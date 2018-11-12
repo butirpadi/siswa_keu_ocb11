@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
         <record id="biaya_ta_jenjang_form_view" model="ir.ui.view">
             <field name="name">biaya.ta.jenjang.form.view</field>
@@ -24,4 +24,4 @@
             </field>
         </record>
     </data>
-</odoo>
+</flectra>

@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
   <data>
     <!-- Filter View -->
     <record id="siswa_keu_ocb11.view_biaya_persiswa_filter" model="ir.ui.view">
@@ -204,4 +204,4 @@
 
     
   </data>
-</odoo>
+</flectra>

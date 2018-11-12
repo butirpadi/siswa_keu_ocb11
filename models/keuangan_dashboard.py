@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, exceptions, _
-from odoo.addons import decimal_precision as dp
+from flectra import models, fields, api, exceptions, _
+from flectra.addons import decimal_precision as dp
 from datetime import datetime
 from pprint import pprint
 
@@ -76,4 +76,4 @@ class keuangan_dashboard(models.Model):
                             ('res_id','=',self.id),
                         ]).name
         return default_name
-            
+             

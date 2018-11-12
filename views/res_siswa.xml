@@ -1,4 +1,4 @@
-<odoo>
+<flectra>
     <data>
 
          <record id="res_siswa_keu_tree" model="ir.ui.view">
@@ -74,4 +74,4 @@
         </record>
 
     </data>
-</odoo>
+</flectra>
