@@ -1,42 +1,95 @@
 <flectra>
-    <data>
-        <!-- Top menu item -->    
-        <!-- <menuitem name="Master" id="siswa_ocb11.master_menu"/> -->
-        <menuitem name="Keuangan" id="siswa_ocb11.keuangan_menu" sequence="2" />
-        
-        <!-- menu categories -->    
-        <menuitem name="Dashboard" id="siswa_keu_ocb11.menu_dashboard_keuangan" parent="siswa_ocb11.keuangan_menu" sequence="1" action="siswa_keu_ocb11.keuangan_dashboard_view_action" />
-        <menuitem name="Master" id="siswa_keu_ocb11.submenu_keuangan" parent="siswa_ocb11.keuangan_menu" sequence="2" />
-        <menuitem name="Keuangan" id="siswa_keu_ocb11.submenu_keuangan_keuangan" parent="siswa_ocb11.keuangan_menu" sequence="3" />
-        <menuitem name="Operations" id="siswa_keu_ocb11.submenu_keuangan_operations" parent="siswa_ocb11.keuangan_menu" sequence="4" />
-        <menuitem name="Reports" id="siswa_keu_ocb11.submenu_keuangan_reports" parent="siswa_ocb11.keuangan_menu" sequence="5" />
-        
-        <menuitem name="Configurations" id="siswa_keu_ocb11.menu_configuration" parent="siswa_ocb11.keuangan_menu" 
-            sequence="6" groups="base.group_system" />
+	<data>
+		<!-- Top menu item -->
+		<!-- <menuitem name="Master" id="siswa_ocb11.master_menu"/> -->
+		<menuitem name="Keuangan" id="siswa_ocb11.keuangan_menu"
+			sequence="2" web_icon="siswa_keu_ocb11,static/description/icon.png" />
 
-        <menuitem name="Dashboard Manager" id="siswa_keu_ocb11.menu_dashboard_keuangan_manager" 
-            parent="siswa_keu_ocb11.menu_configuration" sequence="61" 
-            action="siswa_keu_ocb11.keuangan_dashboard_view_manager_action" />
-        
+		<!-- menu categories -->
+		<menuitem name="Dashboard"
+			id="siswa_keu_ocb11.menu_dashboard_keuangan"
+			parent="siswa_ocb11.keuangan_menu" sequence="1"
+			action="siswa_keu_ocb11.keuangan_dashboard_view_action" />
+		<menuitem name="Master" id="siswa_keu_ocb11.submenu_keuangan"
+			parent="siswa_ocb11.keuangan_menu" sequence="2" />
+		<menuitem name="Keuangan"
+			id="siswa_keu_ocb11.submenu_keuangan_keuangan"
+			parent="siswa_ocb11.keuangan_menu" sequence="3" />
+		<menuitem name="Operations"
+			id="siswa_keu_ocb11.submenu_keuangan_operations"
+			parent="siswa_ocb11.keuangan_menu" sequence="4" />
+		<menuitem name="Reports"
+			id="siswa_keu_ocb11.submenu_keuangan_reports"
+			parent="siswa_ocb11.keuangan_menu" sequence="5" />
 
-        <!-- actions master -->    
-        <menuitem name="Biaya Kesiswaan" id="siswa_keu_ocb11.menu_biaya" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_keu_ocb11.biaya_action_window" sequence="1"/>
-        <menuitem name="Akun Kas" id="siswa_keu_ocb11.menu_kategori_kas" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_keu_ocb11.kas_kategori_action_window" sequence="2"/>
-        <menuitem name="Potongan Biaya" id="potongan_biaya_menu" parent="siswa_keu_ocb11.submenu_keuangan" action="siswa_potongan_view_action"  />
-        <menuitem name="Batch Create Potongan" id="batch_create_potongan_biaya_menu" parent="siswa_keu_ocb11.submenu_keuangan" action="wizard_batch_create_potongan_action"  />
-        <!-- actions keuangan -->    
-        <!-- actions operations -->            
-        <menuitem name="Assign Biaya" id="siswa_keu_ocb11.menu_tahunajaran_jenjang" parent="siswa_keu_ocb11.submenu_keuangan_operations" action="siswa_keu_ocb11.tahunajaran__jenjang_action_window" sequence="1"/>
-        <menuitem name="Pembayaran" id="siswa_keu_ocb11.menu_pembayaran" parent="siswa_keu_ocb11.submenu_keuangan_operations" action="siswa_keu_ocb11.pembayaran_action_window" sequence="2"/>
-        <menuitem name="Kas" id="siswa_keu_ocb11.menu_kas" parent="siswa_keu_ocb11.submenu_keuangan_operations" action="siswa_keu_ocb11.kas_action_window" sequence="3"/>
-        <!-- actions reports -->            
-        <menuitem name="Tagihan Per Siswa" id="siswa_keu_ocb11.menu_keuangan_siswa" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_keuangan_siswa" sequence="1"/>
-        <menuitem name="Daftar Tagihan" id="siswa_keu_ocb11.menu_data_keuangan_siswa" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.data_keuangan_siswa_action" sequence="2"/>
-        <menuitem name="Pembayaran Siswa" id="siswa_keu_ocb11.menu_report_pembayaran_siswa" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_pembayaran_siswa_action" sequence="3"/>
-        <menuitem name="Pembayaran Harian" id="siswa_keu_ocb11.menu_report_pembayaran_harian" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_pembayaran_harian_action" sequence="4"/>
-        <!-- <menuitem name="Keuangan" id="siswa_keu_ocb11.menu_report_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_keuangan_action" sequence="3"/> -->
-        <menuitem name="Kas" id="siswa_keu_ocb11.menu_rekapitulasi_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_rekap_kas_action" sequence="5"/>
-        <!-- <menuitem name="Rekapitulasi Kas" id="siswa_keu_ocb11.menu_report_rekap_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_kas" sequence="1"/> -->
-        
-    </data>
+		<menuitem name="Configurations"
+			id="siswa_keu_ocb11.menu_configuration"
+			parent="siswa_ocb11.keuangan_menu" sequence="6"
+			groups="base.group_system" />
+
+		<menuitem name="Dashboard Manager"
+			id="siswa_keu_ocb11.menu_dashboard_keuangan_manager"
+			parent="siswa_keu_ocb11.menu_configuration" sequence="61"
+			action="siswa_keu_ocb11.keuangan_dashboard_view_manager_action" />
+
+
+		<!-- actions master -->
+		<menuitem name="Biaya Kesiswaan"
+			id="siswa_keu_ocb11.menu_biaya"
+			parent="siswa_keu_ocb11.submenu_keuangan"
+			action="siswa_keu_ocb11.biaya_action_window" sequence="1" />
+		<menuitem name="Akun Kas"
+			id="siswa_keu_ocb11.menu_kategori_kas"
+			parent="siswa_keu_ocb11.submenu_keuangan"
+			action="siswa_keu_ocb11.kas_kategori_action_window" sequence="2" />
+		<menuitem name="Potongan Biaya" id="potongan_biaya_menu"
+			parent="siswa_keu_ocb11.submenu_keuangan"
+			action="siswa_potongan_view_action" />
+		<menuitem name="Batch Create Potongan"
+			id="batch_create_potongan_biaya_menu"
+			parent="siswa_keu_ocb11.submenu_keuangan"
+			action="wizard_batch_create_potongan_action" />
+		<!-- actions keuangan -->
+		<!-- actions operations -->
+		<menuitem name="Assign Biaya"
+			id="siswa_keu_ocb11.menu_tahunajaran_jenjang"
+			parent="siswa_keu_ocb11.submenu_keuangan_operations"
+			action="siswa_keu_ocb11.tahunajaran__jenjang_action_window"
+			sequence="1" />
+		<menuitem name="Pembayaran"
+			id="siswa_keu_ocb11.menu_pembayaran"
+			parent="siswa_keu_ocb11.submenu_keuangan_operations"
+			action="siswa_keu_ocb11.pembayaran_action_window" sequence="2" />
+		<menuitem name="Kas" id="siswa_keu_ocb11.menu_kas"
+			parent="siswa_keu_ocb11.submenu_keuangan_operations"
+			action="siswa_keu_ocb11.kas_action_window" sequence="3" />
+		<!-- actions reports -->
+		<menuitem name="Tagihan Per Siswa"
+			id="siswa_keu_ocb11.menu_keuangan_siswa"
+			parent="siswa_keu_ocb11.submenu_keuangan_reports"
+			action="siswa_keu_ocb11.wizard_keuangan_siswa" sequence="1" />
+		<menuitem name="Daftar Tagihan"
+			id="siswa_keu_ocb11.menu_data_keuangan_siswa"
+			parent="siswa_keu_ocb11.submenu_keuangan_reports"
+			action="siswa_keu_ocb11.data_keuangan_siswa_action" sequence="2" />
+		<menuitem name="Pembayaran Siswa"
+			id="siswa_keu_ocb11.menu_report_pembayaran_siswa"
+			parent="siswa_keu_ocb11.submenu_keuangan_reports"
+			action="siswa_keu_ocb11.wizard_report_pembayaran_siswa_action"
+			sequence="3" />
+		<menuitem name="Pembayaran Harian"
+			id="siswa_keu_ocb11.menu_report_pembayaran_harian"
+			parent="siswa_keu_ocb11.submenu_keuangan_reports"
+			action="siswa_keu_ocb11.wizard_pembayaran_harian_action" sequence="4" />
+		<!-- <menuitem name="Keuangan" id="siswa_keu_ocb11.menu_report_kas" parent="siswa_keu_ocb11.submenu_keuangan_reports" 
+			action="siswa_keu_ocb11.wizard_report_keuangan_action" sequence="3"/> -->
+		<menuitem name="Kas"
+			id="siswa_keu_ocb11.menu_rekapitulasi_kas"
+			parent="siswa_keu_ocb11.submenu_keuangan_reports"
+			action="siswa_keu_ocb11.wizard_rekap_kas_action" sequence="5" />
+		<!-- <menuitem name="Rekapitulasi Kas" id="siswa_keu_ocb11.menu_report_rekap_kas" 
+			parent="siswa_keu_ocb11.submenu_keuangan_reports" action="siswa_keu_ocb11.wizard_report_kas" 
+			sequence="1"/> -->
+
+	</data>
 </flectra>
